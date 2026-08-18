@@ -3329,6 +3329,47 @@ function wireCardSearch(inputId, countId, cardSelector){
 }
 wireCardSearch('fac-search-input', 'fac-result-count', '.fac-card');
 wireCardSearch('flsa-search-input', 'flsa-result-count', '.flsa-card');
+
+/* ============ PDF VIEWER (fixes iOS "Add to Home Screen" trap) ============ */
+/* When this site is launched from a home-screen icon on iOS, Safari runs it
+   in standalone mode with no browser chrome. Tapping a normal PDF link then
+   navigates the whole app away from itself with no back/close button,
+   forcing a force-quit. Instead, open PDFs in an in-page overlay so nothing
+   ever navigates away — the X button just hides the overlay. */
+(function(){
+  var overlay = document.createElement('div');
+  overlay.id = 'pdfOverlay';
+  overlay.style.cssText = 'display:none;position:fixed;inset:0;z-index:2000;background:var(--iron);flex-direction:column;';
+  overlay.innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--iron-2);border-bottom:3px solid var(--brass);flex:0 0 auto;">' +
+      '<span style="font-family:\'Oswald\',sans-serif;font-weight:600;color:var(--parchment);font-size:15px;">Document</span>' +
+      '<button id="pdfOverlayClose" style="font-family:\'Oswald\',sans-serif;font-weight:600;background:var(--brick);color:var(--parchment);border:2px solid var(--brass);border-radius:6px;padding:8px 16px;font-size:15px;">&#10005; Close</button>' +
+    '</div>' +
+    '<iframe id="pdfOverlayFrame" src="" style="flex:1 1 auto;border:0;width:100%;height:100%;background:#fff;"></iframe>';
+  document.body.appendChild(overlay);
+
+  var frame = overlay.querySelector('#pdfOverlayFrame');
+  function openPdf(href){
+    frame.src = href;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closePdf(){
+    overlay.style.display = 'none';
+    frame.src = '';
+    document.body.style.overflow = '';
+  }
+  overlay.querySelector('#pdfOverlayClose').addEventListener('click', closePdf);
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href$=".pdf"], a[href$=".PDF"]') : null;
+    if(!a) return;
+    // only intercept same-site PDFs bundled with this app
+    if(a.origin && a.origin !== window.location.origin) return;
+    e.preventDefault();
+    openPdf(a.getAttribute('href'));
+  }, false);
+})();
 </script>
 
 </body>
