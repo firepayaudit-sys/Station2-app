@@ -592,6 +592,97 @@
   }
   .lineup-clear-btn:hover{ border-color: var(--ember); color: var(--ember); }
 
+  /* ============ PASS IT ON ============ */
+  .pio-unit{
+    margin: 0 auto 30px;
+    max-width:560px;
+  }
+  .pio-unit-head{
+    font-family:'Rye', serif;
+    font-size:22px;
+    color: var(--parchment);
+    text-shadow: 1px 1px 0 var(--brick);
+    margin: 0 0 10px;
+    padding-bottom:6px;
+    border-bottom: 2px solid var(--brass);
+  }
+  .pio-compose{
+    background: linear-gradient(180deg, #2a251c, #1e1a13);
+    border:1px solid var(--steel);
+    border-top: 3px solid var(--brass);
+    border-radius:4px;
+    padding:12px;
+    margin-bottom:16px;
+  }
+  .pio-textarea{
+    width:100%;
+    min-height:70px;
+    resize:vertical;
+    background: var(--iron);
+    border:1px solid var(--steel);
+    border-radius:3px;
+    padding:10px;
+    color: var(--parchment);
+    font-family:'Oswald', sans-serif;
+    font-size:13.5px;
+    line-height:1.5;
+    outline:none;
+    box-sizing:border-box;
+  }
+  .pio-textarea:focus{ border-color: var(--brass); }
+  .pio-textarea::placeholder{ color: var(--ash); }
+  .pio-post-row{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:8px;
+  }
+  .pio-post-btn{
+    background: linear-gradient(180deg, var(--brass-lt), var(--brass));
+    border:1px solid #4a3a1c;
+    color: #241c0d;
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:9px 20px;
+    border-radius:4px;
+    cursor:pointer;
+  }
+  .pio-post-btn:active{ transform: translateY(1px); }
+  .pio-post-btn:disabled{ opacity:0.5; cursor:default; }
+  .pio-feed{ display:flex; flex-direction:column; gap:10px; }
+  .pio-entry{
+    background: var(--iron-2);
+    border:1px solid var(--steel);
+    border-left: 4px solid var(--brick-lt);
+    border-radius:4px;
+    padding: 12px 14px;
+  }
+  .pio-entry-meta{
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--brass-lt);
+    margin-bottom:6px;
+  }
+  .pio-entry-text{
+    font-size:14px;
+    line-height:1.55;
+    color: var(--parchment);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    margin:0;
+  }
+  .pio-empty{
+    font-family:'Courier Prime', monospace;
+    font-size:11.5px;
+    color: var(--ash);
+    font-style:italic;
+    padding:4px 2px;
+  }
+
   /* ============ GENERAL / PHONE DIRECTORY ============ */
   .roster-cat{ margin-top:34px; }
 
@@ -904,6 +995,15 @@
       </span>
       <span class="plate-arrow">→</span>
     </button>
+
+    <button class="plate" onclick="showScreen('pass-it-on')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">PASS IT ON</span>
+        <span class="plate-desc">Shift-to-Shift Apparatus Notes</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
   </div>
 
   <p class="footer-note">Fort Worth, TX &nbsp;·&nbsp; Est. 1930</p>
@@ -1140,6 +1240,62 @@
     </div>
 
     <button id="lineup-clear-btn" class="lineup-clear-btn">Clear Today's Line-Up</button>
+
+  </div>
+</section>
+
+<!-- ============ PASS IT ON ============ -->
+<section class="screen" id="pass-it-on">
+  <div class="sub-hero">
+    <div class="sub-wrap">
+      <div class="nav-row">
+        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
+      </div>
+      <h2 class="sub-title">Pass It On</h2>
+      <p class="sub-tag">Shift-to-Shift Apparatus Notes</p>
+    </div>
+  </div>
+  <div class="content-block">
+
+    <div class="pio-unit" data-unit="engine">
+      <h3 class="pio-unit-head">Engine</h3>
+      <div class="pio-compose">
+        <textarea class="pio-textarea" data-unit="engine" placeholder="Leave a note for the next shift about the Engine — low fluids, equipment issues, anything to flag…"></textarea>
+        <div class="pio-post-row">
+          <button class="pio-post-btn" data-unit="engine" onclick="pioSubmit('engine')">Post Note</button>
+        </div>
+      </div>
+      <div class="pio-feed" id="pio-feed-engine">
+        <p class="pio-empty">No notes yet.</p>
+      </div>
+    </div>
+
+    <div class="pio-unit" data-unit="tower">
+      <h3 class="pio-unit-head">Tower</h3>
+      <div class="pio-compose">
+        <textarea class="pio-textarea" data-unit="tower" placeholder="Leave a note for the next shift about the Tower — low fluids, equipment issues, anything to flag…"></textarea>
+        <div class="pio-post-row">
+          <button class="pio-post-btn" data-unit="tower" onclick="pioSubmit('tower')">Post Note</button>
+        </div>
+      </div>
+      <div class="pio-feed" id="pio-feed-tower">
+        <p class="pio-empty">No notes yet.</p>
+      </div>
+    </div>
+
+    <div class="pio-unit" data-unit="squad">
+      <h3 class="pio-unit-head">Squad</h3>
+      <div class="pio-compose">
+        <textarea class="pio-textarea" data-unit="squad" placeholder="Leave a note for the next shift about the Squad — low fluids, equipment issues, anything to flag…"></textarea>
+        <div class="pio-post-row">
+          <button class="pio-post-btn" data-unit="squad" onclick="pioSubmit('squad')">Post Note</button>
+        </div>
+      </div>
+      <div class="pio-feed" id="pio-feed-squad">
+        <p class="pio-empty">No notes yet.</p>
+      </div>
+    </div>
 
   </div>
 </section>
@@ -2669,12 +2825,111 @@
   <div class="content-block" id="positionContent"></div>
 </section>
 
+<!-- Firebase powers "Pass It On" so notes sync across every phone, not just one device. -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
 <script>
   function showScreen(id){
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
     history.replaceState(null, '', '#' + id);
+  }
+
+  /* ============ PASS IT ON — Firebase ============ */
+  // Fill this in with YOUR Firebase project's config (Firebase Console →
+  // Project settings → General → "Your apps" → SDK setup and configuration).
+  // Until this is filled in, notes will show an error instead of saving.
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyC1VU512CZ7j_7Tvw7zbp6ccaGhfNZcrK0",
+    authDomain: "station-2-app.firebaseapp.com",
+    databaseURL: "https://station-2-app-default-rtdb.firebaseio.com",
+    projectId: "station-2-app",
+    storageBucket: "station-2-app.firebasestorage.app",
+    messagingSenderId: "55531570769",
+    appId: "1:55531570769:web:13a7d9fb464e15963c5a70"
+  };
+
+  let pioDb = null;
+  try{
+    if(FIREBASE_CONFIG.apiKey.indexOf('PASTE_') !== 0 && window.firebase){
+      firebase.initializeApp(FIREBASE_CONFIG);
+      pioDb = firebase.database();
+    } else {
+      console.warn('Pass It On: FIREBASE_CONFIG is still using placeholder values — notes will not save or sync until it is filled in.');
+    }
+  }catch(e){
+    console.error('Pass It On: Firebase failed to initialize.', e);
+  }
+
+  const PIO_UNITS = ['engine', 'tower', 'squad'];
+
+  function pioFormatWhen(ts){
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) +
+      ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  }
+
+  function pioRender(unit, entriesObj){
+    const feed = document.getElementById('pio-feed-' + unit);
+    if(!feed) return;
+    feed.innerHTML = '';
+    const entries = Object.keys(entriesObj || {}).map(id => Object.assign({ id: id }, entriesObj[id]));
+    entries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    if(!entries.length){
+      const p = document.createElement('p');
+      p.className = 'pio-empty';
+      p.textContent = 'No notes yet.';
+      feed.appendChild(p);
+      return;
+    }
+    entries.forEach(entry => {
+      const card = document.createElement('div');
+      card.className = 'pio-entry';
+      const meta = document.createElement('div');
+      meta.className = 'pio-entry-meta';
+      meta.textContent = pioFormatWhen(entry.timestamp || Date.now());
+      const text = document.createElement('p');
+      text.className = 'pio-entry-text';
+      text.textContent = entry.text || '';
+      card.appendChild(meta);
+      card.appendChild(text);
+      feed.appendChild(card);
+    });
+  }
+
+  function initPassItOn(){
+    if(!pioDb) return;
+    PIO_UNITS.forEach(unit => {
+      pioDb.ref('passItOn/' + unit).limitToLast(200).on('value', snapshot => {
+        pioRender(unit, snapshot.val());
+      });
+    });
+  }
+
+  function pioSubmit(unit){
+    const textarea = document.querySelector('.pio-textarea[data-unit="' + unit + '"]');
+    const btn = document.querySelector('.pio-post-btn[data-unit="' + unit + '"]');
+    if(!textarea) return;
+    const text = textarea.value.trim();
+    if(!text) return;
+    if(!pioDb){
+      alert("Notes aren't connected yet — ask whoever set up the app to finish the Firebase setup.");
+      return;
+    }
+    if(btn) btn.disabled = true;
+    pioDb.ref('passItOn/' + unit).push({
+      text: text,
+      timestamp: Date.now()
+    }).then(() => {
+      textarea.value = '';
+    }).catch(err => {
+      console.error(err);
+      alert("Couldn't post that note — check your connection and try again.");
+    }).finally(() => {
+      if(btn) btn.disabled = false;
+    });
   }
 
   window.addEventListener('DOMContentLoaded', () => {
@@ -2684,6 +2939,7 @@
     }
     buildModeBoard();
     initMorningLineup();
+    initPassItOn();
   });
 
   /* ============ MORNING LINE-UP ============ */
