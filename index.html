@@ -739,6 +739,146 @@
     padding:4px 2px;
   }
 
+  /* ============ CREW FILE UPLOADS ============ */
+  .upl-compose{
+    max-width:560px;
+    margin:0 auto 16px;
+    background: linear-gradient(180deg, #2a251c, #1e1a13);
+    border:1px solid var(--steel);
+    border-top: 3px solid var(--brass);
+    border-radius:4px;
+    padding:14px 16px;
+  }
+  .upl-hint{
+    font-size:12.5px;
+    line-height:1.5;
+    color: var(--ash);
+    margin:0 0 12px;
+  }
+  .upl-file-input{
+    width:100%;
+    background: var(--iron);
+    border:1px solid var(--steel);
+    border-radius:3px;
+    padding:9px 10px;
+    color: var(--parchment);
+    font-family:'Oswald', sans-serif;
+    font-size:12.5px;
+    box-sizing:border-box;
+    margin-bottom:10px;
+  }
+  .upl-label-input{
+    width:100%;
+    background: var(--iron);
+    border:1px solid var(--steel);
+    border-radius:3px;
+    padding:10px;
+    color: var(--parchment);
+    font-family:'Oswald', sans-serif;
+    font-size:13.5px;
+    box-sizing:border-box;
+    margin-bottom:12px;
+    outline:none;
+  }
+  .upl-label-input:focus{ border-color: var(--brass); }
+  .upl-label-input::placeholder{ color: var(--ash); }
+  .upl-submit-row{
+    display:flex;
+    justify-content:flex-end;
+  }
+  .upl-submit-btn{
+    background: linear-gradient(180deg, var(--brass-lt), var(--brass));
+    border:1px solid #4a3a1c;
+    color: #241c0d;
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:9px 20px;
+    border-radius:4px;
+    cursor:pointer;
+  }
+  .upl-submit-btn:disabled{ opacity:0.5; cursor:default; }
+  .upl-status{
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:0.5px;
+    color: var(--brass-lt);
+    min-height:14px;
+    margin:10px 0 0;
+    text-align:right;
+  }
+  .upl-feed{
+    max-width:560px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .upl-entry{
+    background: var(--iron-2);
+    border:1px solid var(--steel);
+    border-left: 4px solid var(--brick-lt);
+    border-radius:4px;
+    padding:12px 14px;
+  }
+  .upl-entry-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--brass-lt);
+    margin-bottom:6px;
+  }
+  .upl-entry-when{ flex:1 1 auto; }
+  .upl-entry-delete{
+    flex:0 0 auto;
+    background:none;
+    border:1px solid var(--steel);
+    color: var(--ash);
+    font-family:'Courier Prime', monospace;
+    font-size:10px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:4px 8px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .upl-entry-delete:hover{ border-color: var(--brick-lt); color: var(--brick-lt); }
+  .upl-entry-name{
+    font-size:14px;
+    font-weight:600;
+    color: var(--parchment);
+    margin:0 0 4px;
+    word-wrap:break-word;
+  }
+  .upl-entry-note{
+    font-size:13px;
+    line-height:1.5;
+    color: var(--ash);
+    margin:0 0 10px;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+  }
+  .upl-entry-view{
+    background:none;
+    border:1px solid var(--brass);
+    color: var(--brass-lt);
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:6px 12px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .upl-entry-view:hover{ border-color: var(--ember); color: var(--ember); }
+
   .pio-notify-row{
     max-width:560px;
     margin: 0 auto 26px;
@@ -1189,6 +1329,22 @@
       <span class="plate-arrow">↗</span>
     </a>
 
+    <p class="board-label" style="margin-top:34px;">Crew Uploads</p>
+
+    <div class="upl-compose">
+      <p class="upl-hint">Got a manual, checklist, or reference file to share? Upload it here — it'll show up below for the whole crew, and gets folded into the official list above once reviewed.</p>
+      <input type="file" class="upl-file-input" data-section="trt" id="upl-file-trt">
+      <input type="text" class="upl-label-input" data-section="trt" id="upl-label-trt" placeholder="What is this? (optional label)" maxlength="200">
+      <div class="upl-submit-row">
+        <button class="upl-submit-btn" data-section="trt" onclick="uplSubmit('trt')">Upload</button>
+      </div>
+      <p class="upl-status" id="upl-status-trt"></p>
+    </div>
+
+    <div class="upl-feed" id="upl-feed-trt">
+      <p class="pio-empty">No uploads yet.</p>
+    </div>
+
   </div>
 </section>
 
@@ -1234,6 +1390,22 @@
       </span>
       <span class="plate-arrow">↗</span>
     </a>
+
+    <p class="board-label" style="margin-top:34px;">Crew Uploads</p>
+
+    <div class="upl-compose">
+      <p class="upl-hint">Got a manual, checklist, or reference file to share? Upload it here — it'll show up below for the whole crew, and gets folded into the official list above once reviewed.</p>
+      <input type="file" class="upl-file-input" data-section="hazmat" id="upl-file-hazmat">
+      <input type="text" class="upl-label-input" data-section="hazmat" id="upl-label-hazmat" placeholder="What is this? (optional label)" maxlength="200">
+      <div class="upl-submit-row">
+        <button class="upl-submit-btn" data-section="hazmat" onclick="uplSubmit('hazmat')">Upload</button>
+      </div>
+      <p class="upl-status" id="upl-status-hazmat"></p>
+    </div>
+
+    <div class="upl-feed" id="upl-feed-hazmat">
+      <p class="pio-empty">No uploads yet.</p>
+    </div>
 
   </div>
 </section>
@@ -3153,6 +3325,147 @@
     });
   }
 
+  /* ============ CREW FILE UPLOADS ============ */
+  const UPL_UNITS = ['trt', 'hazmat'];
+  const UPL_MAX_BYTES = 8 * 1024 * 1024; // 8MB raw file cap (base64 lands under the 16MB RTDB write limit)
+
+  function uplRender(section, entriesObj){
+    const feed = document.getElementById('upl-feed-' + section);
+    if(!feed) return;
+    feed.innerHTML = '';
+    const entries = Object.keys(entriesObj || {}).map(id => Object.assign({ id: id }, entriesObj[id]));
+    entries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    if(!entries.length){
+      const p = document.createElement('p');
+      p.className = 'pio-empty';
+      p.textContent = 'No uploads yet.';
+      feed.appendChild(p);
+      return;
+    }
+    entries.forEach(entry => {
+      const card = document.createElement('div');
+      card.className = 'upl-entry';
+
+      const meta = document.createElement('div');
+      meta.className = 'upl-entry-meta';
+
+      const when = document.createElement('span');
+      when.className = 'upl-entry-when';
+      when.textContent = pioFormatWhen(entry.timestamp || Date.now());
+      meta.appendChild(when);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'upl-entry-delete';
+      delBtn.type = 'button';
+      delBtn.textContent = '✕ Delete';
+      delBtn.addEventListener('click', () => uplDelete(section, entry.id));
+      meta.appendChild(delBtn);
+
+      const name = document.createElement('p');
+      name.className = 'upl-entry-name';
+      name.textContent = entry.filename || 'Untitled file';
+
+      card.appendChild(meta);
+      card.appendChild(name);
+
+      if(entry.note){
+        const note = document.createElement('p');
+        note.className = 'upl-entry-note';
+        note.textContent = entry.note;
+        card.appendChild(note);
+      }
+
+      const viewBtn = document.createElement('button');
+      viewBtn.className = 'upl-entry-view';
+      viewBtn.type = 'button';
+      viewBtn.textContent = 'View / Download';
+      viewBtn.addEventListener('click', () => uplView(entry));
+      card.appendChild(viewBtn);
+
+      feed.appendChild(card);
+    });
+  }
+
+  function uplView(entry){
+    if(!entry || !entry.dataUrl) return;
+    if(entry.dataUrl.indexOf('data:application/pdf') === 0 && window.openPdfOverlay){
+      window.openPdfOverlay(entry.dataUrl);
+      return;
+    }
+    const a = document.createElement('a');
+    a.href = entry.dataUrl;
+    a.download = entry.filename || 'download';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function uplDelete(section, entryId){
+    if(!pioDb) return;
+    if(!confirm('Delete this upload? This can\'t be undone.')) return;
+    pioDb.ref('fileUploads/' + section + '/' + entryId).remove().catch(err => {
+      console.error(err);
+      alert("Couldn't delete that upload — check your connection and try again.");
+    });
+  }
+
+  function initUploads(){
+    if(!pioDb) return;
+    UPL_UNITS.forEach(section => {
+      pioDb.ref('fileUploads/' + section).limitToLast(200).on('value', snapshot => {
+        uplRender(section, snapshot.val());
+      });
+    });
+  }
+
+  function uplSubmit(section){
+    const fileInput = document.getElementById('upl-file-' + section);
+    const labelInput = document.getElementById('upl-label-' + section);
+    const btn = document.querySelector('.upl-submit-btn[data-section="' + section + '"]');
+    const status = document.getElementById('upl-status-' + section);
+    if(!fileInput || !fileInput.files || !fileInput.files[0]){
+      if(status) status.textContent = 'Choose a file first.';
+      return;
+    }
+    const file = fileInput.files[0];
+    if(file.size > UPL_MAX_BYTES){
+      if(status) status.textContent = 'That file is too big — 8MB max.';
+      return;
+    }
+    if(!pioDb){
+      alert("Uploads aren't connected yet — ask whoever set up the app to finish the Firebase setup.");
+      return;
+    }
+    if(btn) btn.disabled = true;
+    if(status) status.textContent = 'Uploading…';
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      pioDb.ref('fileUploads/' + section).push({
+        filename: file.name,
+        note: (labelInput && labelInput.value.trim()) || '',
+        dataUrl: reader.result,
+        timestamp: Date.now()
+      }).then(() => {
+        fileInput.value = '';
+        if(labelInput) labelInput.value = '';
+        if(status) status.textContent = 'Uploaded.';
+      }).catch(err => {
+        console.error(err);
+        if(status) status.textContent = '';
+        alert("Couldn't upload that file — check your connection and try again.");
+      }).finally(() => {
+        if(btn) btn.disabled = false;
+      });
+    };
+    reader.onerror = () => {
+      if(btn) btn.disabled = false;
+      if(status) status.textContent = '';
+      alert("Couldn't read that file — try again.");
+    };
+    reader.readAsDataURL(file);
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash.replace('#','');
     if(hash && document.getElementById(hash)){
@@ -3161,6 +3474,7 @@
     buildModeBoard();
     initMorningLineup();
     initPassItOn();
+    initUploads();
   });
 
   /* ============ MORNING LINE-UP ============ */
@@ -3883,6 +4197,7 @@ wireCardSearch('flsa-search-input', 'flsa-result-count', '.flsa-card');
     document.body.style.overflow = '';
   }
   overlay.querySelector('#pdfOverlayClose').addEventListener('click', closePdf);
+  window.openPdfOverlay = openPdf;
 
   document.addEventListener('click', function(e){
     var a = e.target.closest ? e.target.closest('a[href$=".pdf"], a[href$=".PDF"]') : null;
