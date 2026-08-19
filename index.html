@@ -18,6 +18,7 @@
     --parchment: #e7dcc0;
     --ember:     #cf5a26;
     --ash:       #8a8172;
+    --moss:      #5f7a45;
   }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -997,6 +998,124 @@
 
   .roster-card.roster-hidden{ display:none; }
 
+  /* ============ CREW ROSTER ============ */
+  .crew-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 16px;
+    max-width:560px;
+    margin:0 auto 22px;
+    padding:12px 16px;
+    background: var(--iron-2);
+    border:1px solid var(--steel);
+    border-radius:4px;
+  }
+  .crew-legend-item{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:'Oswald', sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.5px;
+    color: var(--ash);
+  }
+  .crew-legend-swatch{
+    width:11px; height:11px;
+    border-radius:2px;
+    flex:0 0 auto;
+  }
+  .crew-station{
+    max-width:560px;
+    margin:0 auto 20px;
+    background: linear-gradient(180deg, #2a251c, #1e1a13);
+    border:1px solid var(--steel);
+    border-top: 3px solid var(--brass);
+    border-radius:4px;
+    padding:16px 16px 8px;
+  }
+  .crew-station-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    margin:0 0 12px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--steel);
+  }
+  .crew-station-title{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:1px;
+    color: var(--parchment);
+    margin:0;
+  }
+  .crew-station-tag{
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    color: var(--brass-lt);
+    white-space:nowrap;
+  }
+  .crew-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px dashed rgba(138,129,114,0.25);
+  }
+  .crew-row:last-child{ border-bottom:none; }
+  .crew-rank{
+    flex:0 0 auto;
+    width:36px;
+    text-align:center;
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:0.5px;
+    color: var(--iron);
+    background: var(--ash);
+    border-radius:3px;
+    padding:3px 0;
+  }
+  .crew-rank--cpt{ background: var(--brick-lt); color: var(--parchment); }
+  .crew-rank--lt{ background: var(--ember); color: var(--iron); }
+  .crew-rank--eng{ background: var(--moss); color: var(--iron); }
+  .crew-rank--ff{ background: var(--brass); color: var(--iron); }
+  .crew-name{
+    flex:1 1 auto;
+    font-size:13.5px;
+    color: var(--parchment);
+    opacity:0.92;
+    min-width:0;
+    overflow-wrap:break-word;
+  }
+  .crew-row--vacant .crew-name{
+    color: var(--ash);
+    font-style:italic;
+    opacity:0.8;
+  }
+  .crew-date{
+    flex:0 0 auto;
+    font-family:'Courier Prime', monospace;
+    font-size:11.5px;
+    color: var(--ash);
+    white-space:nowrap;
+  }
+  .crew-phone{
+    flex:0 0 auto;
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    font-size:12px;
+    color: var(--ember);
+    white-space:nowrap;
+    min-width:78px;
+    text-align:right;
+  }
+  .crew-phone a{ color: var(--ember); text-decoration:none; }
+  .crew-phone a:hover{ text-decoration:underline; }
+  .crew-phone--none{ color: var(--ash); font-weight:400; font-family:'Oswald', sans-serif; }
+
   mark{
     background: var(--brass-lt);
     color: var(--iron);
@@ -1224,6 +1343,15 @@
       <span class="plate-main">
         <span class="plate-unit">PASS IT ON</span>
         <span class="plate-desc">Shift-to-Shift Apparatus Notes</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
+    <button class="plate" onclick="showScreen('roster')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">ROSTER</span>
+        <span class="plate-desc">Battalion 2 · Station 2A / 2B / 2C</span>
       </span>
       <span class="plate-arrow">→</span>
     </button>
@@ -1561,6 +1689,32 @@
         <p class="pio-empty">No notes yet.</p>
       </div>
     </div>
+
+  </div>
+</section>
+
+<!-- ============ ROSTER ============ -->
+<section class="screen" id="roster">
+  <div class="sub-hero">
+    <div class="sub-wrap">
+      <div class="nav-row">
+        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
+      </div>
+      <h2 class="sub-title">Roster</h2>
+      <p class="sub-tag">Battalion 2 · Station 2A / 2B / 2C</p>
+    </div>
+  </div>
+  <div class="board-wrap" style="padding-top:0;">
+
+    <div class="crew-legend">
+      <span class="crew-legend-item"><span class="crew-legend-swatch" style="background:var(--brick-lt);"></span>Captain</span>
+      <span class="crew-legend-item"><span class="crew-legend-swatch" style="background:var(--ember);"></span>Lieutenant</span>
+      <span class="crew-legend-item"><span class="crew-legend-swatch" style="background:var(--moss);"></span>Engineer</span>
+      <span class="crew-legend-item"><span class="crew-legend-swatch" style="background:var(--brass);"></span>Firefighter</span>
+    </div>
+
+    <div id="crewRosterBoard"></div>
 
   </div>
 </section>
@@ -3475,7 +3629,128 @@
     initMorningLineup();
     initPassItOn();
     initUploads();
+    buildCrewRoster();
   });
+
+  /* ============ ROSTER ============ */
+  // Phone numbers aren't in the general Phone Directory — fill them in here
+  // as they're tracked down. Leave phone: '' until then; it'll show as "—".
+  const CREW_ROSTER = [
+    { station: 'Station 2A', tag: '(HM) (TRT)', crew: [
+      { rank:'CPT', name:'SHAWN MACDONALD*', date:'5/2/2026', phone:'' },
+      { rank:'LT',  name:'C. NELSON (PM)',    date:'8/4/2018', phone:'' },
+      { rank:'LT',  name:'C. COMERFORD',      date:'12/30/2023', phone:'' },
+      { rank:'ENG', name:'M. DOLAK (PM)',     date:'5/4/2024', phone:'' },
+      { rank:'ENG', name:'VACANT',            date:'7/25/2026', phone:'', vacant:true },
+      { rank:'ENG', name:'VACANT',            date:'7/11/2026', phone:'', vacant:true },
+      { rank:'FF',  name:'L. MAJORS',         date:'4/9/2011', phone:'' },
+      { rank:'FF',  name:'S. HARMON',         date:'6/20/2020', phone:'' },
+      { rank:'FF',  name:'A. SHERLOCK',       date:'12/31/2022', phone:'' },
+      { rank:'FF',  name:'WESTON WOOD',       date:'12/27/2025', phone:'' },
+      { rank:'FF',  name:'VANDY HOPSON',      date:'5/30/2026', phone:'' },
+      { rank:'FF',  name:'I. BIRD',           date:'11/20/2021', phone:'' }
+    ]},
+    { station: 'Station 2B', tag: '(HM) (TRT)', crew: [
+      { rank:'CPT', name:'DAVID HILL*',       date:'8/8/2026', phone:'' },
+      { rank:'LT',  name:'CHRIS GARCIA',      date:'7/11/2026', phone:'' },
+      { rank:'LT',  name:'JORDAN CROW (PM)',  date:'11/29/2025', phone:'' },
+      { rank:'ENG', name:'JONATHAN STONE',    date:'5/2/2026', phone:'' },
+      { rank:'ENG', name:'P. DODSON (PM)',    date:'6/3/2023', phone:'' },
+      { rank:'ENG', name:'JOHNATHON MOORE',   date:'4/20/2024', phone:'' },
+      { rank:'FF',  name:'B. MICHENER',       date:'12/24/2016', phone:'' },
+      { rank:'FF',  name:'D. JANOSKI',        date:'3/13/2021', phone:'' },
+      { rank:'FF',  name:'KYLE SHORT',        date:'10/5/2024', phone:'' },
+      { rank:'FF',  name:'GENERO AGUILAR',    date:'3/21/2026', phone:'' },
+      { rank:'FF',  name:'NATE DOUGLASS',     date:'11/1/2025', phone:'' },
+      { rank:'FF',  name:'COOPER ZELAZNY',    date:'5/2/2026', phone:'' }
+    ]},
+    { station: 'Station 2C', tag: '(HM) (TRT)', crew: [
+      { rank:'CPT', name:'JONATHON SCHIECK*', date:'7/27/2024', phone:'' },
+      { rank:'LT',  name:'B. CALL',           date:'2/14/2009', phone:'' },
+      { rank:'LT',  name:'VACANT',            date:'5/16/2026', phone:'', vacant:true },
+      { rank:'ENG', name:'JAMES HIX',         date:'7/26/2025', phone:'' },
+      { rank:'ENG', name:'CALEB CROW',        date:'8/24/2024', phone:'' },
+      { rank:'ENG', name:'BLAKE SHAFER',      date:'8/9/2025', phone:'' },
+      { rank:'FF',  name:'AUSTIN TART',       date:'5/2/2026', phone:'' },
+      { rank:'FF',  name:'ERIQ PRICE',        date:'4/4/2026', phone:'' },
+      { rank:'FF',  name:'JACOB NEWTON',      date:'10/5/2024', phone:'' },
+      { rank:'FF',  name:'MONTY BRYANT',      date:'7/26/2025', phone:'' },
+      { rank:'FF',  name:'ALERAH TURPIN',     date:'6/27/2026', phone:'' },
+      { rank:'FF',  name:'KYLE BROWN',        date:'4/4/2026', phone:'' }
+    ]}
+  ];
+
+  function crewPhoneHref(phone){
+    // Accepts formats like "817-392-6901" or "(817) 392-6901"; strips
+    // everything but digits (and a leading +) for the tel: link.
+    const digits = phone.replace(/[^\d+]/g, '');
+    return digits;
+  }
+
+  function buildCrewRoster(){
+    const board = document.getElementById('crewRosterBoard');
+    if(!board) return;
+    board.innerHTML = '';
+
+    CREW_ROSTER.forEach(station => {
+      const card = document.createElement('div');
+      card.className = 'crew-station';
+
+      const head = document.createElement('div');
+      head.className = 'crew-station-head';
+
+      const title = document.createElement('p');
+      title.className = 'crew-station-title';
+      title.textContent = station.station;
+      head.appendChild(title);
+
+      if(station.tag){
+        const tag = document.createElement('span');
+        tag.className = 'crew-station-tag';
+        tag.textContent = station.tag;
+        head.appendChild(tag);
+      }
+
+      card.appendChild(head);
+
+      station.crew.forEach(member => {
+        const row = document.createElement('div');
+        row.className = 'crew-row' + (member.vacant ? ' crew-row--vacant' : '');
+
+        const rank = document.createElement('span');
+        rank.className = 'crew-rank crew-rank--' + member.rank.toLowerCase();
+        rank.textContent = member.rank;
+        row.appendChild(rank);
+
+        const name = document.createElement('span');
+        name.className = 'crew-name';
+        name.textContent = member.name;
+        row.appendChild(name);
+
+        const date = document.createElement('span');
+        date.className = 'crew-date';
+        date.textContent = member.date || '';
+        row.appendChild(date);
+
+        const phone = document.createElement('span');
+        if(member.phone){
+          phone.className = 'crew-phone';
+          const a = document.createElement('a');
+          a.href = 'tel:' + crewPhoneHref(member.phone);
+          a.textContent = member.phone;
+          phone.appendChild(a);
+        } else {
+          phone.className = 'crew-phone crew-phone--none';
+          phone.textContent = '—';
+        }
+        row.appendChild(phone);
+
+        card.appendChild(row);
+      });
+
+      board.appendChild(card);
+    });
+  }
 
   /* ============ MORNING LINE-UP ============ */
   function lineupDateKey(){
