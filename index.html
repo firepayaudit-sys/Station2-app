@@ -963,6 +963,41 @@
     white-space:nowrap;
   }
 
+  #global-search-input{
+    flex:1;
+    background:none;
+    border:none;
+    outline:none;
+    font-family:'Oswald', sans-serif;
+    font-size:14.5px;
+    color: var(--parchment);
+  }
+  #global-search-input::placeholder{ color: var(--ash); }
+  #global-search-count{
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    color: var(--brass-lt);
+    white-space:nowrap;
+  }
+  .search-empty{
+    text-align:center;
+    font-family:'Courier Prime', monospace;
+    font-size:12px;
+    letter-spacing:0.5px;
+    color: var(--ash);
+    padding: 18px 10px 30px;
+  }
+  .search-hit-flash{
+    outline: 3px solid var(--brass);
+    outline-offset: 2px;
+    animation: searchFlashFade 1.6s ease forwards;
+  }
+  @keyframes searchFlashFade{
+    from{ outline-color: var(--brass); }
+    to{ outline-color: transparent; }
+  }
+
   .roster-card{
     background: linear-gradient(180deg, #2a251c, #1e1a13);
     border:1px solid var(--steel);
@@ -1317,6 +1352,14 @@
 
   <div class="board-wrap">
 
+    <div class="roster-search" style="margin-bottom:22px;">
+      <input id="global-search-input" type="text" placeholder="Search names, numbers, manuals, pages…" autocomplete="off">
+      <span id="global-search-count"></span>
+    </div>
+    <div id="global-search-results"></div>
+
+    <div id="home-tiles">
+
     <button class="plate" onclick="showScreen('assignments')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -1379,6 +1422,8 @@
       </span>
       <span class="plate-arrow">→</span>
     </button>
+
+    </div>
   </div>
 
   <p class="footer-note">Fort Worth, TX &nbsp;·&nbsp; Est. 1930</p>
@@ -3742,6 +3787,7 @@
     initUploads();
     buildCrewRoster();
     addContactFooters();
+    initGlobalSearch();
   });
 
   /* ============ ROSTER ============ */
@@ -4555,6 +4601,161 @@ function wireCardSearch(inputId, countId, cardSelector){
 }
 wireCardSearch('fac-search-input', 'fac-result-count', '.fac-card');
 wireCardSearch('flsa-search-input', 'flsa-result-count', '.flsa-card');
+
+/* ============ GLOBAL SEARCH (Home screen) ============ */
+// Indexes everything already on the page — home/general tiles, TRT & HAZMAT
+// manuals/videos/SOPs, CBA/RR, Phone Directory & Facilities & FLSA cards,
+// and the crew roster — so it stays in sync automatically as content is
+// added, without a separately hand-maintained list.
+
+const SCREEN_LABELS = {
+  'home': 'Home',
+  'trt': 'TRT',
+  'hazmat': 'HAZMAT',
+  'general': 'General',
+  'general-lineup': 'Morning Line-Up',
+  'pass-it-on': 'Pass It On',
+  'roster': 'Roster',
+  'general-phone': 'Phone Directory',
+  'general-facilities': 'Facilities',
+  'general-flsa': 'FLSA Schedule',
+  'general-cba-rr': 'CBA / RR',
+  'general-history': 'Station History',
+  'assignments': 'Ride Assignments',
+  'mode-detail': 'Ride Assignments',
+  'apparatus-detail': 'Ride Assignments',
+  'position-detail': 'Ride Assignments'
+};
+
+let SEARCH_INDEX = [];
+
+function buildSearchIndex(){
+  SEARCH_INDEX = [];
+
+  // .plate buttons/links — home & general tiles, TRT/HAZMAT manuals, videos,
+  // SOPs, CBA/RR docs, ride-assignment rig picker.
+  document.querySelectorAll('.plate').forEach(el => {
+    const screen = el.closest('section.screen');
+    if(!screen || screen.id === 'search') return;
+    const unit = (el.querySelector('.plate-unit')?.textContent || '').trim();
+    const desc = (el.querySelector('.plate-desc')?.textContent || '').trim();
+    if(!unit) return;
+    SEARCH_INDEX.push({
+      title: unit,
+      subtitle: desc,
+      screenId: screen.id,
+      hay: (unit + ' ' + desc).toLowerCase(),
+      action: () => el.click()
+    });
+  });
+
+  // Phone Directory / Facilities / FLSA cards (all already carry a
+  // data-search attribute for their own on-page search boxes).
+  document.querySelectorAll('[data-search]').forEach(el => {
+    const screen = el.closest('section.screen');
+    if(!screen) return;
+    const titleEl = el.querySelector('.roster-title, .fac-name, .flsa-pp');
+    const title = (titleEl?.textContent || el.getAttribute('data-search').split(/\s+/).slice(0,4).join(' ')).trim();
+    let subtitle = '';
+    if(el.classList.contains('roster-card')){
+      subtitle = Array.from(el.querySelectorAll('.roster-name')).slice(0,2).map(n=>n.textContent.trim()).join(', ');
+    } else if(el.classList.contains('fac-card')){
+      subtitle = (el.querySelector('.fac-addr')?.textContent || '').trim();
+    } else if(el.classList.contains('flsa-card')){
+      subtitle = (el.querySelector('.flsa-range')?.textContent || '').trim();
+    }
+    SEARCH_INDEX.push({
+      title,
+      subtitle,
+      screenId: screen.id,
+      hay: el.getAttribute('data-search').toLowerCase(),
+      action: () => jumpToSearchResult(el)
+    });
+  });
+
+  // Crew roster rows.
+  document.querySelectorAll('.crew-row').forEach(el => {
+    const screen = el.closest('section.screen');
+    if(!screen) return;
+    const name = (el.querySelector('.crew-name')?.textContent || '').trim();
+    if(!name || name === 'VACANT') return;
+    const rank = (el.querySelector('.crew-rank')?.textContent || '').trim();
+    const station = (el.closest('.crew-station')?.querySelector('.crew-station-title')?.textContent || '').trim();
+    const phone = (el.querySelector('.crew-phone')?.textContent || '').trim();
+    SEARCH_INDEX.push({
+      title: name,
+      subtitle: [rank, station].filter(Boolean).join(' · '),
+      screenId: screen.id,
+      hay: (name + ' ' + rank + ' ' + station + ' ' + phone).toLowerCase(),
+      action: () => jumpToSearchResult(el)
+    });
+  });
+}
+
+function jumpToSearchResult(el){
+  const screen = el.closest('section.screen');
+  if(screen) showScreen(screen.id);
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior:'smooth', block:'center' });
+    el.classList.remove('search-hit-flash');
+    void el.offsetWidth; // restart the animation if it's already mid-flash
+    el.classList.add('search-hit-flash');
+    setTimeout(() => el.classList.remove('search-hit-flash'), 1600);
+  });
+}
+
+function initGlobalSearch(){
+  const input = document.getElementById('global-search-input');
+  const resultsBox = document.getElementById('global-search-results');
+  const tiles = document.getElementById('home-tiles');
+  const countEl = document.getElementById('global-search-count');
+  if(!input || !resultsBox || !tiles) return;
+
+  buildSearchIndex();
+
+  function render(){
+    const term = input.value.trim().toLowerCase();
+    resultsBox.innerHTML = '';
+
+    if(!term){
+      tiles.style.display = '';
+      countEl.textContent = '';
+      return;
+    }
+    tiles.style.display = 'none';
+
+    const matches = SEARCH_INDEX.filter(item => item.hay.includes(term)).slice(0, 40);
+    countEl.textContent = matches.length + ' result' + (matches.length===1?'':'s');
+
+    if(!matches.length){
+      const p = document.createElement('p');
+      p.className = 'search-empty';
+      p.textContent = 'No matches for “' + input.value.trim() + '”.';
+      resultsBox.appendChild(p);
+      return;
+    }
+
+    matches.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'plate';
+      btn.innerHTML = `
+        <span class="rivet tl"></span><span class="rivet br"></span>
+        <span class="plate-main">
+          <span class="plate-unit"></span>
+          <span class="plate-desc"></span>
+        </span>
+        <span class="plate-arrow">→</span>`;
+      btn.querySelector('.plate-unit').textContent = item.title;
+      const screenLabel = SCREEN_LABELS[item.screenId] || '';
+      btn.querySelector('.plate-desc').textContent =
+        (item.subtitle ? item.subtitle + ' — ' : '') + 'In: ' + screenLabel;
+      btn.onclick = item.action;
+      resultsBox.appendChild(btn);
+    });
+  }
+
+  input.addEventListener('input', render);
+}
 
 /* ============ PDF VIEWER (fixes iOS "Add to Home Screen" trap) ============ */
 /* When this site is launched from a home-screen icon on iOS, Safari runs it
