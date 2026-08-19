@@ -574,11 +574,39 @@
   }
   .lineup-input:focus{ border-color: var(--brass); }
   .lineup-input::placeholder{ color: var(--ash); }
+  .lineup-submit-btn{
+    display:block;
+    width:100%;
+    max-width:560px;
+    margin:18px auto 0;
+    background: linear-gradient(180deg, var(--brass-lt), var(--brass));
+    border:1px solid #4a3a1c;
+    color: #241c0d;
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border-radius:4px;
+    padding:12px;
+    cursor:pointer;
+  }
+  .lineup-submit-btn:active{ transform: translateY(1px); }
+  .lineup-submit-btn:disabled{ opacity:0.6; cursor:default; }
+  .lineup-status{
+    text-align:center;
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    color: var(--brass-lt);
+    min-height:16px;
+    margin:8px 0 0;
+  }
   .lineup-clear-btn{
     display:block;
     width:100%;
     max-width:560px;
-    margin:14px auto 0;
+    margin:10px auto 0;
     background:none;
     border:1px solid var(--brick-lt);
     color: var(--brick-lt);
@@ -660,6 +688,10 @@
     padding: 12px 14px;
   }
   .pio-entry-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
     font-family:'Courier Prime', monospace;
     font-size:10.5px;
     letter-spacing:1px;
@@ -667,6 +699,21 @@
     color: var(--brass-lt);
     margin-bottom:6px;
   }
+  .pio-entry-when{ flex:1 1 auto; }
+  .pio-entry-delete{
+    flex:0 0 auto;
+    background:none;
+    border:1px solid var(--steel);
+    color: var(--ash);
+    font-family:'Courier Prime', monospace;
+    font-size:10px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:4px 8px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .pio-entry-delete:hover{ border-color: var(--brick-lt); color: var(--brick-lt); }
   .pio-entry-text{
     font-size:14px;
     line-height:1.55;
@@ -1239,6 +1286,8 @@
       </div>
     </div>
 
+    <button id="lineup-submit-btn" class="lineup-submit-btn">Submit Line-Up</button>
+    <p id="lineup-status" class="lineup-status"></p>
     <button id="lineup-clear-btn" class="lineup-clear-btn">Clear Today's Line-Up</button>
 
   </div>
@@ -2887,15 +2936,38 @@
     entries.forEach(entry => {
       const card = document.createElement('div');
       card.className = 'pio-entry';
+
       const meta = document.createElement('div');
       meta.className = 'pio-entry-meta';
-      meta.textContent = pioFormatWhen(entry.timestamp || Date.now());
+
+      const when = document.createElement('span');
+      when.className = 'pio-entry-when';
+      when.textContent = pioFormatWhen(entry.timestamp || Date.now());
+      meta.appendChild(when);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'pio-entry-delete';
+      delBtn.type = 'button';
+      delBtn.textContent = '✕ Delete';
+      delBtn.addEventListener('click', () => pioDelete(unit, entry.id));
+      meta.appendChild(delBtn);
+
       const text = document.createElement('p');
       text.className = 'pio-entry-text';
       text.textContent = entry.text || '';
+
       card.appendChild(meta);
       card.appendChild(text);
       feed.appendChild(card);
+    });
+  }
+
+  function pioDelete(unit, entryId){
+    if(!pioDb) return;
+    if(!confirm('Delete this note? This can\'t be undone.')) return;
+    pioDb.ref('passItOn/' + unit + '/' + entryId).remove().catch(err => {
+      console.error(err);
+      alert("Couldn't delete that note — check your connection and try again.");
     });
   }
 
@@ -2943,40 +3015,86 @@
   });
 
   /* ============ MORNING LINE-UP ============ */
-  function lineupKey(){
+  function lineupDateKey(){
     const d = new Date();
-    const iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-    return 'hha-lineup-' + iso;
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
 
   function initMorningLineup(){
     const dateEl = document.getElementById('lineup-date');
     const inputs = document.querySelectorAll('.lineup-input');
+    const submitBtn = document.getElementById('lineup-submit-btn');
+    const clearBtn = document.getElementById('lineup-clear-btn');
+    const statusEl = document.getElementById('lineup-status');
     if(!dateEl || !inputs.length) return;
 
     dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
 
-    const key = lineupKey();
-    let saved = {};
-    try{ saved = JSON.parse(localStorage.getItem(key) || '{}'); }catch(e){ saved = {}; }
+    const dateKey = lineupDateKey();
+    const localKey = 'hha-lineup-' + dateKey;
 
-    inputs.forEach(inp => {
-      const pos = inp.dataset.pos;
-      if(saved[pos]) inp.value = saved[pos];
-      inp.addEventListener('input', () => {
-        let data = {};
-        try{ data = JSON.parse(localStorage.getItem(key) || '{}'); }catch(e){ data = {}; }
-        data[inp.dataset.pos] = inp.value;
-        localStorage.setItem(key, JSON.stringify(data));
+    function applyData(data){
+      data = data || {};
+      inputs.forEach(inp => {
+        if(document.activeElement === inp) return; // don't clobber what someone is actively typing
+        const val = data[inp.dataset.pos] || '';
+        if(inp.value !== val) inp.value = val;
       });
-    });
+    }
 
-    const clearBtn = document.getElementById('lineup-clear-btn');
+    function setStatus(msg){
+      if(statusEl) statusEl.textContent = msg;
+    }
+
+    if(pioDb){
+      pioDb.ref('lineup/' + dateKey).on('value', snapshot => {
+        applyData(snapshot.val());
+        const data = snapshot.val();
+        if(data && data.submittedAt){
+          setStatus('Last submitted ' + pioFormatWhen(data.submittedAt));
+        } else {
+          setStatus('');
+        }
+      });
+    } else {
+      let saved = {};
+      try{ saved = JSON.parse(localStorage.getItem(localKey) || '{}'); }catch(e){ saved = {}; }
+      applyData(saved);
+      setStatus("Not connected to shared storage — this device only.");
+    }
+
+    if(submitBtn){
+      submitBtn.addEventListener('click', () => {
+        const data = {};
+        inputs.forEach(inp => { data[inp.dataset.pos] = inp.value.trim(); });
+
+        if(pioDb){
+          data.submittedAt = Date.now();
+          submitBtn.disabled = true;
+          pioDb.ref('lineup/' + dateKey).set(data).then(() => {
+            submitBtn.textContent = 'Submitted ✓';
+            setTimeout(() => { submitBtn.textContent = 'Submit Line-Up'; submitBtn.disabled = false; }, 1500);
+          }).catch(err => {
+            console.error(err);
+            alert("Couldn't submit the line-up — check your connection and try again.");
+            submitBtn.disabled = false;
+          });
+        } else {
+          localStorage.setItem(localKey, JSON.stringify(data));
+          alert("Saved on this device only — the shared line-up isn't connected yet.");
+        }
+      });
+    }
+
     if(clearBtn){
       clearBtn.addEventListener('click', () => {
-        if(!confirm("Clear today's line-up?")) return;
-        localStorage.removeItem(key);
+        if(!confirm("Clear today's line-up for everyone?")) return;
         inputs.forEach(inp => inp.value = '');
+        if(pioDb){
+          pioDb.ref('lineup/' + dateKey).remove().catch(err => console.error(err));
+        } else {
+          localStorage.removeItem(localKey);
+        }
       });
     }
   }
