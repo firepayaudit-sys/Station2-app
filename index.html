@@ -3284,7 +3284,7 @@
     </div>
   </div>
   <div class="board-wrap" style="padding-top:0;">
-    <p class="board-label">Choose Building Type</p>
+    <p class="board-label">Tap Your Rig</p>
     <div id="modeBoard"></div>
   </div>
 </section>
@@ -3303,7 +3303,7 @@
   </div>
   <div class="content-block" style="margin-top:20px;" id="modeInfo"></div>
   <div class="board-wrap" style="padding-top:0;">
-    <p class="board-label">Tap Your Rig</p>
+    <p class="board-label">Choose Call Type</p>
     <div id="apparatusBoard"></div>
   </div>
 </section>
@@ -4221,32 +4221,67 @@
     return { tasks: arrival.crewTasks || [], equipment: arrival.equipment || [] };
   }
 
+  // Flow: assignments (pick rig) -> mode-detail (pick call type) -> apparatus-detail (pick seat) -> position-detail
+  const APPARATUS_KEYS = Object.keys(RIDE_DATA.highrise.apparatus); // same rig keys/labels under every call type
+
   function buildModeBoard(){
     const board = document.getElementById('modeBoard');
     if(!board) return;
     board.innerHTML = '';
-    Object.entries(RIDE_DATA).forEach(([key, mode]) => {
+    APPARATUS_KEYS.forEach(key => {
+      const app = RIDE_DATA.highrise.apparatus[key];
+      const btn = document.createElement('button');
+      btn.className = 'plate';
+      btn.innerHTML = `
+        <span class="rivet tl"></span><span class="rivet br"></span>
+        <span class="plate-main">
+          <span class="plate-unit">${app.label.toUpperCase()}</span>
+        </span>
+        <span class="plate-arrow">→</span>`;
+      btn.onclick = () => openApparatusPicker(key);
+      board.appendChild(btn);
+    });
+  }
+
+  function openApparatusPicker(appKey){
+    currentApparatus = appKey;
+    const label = RIDE_DATA.highrise.apparatus[appKey].label;
+    document.getElementById('modeTitle').textContent = label;
+    document.getElementById('modeTag').textContent = 'Choose the call type for this rig';
+    document.getElementById('modeInfo').innerHTML = '';
+
+    const board = document.getElementById('apparatusBoard');
+    board.innerHTML = '';
+    Object.entries(RIDE_DATA).forEach(([modeKey, mode]) => {
+      const app = mode.apparatus[appKey];
       const btn = document.createElement('button');
       btn.className = 'plate';
       btn.innerHTML = `
         <span class="rivet tl"></span><span class="rivet br"></span>
         <span class="plate-main">
           <span class="plate-unit">${mode.label.toUpperCase()}</span>
+          <span class="plate-desc">${app.arrivals.length} arrival scenario${app.arrivals.length>1?'s':''}</span>
         </span>
         <span class="plate-arrow">→</span>`;
-      btn.onclick = () => openMode(key);
+      btn.onclick = () => openApparatus(modeKey, appKey);
       board.appendChild(btn);
     });
+
+    showScreen('mode-detail');
   }
 
-  function openMode(modeKey){
+  function openApparatus(modeKey, appKey){
     currentMode = modeKey;
+    currentApparatus = appKey;
     const mode = RIDE_DATA[modeKey];
-    document.getElementById('modeTitle').textContent = mode.label;
-    document.getElementById('modeTag').textContent = mode.tag;
+    const app = mode.apparatus[appKey];
 
-    const info = document.getElementById('modeInfo');
-    info.innerHTML = '';
+    document.getElementById('apparatusTitle').textContent = app.label;
+    document.getElementById('apparatusTag').textContent = mode.label + ' · Station 2A';
+    document.getElementById('apparatusBackBtn').onclick = () => openApparatusPicker(appKey);
+
+    const alertBox = document.getElementById('apparatusAlert');
+    alertBox.innerHTML = '';
     if(mode.secondAlarm){
       const card = document.createElement('div');
       card.className = 'info-card';
@@ -4262,7 +4297,7 @@
         ul.appendChild(li);
       });
       card.appendChild(ul);
-      info.appendChild(card);
+      alertBox.appendChild(card);
     }
     if(mode.notes){
       mode.notes.forEach(note => {
@@ -4280,41 +4315,9 @@
           ul.appendChild(li);
         });
         card.appendChild(ul);
-        info.appendChild(card);
+        alertBox.appendChild(card);
       });
     }
-
-    const board = document.getElementById('apparatusBoard');
-    board.innerHTML = '';
-    Object.entries(mode.apparatus).forEach(([key, app]) => {
-      const btn = document.createElement('button');
-      btn.className = 'plate';
-      btn.innerHTML = `
-        <span class="rivet tl"></span><span class="rivet br"></span>
-        <span class="plate-main">
-          <span class="plate-unit">${app.label.toUpperCase()}</span>
-          <span class="plate-desc">${app.arrivals.length} arrival scenario${app.arrivals.length>1?'s':''}</span>
-        </span>
-        <span class="plate-arrow">→</span>`;
-      btn.onclick = () => openApparatus(modeKey, key);
-      board.appendChild(btn);
-    });
-
-    showScreen('mode-detail');
-  }
-
-  function openApparatus(modeKey, appKey){
-    currentMode = modeKey;
-    currentApparatus = appKey;
-    const mode = RIDE_DATA[modeKey];
-    const app = mode.apparatus[appKey];
-
-    document.getElementById('apparatusTitle').textContent = app.label;
-    document.getElementById('apparatusTag').textContent = mode.label + ' · Station 2A';
-    document.getElementById('apparatusBackBtn').onclick = () => openMode(modeKey);
-
-    const alertBox = document.getElementById('apparatusAlert');
-    alertBox.innerHTML = '';
     if(app.alert){
       const div = document.createElement('div');
       div.className = 'rpm-alert';
