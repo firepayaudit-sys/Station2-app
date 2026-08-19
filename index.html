@@ -1325,6 +1325,20 @@
     letter-spacing:0.3px;
   }
   .flsa-card.roster-hidden{ display:none; }
+  .flsa-card--current{
+    border-left-color: var(--brass);
+    box-shadow: 0 0 0 1px var(--brass-lt) inset;
+  }
+  .flsa-card--summary{
+    margin-bottom: 26px;
+  }
+  .flsa-card--summary .flsa-payday{
+    font-family:'Courier Prime', monospace;
+    font-size:14px;
+    color: var(--brass-lt);
+    letter-spacing:0.5px;
+    margin-top:8px;
+  }
   .flsa-note{
     max-width:560px;
     text-align:center;
@@ -2801,6 +2815,8 @@
   </div>
   <div class="board-wrap" style="padding-top:0;">
 
+    <div id="flsa-current-wrap"></div>
+
     <p class="board-label" style="margin-top:34px;">2026 FLSA Schedule</p>
     <p class="flsa-note" style="margin:-6px auto 18px;">28-day cycle · hours shown per shift, (±) is built-in OT relative to the 106-hr FLSA threshold</p>
 
@@ -3787,6 +3803,7 @@
     initUploads();
     buildCrewRoster();
     addContactFooters();
+    initFlsaCurrentPeriod();
     initGlobalSearch();
   });
 
@@ -4601,6 +4618,56 @@ function wireCardSearch(inputId, countId, cardSelector){
 }
 wireCardSearch('fac-search-input', 'fac-result-count', '.fac-card');
 wireCardSearch('flsa-search-input', 'flsa-result-count', '.flsa-card');
+
+/* ============ FLSA — Current Pay Period ============ */
+// Reads the same printed schedule cards already on the page (single source
+// of truth) and figures out which one contains today's date.
+function initFlsaCurrentPeriod(){
+  const wrap = document.getElementById('flsa-current-wrap');
+  const cards = Array.from(document.querySelectorAll('#general-flsa .flsa-card'));
+  if(!wrap || !cards.length) return;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  function parseRange(card){
+    const text = (card.querySelector('.flsa-range')?.textContent || '').trim();
+    const parts = text.split(/\s*[–—-]\s*/).filter(Boolean);
+    if(parts.length < 2) return null;
+    const toDate = (s) => {
+      const m = s.trim().match(/(\d+)\/(\d+)\/(\d+)/);
+      if(!m) return null;
+      return new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
+    };
+    const start = toDate(parts[0]);
+    const end = toDate(parts[1]);
+    if(!start || !end) return null;
+    end.setHours(23,59,59,999);
+    return { start, end };
+  }
+
+  let currentCard = null;
+  for(const card of cards){
+    const range = parseRange(card);
+    if(range && today >= range.start && today <= range.end){
+      currentCard = card;
+      break;
+    }
+  }
+  if(!currentCard) return; // outside the printed schedule's date range — say nothing rather than guess
+
+  currentCard.classList.add('flsa-card--current');
+
+  const label = document.createElement('p');
+  label.className = 'board-label';
+  label.textContent = 'Current Pay Period';
+  wrap.appendChild(label);
+
+  const summary = currentCard.cloneNode(true);
+  summary.removeAttribute('data-search'); // avoid a duplicate hit in the on-page/global search index
+  summary.classList.add('flsa-card--summary');
+  wrap.appendChild(summary);
+}
 
 /* ============ GLOBAL SEARCH (Home screen) ============ */
 // Indexes everything already on the page — home/general tiles, TRT & HAZMAT
