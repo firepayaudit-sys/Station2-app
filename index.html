@@ -264,6 +264,21 @@
     padding: 10px 20px 40px;
   }
 
+  .footer-email{
+    text-align:center;
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    color: #574f40;
+    padding: 0 20px 30px;
+  }
+  .footer-email a{
+    color: var(--brass);
+    text-decoration:none;
+  }
+  .footer-email a:active,
+  .footer-email a:hover{ text-decoration:underline; }
+
   /* ============ SUB PAGES ============ */
   .sub-hero{
     padding: 28px 20px 30px;
@@ -3704,6 +3719,18 @@
     reader.readAsDataURL(file);
   }
 
+  function addContactFooters(){
+    document.querySelectorAll('section.screen').forEach(section => {
+      const p = document.createElement('p');
+      p.className = 'footer-email';
+      const a = document.createElement('a');
+      a.href = 'mailto:firepayaudit@gmail.com';
+      a.textContent = 'firepayaudit@gmail.com';
+      p.appendChild(a);
+      section.appendChild(p);
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash.replace('#','');
     if(hash && document.getElementById(hash)){
@@ -3714,6 +3741,7 @@
     initPassItOn();
     initUploads();
     buildCrewRoster();
+    addContactFooters();
   });
 
   /* ============ ROSTER ============ */
