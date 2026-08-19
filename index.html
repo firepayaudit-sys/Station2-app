@@ -739,6 +739,41 @@
     padding:4px 2px;
   }
 
+  .pio-notify-row{
+    max-width:560px;
+    margin: 0 auto 26px;
+    text-align:center;
+  }
+  .pio-notify-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background: none;
+    border:1px solid var(--brass);
+    color: var(--brass-lt);
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:10px 18px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .pio-notify-btn.is-on{
+    background: linear-gradient(180deg, var(--brass-lt), var(--brass));
+    color: #241c0d;
+    border-color:#4a3a1c;
+  }
+  .pio-notify-btn:disabled{ opacity:0.6; cursor:default; }
+  .pio-notify-status{
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:0.5px;
+    color: var(--ash);
+    margin:8px 0 0;
+  }
+
   /* ============ GENERAL / PHONE DIRECTORY ============ */
   .roster-cat{ margin-top:34px; }
 
@@ -1310,6 +1345,11 @@
     </div>
   </div>
   <div class="content-block">
+
+    <div class="pio-notify-row">
+      <button id="pio-notify-btn" class="pio-notify-btn" onclick="pioToggleNotifications()">🔔 Enable Notifications</button>
+      <p id="pio-notify-status" class="pio-notify-status"></p>
+    </div>
 
     <div class="pio-unit" data-unit="engine">
       <h3 class="pio-unit-head">Engine</h3>
@@ -2881,6 +2921,7 @@
 <!-- Firebase powers "Pass It On" so notes sync across every phone, not just one device. -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js"></script>
 
 <script>
   function showScreen(id){
@@ -2914,6 +2955,108 @@
     }
   }catch(e){
     console.error('Pass It On: Firebase failed to initialize.', e);
+  }
+
+  /* ============ PASS IT ON — Push Notifications ============ */
+  // Fill in with the "Web Push certificate" key pair from Firebase Console →
+  // Project settings → Cloud Messaging → Web configuration.
+  const FCM_VAPID_KEY = "BGtLKxd7R1KxKpSxxlf5uGzFFXAtZjeFnLdqfs8WHBPTCa2v4BGUETI35YAvQS4-hD_Z93thSqONhJcaUixt2LU";
+
+  let pioMessaging = null;
+  try{
+    if(pioDb && window.firebase && firebase.messaging && firebase.messaging.isSupported && firebase.messaging.isSupported()){
+      pioMessaging = firebase.messaging();
+    }
+  }catch(e){
+    console.warn('Pass It On: push messaging not available in this browser.', e);
+  }
+
+  const PIO_NOTIFY_LOCAL_KEY = 'hha-pio-notify-token';
+
+  function pioNotifySupported(){
+    return !!(pioMessaging && 'serviceWorker' in navigator && 'Notification' in window && FCM_VAPID_KEY.indexOf('PASTE_') !== 0);
+  }
+
+  function pioUpdateNotifyUI(){
+    const btn = document.getElementById('pio-notify-btn');
+    const status = document.getElementById('pio-notify-status');
+    if(!btn) return;
+
+    if(!pioNotifySupported()){
+      btn.style.display = 'none';
+      if(status) status.textContent = ('Notification' in window) ? '' : "Notifications aren't supported in this browser.";
+      return;
+    }
+
+    btn.style.display = '';
+    const storedToken = localStorage.getItem(PIO_NOTIFY_LOCAL_KEY);
+    const permission = Notification.permission;
+
+    if(permission === 'granted' && storedToken){
+      btn.textContent = '🔔 Notifications On — Tap to Turn Off';
+      btn.classList.add('is-on');
+      btn.disabled = false;
+      if(status) status.textContent = "You'll get an alert when a new note is posted.";
+    } else if(permission === 'denied'){
+      btn.textContent = '🔕 Notifications Blocked';
+      btn.classList.remove('is-on');
+      btn.disabled = true;
+      if(status) status.textContent = "Blocked in your phone/browser settings — enable them there first, then reload.";
+    } else {
+      btn.textContent = '🔔 Enable Notifications';
+      btn.classList.remove('is-on');
+      btn.disabled = false;
+      if(status) status.textContent = '';
+    }
+  }
+
+  async function pioToggleNotifications(){
+    const btn = document.getElementById('pio-notify-btn');
+    const storedToken = localStorage.getItem(PIO_NOTIFY_LOCAL_KEY);
+
+    if(Notification.permission === 'granted' && storedToken){
+      // currently on -> turn off
+      if(btn) btn.disabled = true;
+      try{
+        if(pioDb) await pioDb.ref('pushTokens/' + storedToken).remove();
+        if(pioMessaging && pioMessaging.deleteToken) await pioMessaging.deleteToken();
+      }catch(e){ console.error(e); }
+      localStorage.removeItem(PIO_NOTIFY_LOCAL_KEY);
+      pioUpdateNotifyUI();
+      return;
+    }
+
+    // currently off -> turn on
+    if(btn) btn.disabled = true;
+    try{
+      const permission = await Notification.requestPermission();
+      if(permission !== 'granted'){
+        pioUpdateNotifyUI();
+        return;
+      }
+      const reg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+      const token = await pioMessaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: reg });
+      if(token && pioDb){
+        await pioDb.ref('pushTokens/' + token).set({ createdAt: Date.now() });
+        localStorage.setItem(PIO_NOTIFY_LOCAL_KEY, token);
+      }
+    }catch(e){
+      console.error('Pass It On: failed to enable notifications.', e);
+      alert("Couldn't turn on notifications — check your connection and try again.");
+    }
+    pioUpdateNotifyUI();
+  }
+
+  function pioNotifyNewPost(unit, text){
+    // Fire-and-forget call to the Worker's /api/notify endpoint — never
+    // blocks or fails the actual note submission if this doesn't work.
+    try{
+      fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ unit: unit, text: text })
+      }).catch(() => {});
+    }catch(e){}
   }
 
   const PIO_UNITS = ['engine', 'tower', 'squad'];
@@ -2976,6 +3119,7 @@
   }
 
   function initPassItOn(){
+    pioUpdateNotifyUI();
     if(!pioDb) return;
     PIO_UNITS.forEach(unit => {
       pioDb.ref('passItOn/' + unit).limitToLast(200).on('value', snapshot => {
@@ -3000,6 +3144,7 @@
       timestamp: Date.now()
     }).then(() => {
       textarea.value = '';
+      pioNotifyNewPost(unit, text);
     }).catch(err => {
       console.error(err);
       alert("Couldn't post that note — check your connection and try again.");

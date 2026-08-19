@@ -1,0 +1,7 @@
+name = "station2"
+main = "src/worker.js"
+compatibility_date = "2026-08-01"
+
+[assets]
+directory = "./"
+binding = "ASSETS"
