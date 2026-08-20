@@ -540,6 +540,220 @@
     margin:0 1px;
   }
 
+  /* ============ HYDRANT CALCULATOR (Engineer — Engine/Tower) ============ */
+  .hcalc-wrap{
+    --hc-plate: #322e26;
+    --hc-ember-lt: #e0602f;
+    --hc-parchment-dim: #bdb195;
+    --hc-rivet: #17140f;
+    --hc-ok: #5c8a4a;
+    margin-top:28px;
+    padding-top:24px;
+    border-top:1px solid rgba(184,147,79,0.35);
+  }
+  .hcalc-heading{
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: var(--brass-lt);
+    margin:0 0 4px;
+  }
+  .hcalc-subheading{
+    font-family:'Courier Prime',monospace;
+    font-size:11px;
+    color: var(--hc-parchment-dim);
+    margin:0 0 16px;
+  }
+  .hcalc-card{
+    background:linear-gradient(180deg, var(--hc-plate), #2a2620);
+    border:1px solid #4a4536;
+    border-radius:6px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 6px 16px rgba(0,0,0,0.45);
+    padding:18px 16px;
+    margin-bottom:16px;
+    position:relative;
+  }
+  .hcalc-card::before, .hcalc-card::after{
+    content:"";
+    position:absolute;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #7a7160, var(--hc-rivet) 70%);
+    box-shadow:0 1px 1px rgba(0,0,0,0.6);
+    top:8px;
+  }
+  .hcalc-card::before{left:8px;}
+  .hcalc-card::after{right:8px;}
+  .hcalc-card-title{
+    font-family:'Oswald',sans-serif;
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color: var(--brass-lt);
+    margin:0 0 14px;
+    padding-bottom:8px;
+    border-bottom:2px solid var(--ember);
+  }
+  .hcalc-field{margin-bottom:14px;}
+  .hcalc-field:last-child{margin-bottom:0;}
+  .hcalc-label{
+    display:block;
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color: var(--hc-parchment-dim);
+    margin-bottom:5px;
+  }
+  .hcalc-unit{color: var(--brass-lt); font-size:10px;}
+  .hcalc-input{
+    width:100%;
+    background:#181611;
+    border:1px solid #4a4536;
+    border-radius:4px;
+    color: var(--parchment);
+    font-family:'Courier Prime',monospace;
+    font-size:20px;
+    padding:10px 12px;
+  }
+  .hcalc-input:focus{
+    outline:none;
+    border-color: var(--ember);
+    box-shadow:0 0 0 2px rgba(193,68,30,0.25);
+  }
+  .hcalc-input::-webkit-outer-spin-button,
+  .hcalc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .hcalc-hint{
+    font-family:'Courier Prime',monospace;
+    font-size:10.5px;
+    color: var(--hc-parchment-dim);
+    margin-top:12px;
+    line-height:1.5;
+    border-top:1px dashed #4a4536;
+    padding-top:10px;
+  }
+  .hcalc-result{text-align:center;}
+  .hcalc-status{
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:3px;
+    display:inline-block;
+    margin-bottom:14px;
+  }
+  .hcalc-status.good{background:rgba(92,138,74,0.18);color:#8fbf78;border:1px solid var(--hc-ok);}
+  .hcalc-status.mid{background:rgba(182,135,63,0.18);color:var(--brass-lt);border:1px solid var(--brass);}
+  .hcalc-status.low{background:rgba(193,68,30,0.18);color:var(--hc-ember-lt);border:1px solid var(--ember);}
+  .hcalc-bignum{
+    font-family:'Rye',serif;
+    font-size:52px;
+    line-height:1;
+    color: var(--hc-ember-lt);
+    text-shadow:0 2px 0 rgba(0,0,0,0.5);
+  }
+  .hcalc-biglabel{
+    font-family:'Oswald',sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color: var(--hc-parchment-dim);
+    margin-top:4px;
+  }
+  .hcalc-breakdown{
+    display:flex;
+    justify-content:space-around;
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #4a4536;
+  }
+  .hcalc-bditem{text-align:center;}
+  .hcalc-bdnum{
+    font-family:'Courier Prime',monospace;
+    font-weight:700;
+    font-size:20px;
+    color: var(--parchment);
+  }
+  .hcalc-bdlbl{
+    font-family:'Oswald',sans-serif;
+    font-size:9.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--hc-parchment-dim);
+    margin-top:2px;
+  }
+  .hcalc-bddivider{width:1px;background:#4a4536;}
+  .hcalc-strip{
+    margin-top:16px;
+    height:8px;
+    border-radius:4px;
+    background:linear-gradient(90deg, var(--ember) 0%, var(--brass) 45%, var(--hc-ok) 100%);
+    position:relative;
+  }
+  .hcalc-marker{
+    position:absolute;
+    top:-5px;
+    width:2px;
+    height:18px;
+    background: var(--parchment);
+    box-shadow:0 0 4px rgba(0,0,0,0.8);
+    transition:left 0.15s ease;
+  }
+  .hcalc-striplabels{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Courier Prime',monospace;
+    font-size:9px;
+    color: var(--hc-parchment-dim);
+    margin-top:6px;
+  }
+  .hcalc-deploy-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 4px;
+    border-bottom:1px solid #4a4536;
+  }
+  .hcalc-deploy-item:last-child{border-bottom:none;}
+  .hcalc-di-left{display:flex;align-items:center;gap:10px;}
+  .hcalc-di-gpm{
+    font-family:'Courier Prime',monospace;
+    font-weight:700;
+    font-size:15px;
+    min-width:52px;
+  }
+  .hcalc-di-desc{
+    font-family:'Oswald',sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.3px;
+  }
+  .hcalc-di-check{
+    font-family:'Oswald',sans-serif;
+    font-size:10px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:3px;
+  }
+  .hcalc-deploy-item.avail .hcalc-di-gpm{color: var(--hc-ok);}
+  .hcalc-deploy-item.avail .hcalc-di-desc{color: var(--parchment);}
+  .hcalc-deploy-item.avail .hcalc-di-check{background:rgba(92,138,74,0.18);color:#8fbf78;border:1px solid var(--hc-ok);}
+  .hcalc-deploy-item.locked{opacity:0.4;}
+  .hcalc-deploy-item.locked .hcalc-di-gpm{color: var(--hc-parchment-dim);}
+  .hcalc-deploy-item.locked .hcalc-di-desc{color: var(--hc-parchment-dim);}
+  .hcalc-deploy-item.locked .hcalc-di-check{background:rgba(255,255,255,0.04);color:var(--hc-parchment-dim);border:1px solid #4a4536;}
+  .hcalc-footnote{
+    text-align:center;
+    font-family:'Courier Prime',monospace;
+    font-size:10px;
+    color: var(--hc-parchment-dim);
+    margin-top:4px;
+    opacity:0.7;
+  }
 
   /* ============ MORNING LINE-UP (inside Ride Assignments) ============ */
   #assignments .flsa-note{ font-size:11px; }
@@ -4415,6 +4629,10 @@
       content.appendChild(buildArrivalCard(arrival, data, i === 0));
     });
 
+    if(seatId === 'engineer' && (appKey === 'engine' || appKey === 'tower')){
+      content.appendChild(buildHydrantCalcCard());
+    }
+
     showScreen('position-detail');
   }
 
@@ -4489,6 +4707,172 @@
 
     card.appendChild(body);
     return card;
+  }
+
+  /* ============ HYDRANT WATER AVAILABLE CALCULATOR (Engineer — Engine/Tower) ============ */
+  function buildHydrantCalcCard(){
+    // Reference table: static pressure -> [x3, x2, x1 threshold] residual psi
+    const table = [
+      {s:50,  x3:45, x2:40, x1:35},
+      {s:60,  x3:55, x2:50, x1:45},
+      {s:70,  x3:65, x2:60, x1:50},
+      {s:80,  x3:75, x2:70, x1:65},
+      {s:90,  x3:80, x2:75, x1:70},
+      {s:100, x3:90, x2:85, x1:75},
+    ];
+    function lerp(a,b,t){ return a + (b-a)*t; }
+    function thresholdsFor(staticP){
+      const s = Math.max(table[0].s, Math.min(table[table.length-1].s, staticP));
+      for(let i=0;i<table.length-1;i++){
+        const a = table[i], b = table[i+1];
+        if(s >= a.s && s <= b.s){
+          const t = (s - a.s) / (b.s - a.s);
+          return { x3: lerp(a.x3,b.x3,t), x2: lerp(a.x2,b.x2,t), x1: lerp(a.x1,b.x1,t) };
+        }
+      }
+      return {x3:table[0].x3, x2:table[0].x2, x1:table[0].x1};
+    }
+    function multiplierFor(staticP, residualP){
+      const th = thresholdsFor(staticP);
+      if(residualP >= th.x3){
+        const slope = th.x3 - th.x2;
+        if(slope <= 0) return 3;
+        return 3 + (residualP - th.x3) / slope;
+      }
+      if(residualP >= th.x2){
+        const t = (residualP - th.x2) / (th.x3 - th.x2);
+        return lerp(2, 3, t);
+      }
+      if(residualP >= th.x1){
+        const t = (residualP - th.x1) / (th.x2 - th.x1);
+        return lerp(1, 2, t);
+      }
+      const slope = th.x2 - th.x1;
+      if(slope <= 0) return 0;
+      const t = (residualP - (th.x1 - slope)) / slope;
+      return Math.max(0, t);
+    }
+    const deployOptions = [
+      {gpm:175,  desc:'1¾" Handline — 50 psi Fog'},
+      {gpm:250,  desc:'2" Handline — 50 psi Fog'},
+      {gpm:265,  desc:'2½" Handline — 1⅛" Smooth Bore'},
+      {gpm:500,  desc:'Deck Gun — 1⅜" Tip'},
+      {gpm:1063, desc:'Aerial — 2" Tip'}
+    ];
+
+    const wrap = document.createElement('div');
+    wrap.className = 'hcalc-wrap';
+    wrap.innerHTML = `
+      <p class="hcalc-heading">Hydrant Water Available</p>
+      <p class="hcalc-subheading">Estimating Additional Supply — Percent Drop Method</p>
+
+      <div class="hcalc-card">
+        <p class="hcalc-card-title">Hydrant Test Readings</p>
+        <div class="hcalc-field">
+          <label class="hcalc-label">Static Pressure <span class="hcalc-unit">psi</span></label>
+          <input type="number" class="hcalc-input" data-hf="staticP" inputmode="decimal" placeholder="e.g. 65">
+        </div>
+        <div class="hcalc-field">
+          <label class="hcalc-label">Residual Pressure <span class="hcalc-unit">psi (while flowing)</span></label>
+          <input type="number" class="hcalc-input" data-hf="residualP" inputmode="decimal" placeholder="e.g. 48">
+        </div>
+        <div class="hcalc-field">
+          <label class="hcalc-label">Current Flow <span class="hcalc-unit">gpm</span></label>
+          <input type="number" class="hcalc-input" data-hf="currentGPM" inputmode="decimal" placeholder="e.g. 250">
+        </div>
+        <div class="hcalc-hint">1. Mark static, then flow water and record GPM and residual. 2. Enter all three above — this calculates the multiplier by interpolating your drop against the reference curve, no need to round to the table's 10-psi steps.</div>
+      </div>
+
+      <div class="hcalc-card hcalc-result" data-hf="resultPlate" style="display:none;">
+        <p class="hcalc-card-title">Estimated Availability</p>
+        <div class="hcalc-status" data-hf="statusBadge">—</div>
+        <div class="hcalc-bignum" data-hf="outAdditional">0</div>
+        <div class="hcalc-biglabel">Additional GPM Available</div>
+        <div class="hcalc-strip"><div class="hcalc-marker" data-hf="marker" style="left:0%;"></div></div>
+        <div class="hcalc-striplabels"><span>0×</span><span>1×</span><span>2×</span><span>3×</span></div>
+        <div class="hcalc-breakdown">
+          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="outCurrent">0</div><div class="hcalc-bdlbl">Now Flowing</div></div>
+          <div class="hcalc-bddivider"></div>
+          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="multValue">0.0×</div><div class="hcalc-bdlbl">Multiplier</div></div>
+          <div class="hcalc-bddivider"></div>
+          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="outTotal">0</div><div class="hcalc-bdlbl">Total Capacity</div></div>
+        </div>
+      </div>
+
+      <div class="hcalc-card" data-hf="deployPlate" style="display:none;">
+        <p class="hcalc-card-title">You Can Deploy</p>
+        <div data-hf="deployList"></div>
+      </div>
+
+      <p class="hcalc-footnote">Combat Ready Hose reference · Percent-drop method (NFPA 291-style)</p>
+    `;
+
+    const $ = (name) => wrap.querySelector('[data-hf="' + name + '"]');
+    const staticInput = $('staticP');
+    const residualInput = $('residualP');
+    const gpmInput = $('currentGPM');
+    const resultPlate = $('resultPlate');
+    const statusBadge = $('statusBadge');
+    const multValue = $('multValue');
+    const marker = $('marker');
+    const outCurrent = $('outCurrent');
+    const outAdditional = $('outAdditional');
+    const outTotal = $('outTotal');
+    const deployPlate = $('deployPlate');
+    const deployList = $('deployList');
+
+    function recalc(){
+      const s = parseFloat(staticInput.value);
+      const r = parseFloat(residualInput.value);
+      const g = parseFloat(gpmInput.value);
+
+      if(isNaN(s) || isNaN(r) || isNaN(g) || s <= 0 || g < 0 || r > s){
+        resultPlate.style.display = 'none';
+        deployPlate.style.display = 'none';
+        return;
+      }
+
+      const mult = Math.max(0, multiplierFor(s, r));
+      const additional = mult * g;
+      const total = g + additional;
+
+      resultPlate.style.display = '';
+      multValue.textContent = mult.toFixed(1) + '×';
+      outCurrent.textContent = Math.round(g);
+      outAdditional.textContent = Math.round(additional);
+      outTotal.textContent = Math.round(total);
+
+      const pct = Math.max(0, Math.min(1, mult/3)) * 100;
+      marker.style.left = pct + '%';
+
+      statusBadge.classList.remove('good','mid','low');
+      if(mult >= 2){
+        statusBadge.classList.add('good');
+        statusBadge.textContent = 'Strong Supply';
+      } else if(mult >= 1){
+        statusBadge.classList.add('mid');
+        statusBadge.textContent = 'Moderate Supply';
+      } else {
+        statusBadge.classList.add('low');
+        statusBadge.textContent = 'Limited — Near Capacity';
+      }
+
+      deployPlate.style.display = '';
+      deployList.innerHTML = deployOptions.map(opt => {
+        const ok = additional >= opt.gpm;
+        return `<div class="hcalc-deploy-item ${ok ? 'avail' : 'locked'}">
+          <div class="hcalc-di-left">
+            <span class="hcalc-di-gpm">${opt.gpm}</span>
+            <span class="hcalc-di-desc">${opt.desc}</span>
+          </div>
+          <span class="hcalc-di-check">${ok ? 'Ready' : 'Locked'}</span>
+        </div>`;
+      }).join('');
+    }
+
+    [staticInput, residualInput, gpmInput].forEach(el => el.addEventListener('input', recalc));
+
+    return wrap;
   }
 
 // ---- Phone directory search (General tab) ----
