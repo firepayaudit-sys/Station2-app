@@ -541,13 +541,8 @@
   }
 
 
-  /* ============ GENERAL / MORNING LINE-UP ============ */
-  #general-lineup .sub-hero{ padding: 16px 20px 16px; }
-  #general-lineup .nav-row{ margin-bottom:10px; }
-  #general-lineup .sub-title{ font-size: clamp(24px, 6vw, 34px); margin-bottom:2px; }
-  #general-lineup .board-wrap{ padding: 14px 14px 24px; }
-  #general-lineup .board-label{ margin-top:0 !important; margin-bottom:8px; font-size:10px; }
-  #general-lineup .flsa-note{ margin:-2px auto 10px !important; font-size:11px; }
+  /* ============ MORNING LINE-UP (inside Ride Assignments) ============ */
+  #assignments .flsa-note{ font-size:11px; }
 
   .lineup-board{
     display:grid;
@@ -1401,15 +1396,6 @@
       <span class="plate-arrow">→</span>
     </button>
 
-    <button class="plate" onclick="showScreen('general-lineup')">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">MORNING LINE-UP</span>
-        <span class="plate-desc">Fill In Today's Riding Assignments</span>
-      </span>
-      <span class="plate-arrow">→</span>
-    </button>
-
     <button class="plate" onclick="showScreen('pass-it-on')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -1432,7 +1418,7 @@
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
         <span class="plate-unit">GENERAL</span>
-        <span class="plate-desc">Station 2A General Reference</span>
+        <span class="plate-desc">FWFD General refrence</span>
       </span>
       <span class="plate-arrow">→</span>
     </button>
@@ -1675,55 +1661,6 @@
 </section>
 
 <!-- ============ GENERAL / MORNING LINE-UP ============ -->
-<section class="screen" id="general-lineup">
-  <div class="sub-hero">
-    <div class="sub-wrap">
-      <div class="nav-row">
-        <button class="back-btn" onclick="showScreen('home')">← Back</button>
-        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
-      </div>
-      <h2 class="sub-title">Morning Line-Up</h2>
-      <p class="sub-tag">Station 2A General Reference</p>
-    </div>
-  </div>
-  <div class="board-wrap" style="padding-top:0;">
-
-    <p class="board-label" style="margin-top:34px;">Today's Riding Assignments</p>
-    <p id="lineup-date" class="flsa-note" style="margin:-6px auto 18px;"></p>
-
-    <div class="lineup-board">
-      <div class="lineup-unit" data-unit="engine">
-        <div class="lineup-unit-head">Engine</div>
-        <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="engine-officer" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="engine-eng" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="engine-ff1" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="engine-ff2" placeholder="—" autocomplete="off"></div>
-      </div>
-
-      <div class="lineup-unit" data-unit="tower">
-        <div class="lineup-unit-head">Tower</div>
-        <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="tower-officer" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="tower-eng" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="tower-ff1" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="tower-ff2" placeholder="—" autocomplete="off"></div>
-      </div>
-
-      <div class="lineup-unit" data-unit="squad">
-        <div class="lineup-unit-head">Squad</div>
-        <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="squad-officer" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="squad-eng" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="squad-ff1" placeholder="—" autocomplete="off"></div>
-        <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="squad-ff2" placeholder="—" autocomplete="off"></div>
-      </div>
-    </div>
-
-    <button id="lineup-submit-btn" class="lineup-submit-btn">Submit Line-Up</button>
-    <p id="lineup-status" class="lineup-status"></p>
-    <button id="lineup-clear-btn" class="lineup-clear-btn">Clear Today's Line-Up</button>
-
-  </div>
-</section>
-
 <!-- ============ PASS IT ON ============ -->
 <section class="screen" id="pass-it-on">
   <div class="sub-hero">
@@ -3347,6 +3284,41 @@
   <div class="board-wrap" style="padding-top:0;">
     <p class="board-label">Tap Your Rig</p>
     <div id="modeBoard"></div>
+
+    <div style="margin-top:38px; padding-top:28px; border-top:1px solid rgba(184,147,79,0.35);">
+      <p class="board-label">Today's Riding Assignments</p>
+      <p id="lineup-date" class="flsa-note" style="margin:-6px auto 18px;"></p>
+
+      <div class="lineup-board">
+        <div class="lineup-unit" data-unit="engine">
+          <div class="lineup-unit-head">Engine</div>
+          <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="engine-officer" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="engine-eng" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="engine-ff1" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="engine-ff2" placeholder="—" autocomplete="off"></div>
+        </div>
+
+        <div class="lineup-unit" data-unit="tower">
+          <div class="lineup-unit-head">Tower</div>
+          <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="tower-officer" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="tower-eng" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="tower-ff1" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="tower-ff2" placeholder="—" autocomplete="off"></div>
+        </div>
+
+        <div class="lineup-unit" data-unit="squad">
+          <div class="lineup-unit-head">Squad</div>
+          <div class="lineup-row"><span class="lineup-pos">Officer</span><input class="lineup-input" type="text" data-pos="squad-officer" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">Eng</span><input class="lineup-input" type="text" data-pos="squad-eng" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="squad-ff1" placeholder="—" autocomplete="off"></div>
+          <div class="lineup-row"><span class="lineup-pos">FF</span><input class="lineup-input" type="text" data-pos="squad-ff2" placeholder="—" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <button id="lineup-submit-btn" class="lineup-submit-btn">Submit Line-Up</button>
+      <p id="lineup-status" class="lineup-status"></p>
+      <button id="lineup-clear-btn" class="lineup-clear-btn">Clear Today's Line-Up</button>
+    </div>
   </div>
 </section>
 
@@ -4680,7 +4652,6 @@ const SCREEN_LABELS = {
   'trt': 'TRT',
   'hazmat': 'HAZMAT',
   'general': 'General',
-  'general-lineup': 'Morning Line-Up',
   'pass-it-on': 'Pass It On',
   'roster': 'Roster',
   'general-phone': 'Phone Directory',
