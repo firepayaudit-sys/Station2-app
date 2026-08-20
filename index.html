@@ -3703,7 +3703,7 @@
   function uplView(entry){
     if(!entry || !entry.dataUrl) return;
     if(entry.dataUrl.indexOf('data:application/pdf') === 0 && window.openPdfOverlay){
-      window.openPdfOverlay(entry.dataUrl);
+      window.openPdfOverlay(entry.dataUrl, entry.note || entry.filename || 'Document');
       return;
     }
     const a = document.createElement('a');
@@ -4829,36 +4829,160 @@ function initGlobalSearch(){
    in standalone mode with no browser chrome. Tapping a normal PDF link then
    navigates the whole app away from itself with no back/close button,
    forcing a force-quit. Instead, open PDFs in an in-page overlay so nothing
-   ever navigates away — the X button just hides the overlay. */
+   ever navigates away — the X button just hides the overlay.
+
+   Pages are rendered with pdf.js onto stacked <canvas> elements inside a
+   normal scrollable <div>, rather than handed to the browser's own
+   in-iframe PDF viewer. Native iframe-embedded PDF viewers are wildly
+   inconsistent about scrolling multi-page documents — iOS Safari in
+   particular often locks to page 1 with no way to scroll further,
+   regardless of how the iframe itself is sized. A plain scrollable div is
+   just normal page content, so it scrolls the same everywhere (and still
+   supports the browser's native pinch-zoom, since the viewport meta tag
+   here doesn't disable it). */
 (function(){
-  // The header and iframe use explicit absolute offsets + calc() for the
-  // iframe's height. Browsers don't stretch an absolutely-positioned
-  // replaced element (iframe/img/video) between top+bottom the way they
-  // do a normal block — with height left as "auto" it falls back to the
-  // intrinsic 150px default, which locks the embedded PDF viewer to
-  // showing just page 1 with no scroll. calc(100% - headerHeight) gives
-  // it a concrete height instead, so the PDF viewer sizes correctly.
   var HEADER_H = 52;
+  var PDFJS_BASE = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+
   var overlay = document.createElement('div');
   overlay.id = 'pdfOverlay';
   overlay.style.cssText = 'display:none;position:fixed;inset:0;z-index:2000;background:var(--iron);';
   overlay.innerHTML =
     '<div style="position:absolute;top:0;left:0;right:0;height:' + HEADER_H + 'px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--iron-2);border-bottom:3px solid var(--brass);">' +
-      '<span style="font-family:\'Oswald\',sans-serif;font-weight:600;color:var(--parchment);font-size:15px;">Document</span>' +
-      '<button id="pdfOverlayClose" style="font-family:\'Oswald\',sans-serif;font-weight:600;background:var(--brick);color:var(--parchment);border:2px solid var(--brass);border-radius:6px;padding:8px 16px;font-size:15px;">&#10005; Close</button>' +
+      '<span id="pdfOverlayTitle" style="font-family:\'Oswald\',sans-serif;font-weight:600;color:var(--parchment);font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:12px;">Document</span>' +
+      '<button id="pdfOverlayClose" style="flex:0 0 auto;font-family:\'Oswald\',sans-serif;font-weight:600;background:var(--brick);color:var(--parchment);border:2px solid var(--brass);border-radius:6px;padding:8px 16px;font-size:15px;">&#10005; Close</button>' +
     '</div>' +
-    '<iframe id="pdfOverlayFrame" src="" style="position:absolute;top:' + HEADER_H + 'px;left:0;width:100%;height:calc(100% - ' + HEADER_H + 'px);border:0;background:#fff;"></iframe>';
+    '<div id="pdfOverlayBody" style="position:absolute;top:' + HEADER_H + 'px;left:0;width:100%;height:calc(100% - ' + HEADER_H + 'px);overflow:auto;-webkit-overflow-scrolling:touch;background:#4b4a45;"></div>';
   document.body.appendChild(overlay);
 
-  var frame = overlay.querySelector('#pdfOverlayFrame');
-  function openPdf(href){
-    frame.src = href;
+  var body = overlay.querySelector('#pdfOverlayBody');
+  var titleEl = overlay.querySelector('#pdfOverlayTitle');
+  var renderToken = 0; // bumped on every open/close so a slow-finishing render from a previous PDF can't paint over a newer one
+
+  var pdfjsReady = null;
+  function loadPdfJs(){
+    if(pdfjsReady) return pdfjsReady;
+    pdfjsReady = new Promise(function(resolve, reject){
+      if(window.pdfjsLib){ resolve(window.pdfjsLib); return; }
+      var s = document.createElement('script');
+      s.src = PDFJS_BASE + 'pdf.min.js';
+      s.onload = function(){
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_BASE + 'pdf.worker.min.js';
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = function(){ reject(new Error('pdf.js failed to load')); };
+      document.head.appendChild(s);
+    });
+    return pdfjsReady;
+  }
+
+  function statusMessage(text){
+    body.innerHTML = '';
+    var p = document.createElement('p');
+    p.textContent = text;
+    p.style.cssText = 'color:#cfc7b4;text-align:center;padding:50px 20px;font-family:\'Courier Prime\',monospace;font-size:13px;';
+    body.appendChild(p);
+  }
+
+  // Falls back to the plain OS/browser PDF handling (new tab) only if
+  // pdf.js itself can't load or can't parse the file — better than a dead
+  // end, even though it re-introduces the original iOS-trap risk in that
+  // rare case.
+  function openInNewTab(href){
+    window.open(href, '_blank');
+  }
+
+  function pdfSource(href){
+    if(href.indexOf('data:') === 0){
+      var comma = href.indexOf(',');
+      var meta = href.slice(5, comma);
+      var dataPart = href.slice(comma + 1);
+      if(meta.indexOf('base64') !== -1){
+        var binary = atob(dataPart);
+        var bytes = new Uint8Array(binary.length);
+        for(var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return { data: bytes };
+      }
+    }
+    return { url: href };
+  }
+
+  async function renderPdf(href, token){
+    statusMessage('Loading document…');
+
+    var pdfjsLib;
+    try { pdfjsLib = await loadPdfJs(); }
+    catch(e){ if(token === renderToken){ statusMessage("Couldn't load the document viewer — opening in a new tab instead."); openInNewTab(href); } return; }
+    if(token !== renderToken) return;
+
+    var pdf;
+    try { pdf = await pdfjsLib.getDocument(pdfSource(href)).promise; }
+    catch(e){ if(token === renderToken){ statusMessage("Couldn't open this document — opening in a new tab instead."); openInNewTab(href); } return; }
+    if(token !== renderToken) return;
+
+    body.innerHTML = '';
+    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    var containerWidth = body.clientWidth;
+    var pageEls = [];
+
+    function renderPage(idx){
+      return pdf.getPage(idx).then(function(page){
+        if(token !== renderToken) return;
+        var unscaled = page.getViewport({ scale: 1 });
+        var scale = (containerWidth / unscaled.width) * dpr;
+        var viewport = page.getViewport({ scale: scale });
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        canvas.style.cssText = 'width:100%;height:auto;display:block;';
+        var wrap = pageEls[idx - 1];
+        wrap.innerHTML = '';
+        wrap.appendChild(canvas);
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise.catch(function(){});
+      });
+    }
+
+    var observer = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          observer.unobserve(entry.target);
+          renderPage(Number(entry.target.dataset.pageIndex));
+        }
+      });
+    }, { root: body, rootMargin: '800px 0px' }) : null;
+
+    for(var i = 1; i <= pdf.numPages; i++){
+      var wrap = document.createElement('div');
+      wrap.dataset.pageIndex = i;
+      wrap.style.cssText = 'max-width:900px;margin:14px auto;min-height:260px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;';
+      var ph = document.createElement('span');
+      ph.textContent = 'Page ' + i + ' / ' + pdf.numPages;
+      ph.style.cssText = 'color:#999;font-family:\'Courier Prime\',monospace;font-size:12px;';
+      wrap.appendChild(ph);
+      body.appendChild(wrap);
+      pageEls.push(wrap);
+      if(observer) observer.observe(wrap);
+    }
+
+    // Render the first couple pages immediately so there's no blank flash
+    // before the IntersectionObserver's first callback fires.
+    renderPage(1);
+    if(pdf.numPages > 1) renderPage(2);
+  }
+
+  function openPdf(href, label){
+    renderToken++;
+    var token = renderToken;
+    titleEl.textContent = label || 'Document';
     overlay.style.display = 'block';
     document.body.style.overflow = 'hidden';
+    body.scrollTop = 0;
+    renderPdf(href, token);
   }
   function closePdf(){
+    renderToken++; // invalidates any render still in flight
     overlay.style.display = 'none';
-    frame.src = '';
+    body.innerHTML = '';
     document.body.style.overflow = '';
   }
   overlay.querySelector('#pdfOverlayClose').addEventListener('click', closePdf);
@@ -4870,7 +4994,8 @@ function initGlobalSearch(){
     // only intercept same-site PDFs bundled with this app
     if(a.origin && a.origin !== window.location.origin) return;
     e.preventDefault();
-    openPdf(a.getAttribute('href'));
+    var unitEl = a.querySelector('.plate-unit');
+    openPdf(a.getAttribute('href'), unitEl ? unitEl.textContent.trim() : 'Document');
   }, false);
 })();
 </script>
