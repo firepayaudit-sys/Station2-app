@@ -1326,7 +1326,7 @@
   .crew-row:last-child{ border-bottom:none; }
   .crew-rank{
     flex:0 0 auto;
-    width:36px;
+    min-width:36px;
     text-align:center;
     font-family:'Oswald', sans-serif;
     font-weight:700;
@@ -1335,12 +1335,14 @@
     color: var(--iron);
     background: var(--ash);
     border-radius:3px;
-    padding:3px 0;
+    padding:3px 5px;
+    white-space:nowrap;
   }
   .crew-rank--cpt{ background: var(--brick-lt); color: var(--parchment); }
   .crew-rank--lt{ background: var(--ember); color: var(--iron); }
   .crew-rank--eng{ background: var(--moss); color: var(--iron); }
   .crew-rank--ff{ background: var(--brass); color: var(--iron); }
+  .crew-rank--sup2, .crew-rank--med2, .crew-rank--med12{ background: var(--steel); color: var(--parchment); }
   .crew-name{
     flex:1 1 auto;
     font-size:13.5px;
@@ -4047,6 +4049,26 @@
       { rank:'FF',  name:'MONTY BRYANT',      date:'7/26/2025', phone:'817-727-0751' },
       { rank:'FF',  name:'ALERAH TURPIN',     date:'6/27/2026', phone:'940-353-9055' },
       { rank:'FF',  name:'KYLE BROWN',        date:'4/4/2026', phone:'817-707-4776' }
+    ]},
+    { station: 'EMS Battalion 2 (A-Shift)', tag: 'Duty: 682-404-9127', crew: [
+      { rank:'SUP2',  name:'Brody Nolde-Hurlbert', phone:'214-886-3844' },
+      { rank:'MED2',  name:'Delena Bentley',       phone:'281-690-3970' },
+      { rank:'MED2',  name:'Kieran Oliver',        phone:'682-217-7788' },
+      { rank:'MED12', name:'Cale Meredith',        phone:'469-474-9726' }
+    ]},
+    { station: 'EMS Battalion 2 (B-Shift)', tag: 'Duty: 682-404-9127', crew: [
+      { rank:'SUP2',  name:'Matt Hansen',    phone:'214-406-3111' },
+      { rank:'MED2',  name:'Ron Miller',     phone:'469-363-8190' },
+      { rank:'MED2',  name:'James Berry',    phone:'817-889-4153' },
+      { rank:'MED12', name:'Kaitlyn Kelly',  phone:'214-517-8102' },
+      { rank:'MED12', name:'Deionte Smith',  phone:'817-902-7674' }
+    ]},
+    { station: 'EMS Battalion 2 (C-Shift)', tag: 'Duty: 682-404-9127', crew: [
+      { rank:'SUP2',  name:'Tim Malacina',      phone:'214-471-0143' },
+      { rank:'MED2',  name:'Claire Morris',     phone:'817-718-0412' },
+      { rank:'MED2',  name:'Reagan Stevens',    phone:'682-351-7547' },
+      { rank:'MED12', name:'Sebastian Salazar', phone:'214-228-7166' },
+      { rank:'MED12', name:'Megan Largent',     phone:'940-210-0565' }
     ]}
   ];
 
