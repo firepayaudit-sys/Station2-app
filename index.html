@@ -3928,17 +3928,22 @@
   function pioDelete(unit, entryId, entry){
     if(!pioDb) return;
     if(!confirm('Delete this note? This can\'t be undone.')) return;
-    // Silently archive a copy before removing it, so an accidental delete can
-    // still be recovered later (from the Firebase console) even though there's
-    // no on-page "undo" or trash view for it.
+    // Best-effort: try to archive a copy before removing it, so an accidental
+    // delete can still be recovered later (from the Firebase console) even
+    // though there's no on-page "undo" or trash view for it. The backup write
+    // is fire-and-forget and never blocks the actual delete — if the backup
+    // path isn't writable (e.g. Firebase security rules haven't been opened
+    // up for it yet) the note still gets deleted normally instead of getting
+    // stuck.
     const backupData = {
       text: (entry && entry.text) || '',
       timestamp: (entry && entry.timestamp) || Date.now(),
       deletedAt: Date.now()
     };
-    pioDb.ref('passItOnBackup/' + unit + '/' + entryId).set(backupData).then(() => {
-      return pioDb.ref('passItOn/' + unit + '/' + entryId).remove();
-    }).catch(err => {
+    pioDb.ref('passItOnBackup/' + unit + '/' + entryId).set(backupData).catch(err => {
+      console.error('Pass It On backup failed (delete still proceeds):', err);
+    });
+    pioDb.ref('passItOn/' + unit + '/' + entryId).remove().catch(err => {
       console.error(err);
       alert("Couldn't delete that note — check your connection and try again.");
     });
@@ -4036,11 +4041,15 @@
     if(overlay) overlay.addEventListener('click', (e) => { if(e.target === overlay) closePanel(); });
 
     if(!pioDb) return;
+    // The error callback keeps this quiet (falls back to the "No updates
+    // logged yet." empty state already in the markup) if the siteUpdates
+    // path isn't readable yet — e.g. Firebase security rules haven't been
+    // opened up for it — instead of throwing on every page load.
     pioDb.ref('siteUpdates').limitToLast(200).on('value', snapshot => {
       const val = snapshot.val();
       suRender(val);
       suSweepOld(val);
-    });
+    }, err => console.error('Site Updates unavailable:', err));
   }
 
   function pioSubmit(unit){
