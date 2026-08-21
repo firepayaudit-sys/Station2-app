@@ -3682,7 +3682,7 @@
         </div>
       </div>
 
-      <button id="lineup-submit-btn" class="lineup-submit-btn">Submit Line-Up</button>
+      <button id="lineup-submit-btn" class="lineup-submit-btn">Submit Line Up to Crew</button>
       <p id="lineup-status" class="lineup-status"></p>
       <button id="lineup-clear-btn" class="lineup-clear-btn">Clear Today's Line-Up</button>
     </div>
@@ -4453,7 +4453,7 @@
           submitBtn.disabled = true;
           pioDb.ref('lineup/' + dateKey).set(data).then(() => {
             submitBtn.textContent = 'Submitted ✓';
-            setTimeout(() => { submitBtn.textContent = 'Submit Line-Up'; submitBtn.disabled = false; }, 1500);
+            setTimeout(() => { submitBtn.textContent = 'Submit Line Up to Crew'; submitBtn.disabled = false; }, 1500);
           }).catch(err => {
             console.error(err);
             alert("Couldn't submit the line-up — check your connection and try again.");
