@@ -964,6 +964,105 @@
     padding:4px 2px;
   }
 
+  /* ============ SITE UPDATES (footer link + panel) ============ */
+  .footer-updates-link{
+    display:block;
+    margin: 4px auto 34px;
+    background:none;
+    border:none;
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color: var(--ash);
+    text-decoration:underline;
+    text-underline-offset:3px;
+    cursor:pointer;
+    padding:6px;
+  }
+  .footer-updates-link:hover{ color: var(--brass-lt); }
+
+  .su-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background: rgba(23,20,15,0.92);
+    padding:20px;
+    overflow-y:auto;
+  }
+  .su-panel{
+    max-width:560px;
+    margin:30px auto;
+    background: var(--iron-2);
+    border:2px solid var(--brass);
+    border-radius:6px;
+  }
+  .su-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 18px;
+    border-bottom:2px solid var(--brass);
+  }
+  .su-title{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color: var(--parchment);
+    text-transform:uppercase;
+    letter-spacing:1px;
+  }
+  .su-close{
+    flex:0 0 auto;
+    background:none;
+    border:1px solid var(--steel);
+    color: var(--ash);
+    font-family:'Courier Prime', monospace;
+    font-size:11px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:6px 10px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .su-close:hover{ border-color: var(--brick-lt); color: var(--brick-lt); }
+  .su-body{ padding:16px 18px 20px; }
+  .su-list{ display:flex; flex-direction:column; gap:10px; }
+  .su-row{
+    background: var(--iron);
+    border:1px solid var(--steel);
+    border-left: 4px solid var(--brass);
+    border-radius:4px;
+    padding:12px 14px;
+  }
+  .su-when{
+    display:block;
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--brass-lt);
+    margin-bottom:6px;
+  }
+  .su-text{
+    font-size:14px;
+    line-height:1.55;
+    color: var(--parchment);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    margin:0;
+  }
+  .su-note{
+    font-family:'Courier Prime', monospace;
+    font-size:10.5px;
+    color: var(--ash);
+    text-align:center;
+    line-height:1.5;
+    margin:14px 0 0;
+  }
+
   /* ============ CREW FILE UPLOADS ============ */
   .upl-compose{
     max-width:560px;
@@ -1621,6 +1720,24 @@
       <span class="plate-arrow">→</span>
     </button>
 
+    <a class="plate" href="https://fortworthfire-tsc.prd.mykronos.com/telestaff/" target="_blank" rel="noopener">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">TELESTAFF</span>
+        <span class="plate-desc">Scheduling &amp; Timekeeping</span>
+      </span>
+      <span class="plate-arrow">↗</span>
+    </a>
+
+    <a class="plate" href="https://app1.pstrax.com/sso-login.php" target="_blank" rel="noopener">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">PSTRAX</span>
+        <span class="plate-desc">Station &amp; Apparatus Checks</span>
+      </span>
+      <span class="plate-arrow">↗</span>
+    </a>
+
     <button class="plate" onclick="showScreen('roster')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -1644,7 +1761,23 @@
 
   <p class="footer-note">Fort Worth, TX &nbsp;·&nbsp; Est. 1930</p>
   <p class="footer-note" style="margin-top:-6px; font-size:9.5px; opacity:0.7;">32.748641, -97.335195</p>
+  <button id="site-updates-link" class="footer-updates-link" type="button">Updates</button>
 </section>
+
+<div id="site-updates-overlay" class="su-overlay">
+  <div class="su-panel">
+    <div class="su-head">
+      <span class="su-title">Recent Updates</span>
+      <button id="su-close" class="su-close" type="button">&#10005; Close</button>
+    </div>
+    <div class="su-body">
+      <div id="su-list" class="su-list">
+        <p class="pio-empty">No updates logged yet.</p>
+      </div>
+      <p class="su-note">Showing changes from the last 7 days.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ============ TRT ============ -->
 <section class="screen" id="trt">
@@ -3779,7 +3912,7 @@
       delBtn.className = 'pio-entry-delete';
       delBtn.type = 'button';
       delBtn.textContent = '✕ Delete';
-      delBtn.addEventListener('click', () => pioDelete(unit, entry.id));
+      delBtn.addEventListener('click', () => pioDelete(unit, entry.id, entry));
       meta.appendChild(delBtn);
 
       const text = document.createElement('p');
@@ -3792,10 +3925,20 @@
     });
   }
 
-  function pioDelete(unit, entryId){
+  function pioDelete(unit, entryId, entry){
     if(!pioDb) return;
     if(!confirm('Delete this note? This can\'t be undone.')) return;
-    pioDb.ref('passItOn/' + unit + '/' + entryId).remove().catch(err => {
+    // Silently archive a copy before removing it, so an accidental delete can
+    // still be recovered later (from the Firebase console) even though there's
+    // no on-page "undo" or trash view for it.
+    const backupData = {
+      text: (entry && entry.text) || '',
+      timestamp: (entry && entry.timestamp) || Date.now(),
+      deletedAt: Date.now()
+    };
+    pioDb.ref('passItOnBackup/' + unit + '/' + entryId).set(backupData).then(() => {
+      return pioDb.ref('passItOn/' + unit + '/' + entryId).remove();
+    }).catch(err => {
       console.error(err);
       alert("Couldn't delete that note — check your connection and try again.");
     });
@@ -3808,6 +3951,95 @@
       pioDb.ref('passItOn/' + unit).limitToLast(200).on('value', snapshot => {
         pioRender(unit, snapshot.val());
       });
+    });
+  }
+
+  /* ============ SITE UPDATES ============ */
+  // A short changelog, meant to be posted to by whoever deploys a change —
+  // not a crew-facing input form. Entries live for a week so the list stays
+  // short and only shows what's recent, then age out to a backup path
+  // (same "write backup, then remove" pattern as the Pass It On backup)
+  // rather than being deleted outright.
+  const SITE_UPDATES_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+  function suFormatWhen(ts){
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) +
+      ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  }
+
+  function suRender(entriesObj){
+    const list = document.getElementById('su-list');
+    if(!list) return;
+    list.innerHTML = '';
+    const entries = Object.keys(entriesObj || {}).map(id => Object.assign({ id: id }, entriesObj[id]));
+    entries.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    if(!entries.length){
+      const p = document.createElement('p');
+      p.className = 'pio-empty';
+      p.textContent = 'No updates logged yet.';
+      list.appendChild(p);
+      return;
+    }
+    entries.forEach(entry => {
+      const row = document.createElement('div');
+      row.className = 'su-row';
+
+      const when = document.createElement('span');
+      when.className = 'su-when';
+      when.textContent = suFormatWhen(entry.timestamp || Date.now());
+
+      const text = document.createElement('p');
+      text.className = 'su-text';
+      text.textContent = entry.text || '';
+
+      row.appendChild(when);
+      row.appendChild(text);
+      list.appendChild(row);
+    });
+  }
+
+  // Archives (backs up, then removes) any live entry older than a week.
+  // Runs passively every time the list refreshes, so cleanup happens on any
+  // page load rather than only when someone opens the Updates panel.
+  function suSweepOld(entriesObj){
+    if(!pioDb || !entriesObj) return;
+    const cutoff = Date.now() - SITE_UPDATES_WEEK_MS;
+    Object.keys(entriesObj).forEach(id => {
+      const entry = entriesObj[id];
+      if((entry.timestamp || 0) < cutoff){
+        pioDb.ref('siteUpdatesBackup/' + id).set(entry).then(() => {
+          return pioDb.ref('siteUpdates/' + id).remove();
+        }).catch(err => console.error(err));
+      }
+    });
+  }
+
+  function initSiteUpdates(){
+    const link = document.getElementById('site-updates-link');
+    const overlay = document.getElementById('site-updates-overlay');
+    const closeBtn = document.getElementById('su-close');
+
+    function openPanel(){
+      if(!overlay) return;
+      overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(){
+      if(!overlay) return;
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    if(link) link.addEventListener('click', openPanel);
+    if(closeBtn) closeBtn.addEventListener('click', closePanel);
+    if(overlay) overlay.addEventListener('click', (e) => { if(e.target === overlay) closePanel(); });
+
+    if(!pioDb) return;
+    pioDb.ref('siteUpdates').limitToLast(200).on('value', snapshot => {
+      const val = snapshot.val();
+      suRender(val);
+      suSweepOld(val);
     });
   }
 
@@ -4002,6 +4234,7 @@
     addContactFooters();
     initFlsaCurrentPeriod();
     initGlobalSearch();
+    initSiteUpdates();
   });
 
   /* ============ ROSTER ============ */
@@ -4009,7 +4242,7 @@
   // as they're tracked down. Leave phone: '' until then; it'll show as "—".
   const CREW_ROSTER = [
     { station: 'Station 2A', tag: '(HM) (TRT)', crew: [
-      { rank:'CPT', name:'SHAWN MACDONALD*', date:'5/2/2026', phone:'817-343-0082' },
+      { rank:'CPT', name:'SHAWN MACDONALD', date:'5/2/2026', phone:'817-343-0082' },
       { rank:'LT',  name:'C. NELSON (PM)',    date:'8/4/2018', phone:'254-592-5069' },
       { rank:'LT',  name:'C. COMERFORD',      date:'12/30/2023', phone:'817-919-1153' },
       { rank:'ENG', name:'M. DOLAK (PM)',     date:'5/4/2024', phone:'817-363-3647' },
@@ -4023,7 +4256,7 @@
       { rank:'FF',  name:'I. BIRD',           date:'11/20/2021', phone:'817-308-3973' }
     ]},
     { station: 'Station 2B', tag: '(HM) (TRT)', crew: [
-      { rank:'CPT', name:'DAVID HILL*',       date:'8/8/2026', phone:'972-571-6965' },
+      { rank:'CPT', name:'DAVID HILL',       date:'8/8/2026', phone:'972-571-6965' },
       { rank:'LT',  name:'CHRIS GARCIA',      date:'7/11/2026', phone:'817-201-5208' },
       { rank:'LT',  name:'JORDAN CROW (PM)',  date:'11/29/2025', phone:'817-343-5314' },
       { rank:'ENG', name:'JONATHAN STONE',    date:'5/2/2026', phone:'830-953-9005' },
@@ -4037,7 +4270,7 @@
       { rank:'FF',  name:'COOPER ZELAZNY',    date:'5/2/2026', phone:'817-994-8599' }
     ]},
     { station: 'Station 2C', tag: '(HM) (TRT)', crew: [
-      { rank:'CPT', name:'JONATHON SCHIECK*', date:'7/27/2024', phone:'817-713-5083' },
+      { rank:'CPT', name:'JONATHON SCHIECK', date:'7/27/2024', phone:'817-713-5083' },
       { rank:'LT',  name:'B. CALL',           date:'2/14/2009', phone:'469-360-3666' },
       { rank:'LT',  name:'VACANT',            date:'5/16/2026', phone:'', vacant:true },
       { rank:'ENG', name:'JAMES HIX',         date:'7/26/2025', phone:'817-944-7784' },
