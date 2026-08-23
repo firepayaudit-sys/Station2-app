@@ -3654,7 +3654,7 @@
         <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
       </div>
       <h2 class="sub-title">Ride Assignments</h2>
-      <p class="sub-tag">Station 2A Pre-Assignments</p>
+      <p class="sub-tag">Station Pre-Assignments</p>
     </div>
   </div>
   <div class="board-wrap" style="padding-top:0;">
@@ -4806,7 +4806,7 @@
     const app = mode.apparatus[appKey];
 
     document.getElementById('apparatusTitle').textContent = app.label;
-    document.getElementById('apparatusTag').textContent = mode.label + ' · Station 2A';
+    document.getElementById('apparatusTag').textContent = mode.label + ' · Station';
     document.getElementById('apparatusBackBtn').onclick = () => openApparatusPicker(appKey);
 
     const alertBox = document.getElementById('apparatusAlert');
@@ -4899,7 +4899,7 @@
     const app = mode.apparatus[appKey];
 
     document.getElementById('positionTitle').textContent = seatLabel(app, seatId);
-    document.getElementById('positionTag').textContent = app.label + ' · ' + mode.label + ' · Station 2A';
+    document.getElementById('positionTag').textContent = app.label + ' · ' + mode.label + ' · Station';
     document.getElementById('positionBackBtn').onclick = () => openApparatus(modeKey, appKey);
 
     const content = document.getElementById('positionContent');
