@@ -1738,6 +1738,15 @@
       <span class="plate-arrow">→</span>
     </a>
 
+    <button class="plate" onclick="openFirstDueMobile()">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">FIRST DUE MOBILE</span>
+        <span class="plate-desc">Pre-Incident Planning App</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
     <button class="plate" onclick="showScreen('general')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -4081,6 +4090,21 @@
       suRender(val);
       suSweepOld(val);
     }, err => console.error('Site Updates unavailable:', err));
+  }
+
+  /* ============ FIRST DUE MOBILE SHORTCUT ============ */
+  // First Due Mobile is a native phone app with no browser/web version, so
+  // unlike PSTrax/TeleStaff/Vector LMS it can't be opened as a page inside
+  // this app. The closest thing we can offer is a shortcut straight to its
+  // App Store / Play Store listing — both stores show an "Open" button
+  // there instead of "Install" when the app is already on the device, so
+  // this still gets you into the app in one extra tap if it's installed.
+  function openFirstDueMobile(){
+    const ua = navigator.userAgent || navigator.vendor || '';
+    const isAndroid = /Android/.test(ua);
+    const iosUrl = 'https://apps.apple.com/us/app/first-due-mobile/id1300758445';
+    const androidUrl = 'https://play.google.com/store/apps/details?id=com.firstduesizeup.firstduemobile&hl=en_US';
+    window.open(isAndroid ? androidUrl : iosUrl, '_blank', 'noopener');
   }
 
   function pioSubmit(unit){
