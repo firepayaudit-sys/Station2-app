@@ -2086,6 +2086,19 @@
       </div>
     </div>
 
+    <div class="pio-unit" data-unit="support">
+      <h3 class="pio-unit-head">Support</h3>
+      <div class="pio-compose">
+        <textarea class="pio-textarea" data-unit="support" placeholder="Leave a note for the next shift about Support — low fluids, equipment issues, anything to flag…"></textarea>
+        <div class="pio-post-row">
+          <button class="pio-post-btn" data-unit="support" onclick="pioSubmit('support')">Post Note</button>
+        </div>
+      </div>
+      <div class="pio-feed" id="pio-feed-support">
+        <p class="pio-empty">No notes yet.</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -3893,7 +3906,7 @@
     }catch(e){}
   }
 
-  const PIO_UNITS = ['engine', 'tower', 'squad'];
+  const PIO_UNITS = ['engine', 'tower', 'squad', 'support'];
 
   function pioFormatWhen(ts){
     const d = new Date(ts);
