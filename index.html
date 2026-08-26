@@ -4518,14 +4518,14 @@
           label: "Engine",
           alert: null,
           cache: [
-            { label:"Engine HR Package", items:["3 sections of 2½\" hose (50' lengths), Denver-loaded with Velcro straps","HR Standpipe Bag","Thermal Imager","Search Bag","Set of Irons"] },
+            { label:"Engine HR Package", items:["3 sections of 2½\" hose (50' lengths), Denver-loaded with Velcro straps","HR Standpipe Bag","Thermal Imager","Search Rope Bag","Set of Irons"] },
             { label:"Engine Hi-Rise Equipment Bag", items:["2½\" nozzle with 1 1/8\" straight bore tips","One 12\" pipe wrench","One spanner wrench","One roll of duct tape","Door stops","1½\" female to 2½\" male fitting","2 air bottle carrying straps","2½\" in-line pressure gauge w/ elbow fitting (attaches to standpipe connection; labeled for 2½\" hose lengths)","Accountability board — Velcro one side, pre-printed HR assignments on the other"] }
           ],
           arrivals: [
             {
               order:"1st Due", group:"Suppression",
               seats: {
-                officer:  { tasks:["Obtain keys","Place elevators into Phase 1","Investigate the fire floor","Decide on hallway or stairwell stretch","Deploy the attack line"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Obtain keys","Place elevators into Phase 1","Investigate the fire floor","Decide on hallway or stairwell stretch","Deploy the attack line"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Obtain keys","Place elevators into Phase 1","Investigate the fire floor","Decide on hallway or stairwell stretch","Deploy the attack line"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Obtain keys","Place elevators into Phase 1","Investigate the fire floor","Decide on hallway or stairwell stretch","Deploy the attack line"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack"] },
                 ffr:      { tasks:["Obtain keys","Place elevators into Phase 1","Investigate the fire floor","Decide on hallway or stairwell stretch","Deploy the attack line"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4534,7 +4534,7 @@
             {
               order:"2nd Due", group:"Suppression / Water",
               seats: {
-                officer:  { tasks:["Contact Suppression","Deploy back-up line if needed","Support Division X"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Contact Suppression","Deploy back-up line if needed","Support Division X"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Locate sprinkler and standpipe connections","Park within 50 ft of the FDC's","Hook up 2½\" hose to FDC connections","If the fire pump is operating: pump to idle pressure","If the fire pump is not operating: pump the roof","Standpipe only (no fire pump): pump the fire floor"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Contact Suppression","Deploy back-up line if needed","Support Division X"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack"] },
                 ffr:      { tasks:["Contact Suppression","Deploy back-up line if needed","Support Division X"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4543,7 +4543,7 @@
             {
               order:"3rd Due", group:"Suppression / Water",
               seats: {
-                officer:  { tasks:["Contact Suppression","Assist with back-up line if needed","Support with air bottles"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Contact Suppression","Assist with back-up line if needed","Support with air bottles"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Locate closest hydrant to the 2nd engine","Park within 50 ft of the 2nd engine","Hook up volume connection","Supply the 2nd engine in tandem pumping mode"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Contact Suppression","Assist with back-up line if needed","Support with air bottles"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack","4 Air Bottles"] },
                 ffr:      { tasks:["Contact Suppression","Assist with back-up line if needed","Support with air bottles"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4552,7 +4552,7 @@
             {
               order:"4th Due", group:"Floors Above",
               seats: {
-                officer:  { tasks:["Ascend to the floor above the fire floor","Consider using the evacuation stairwell"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Ascend to the floor above the fire floor","Consider using the evacuation stairwell"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Drop the HR hose and bag in the stairwell at the door where they entered"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Search floors above","Provide a CAN report"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack"] },
                 ffr:      { tasks:["Assess ventilation options","Find a vertical ventilation exhaust point if needed"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4561,7 +4561,7 @@
             {
               order:"5th Due", group:"Interior Staging",
               seats: {
-                officer:  { tasks:["Ascend to 2 floors below the fire floor","Maintain at least a 1:1 ratio in Interior Staging"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Ascend to 2 floors below the fire floor","Maintain at least a 1:1 ratio in Interior Staging"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Maintain accountability and log for Refuge and Treatment"], equipment:["Long Tool","4 Air Bottles"] },
                 ffl:      { tasks:["Manage equipment until Equipment Staging Division is established"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack","4 Air Bottles"] },
                 ffr:      { tasks:["Establish Refuge and Treatment Division until EMS 99 arrives"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4570,7 +4570,7 @@
             {
               order:"2nd Alarm", group:"Base (1st Engine on 2nd Alarm)",
               seats: {
-                officer:  { tasks:["Locate outside of a 200 ft perimeter or 2–3 blocks from the incident","Communicate with the Command Post (primary channel) and arriving companies (face-to-face)","Officially check in companies and maintain accountability — maintain designated level of available units","Direct companies when assigned to the Interior Staging Area or a Division/Group","Log, secure, and respond to requests for apparatus and equipment","If a working fire is declared, consider requesting a 3rd Alarm immediately"], equipment:["TIC","Knox Key","Hose Pack"] },
+                officer:  { tasks:["Locate outside of a 200 ft perimeter or 2–3 blocks from the incident","Communicate with the Command Post (primary channel) and arriving companies (face-to-face)","Officially check in companies and maintain accountability — maintain designated level of available units","Direct companies when assigned to the Interior Staging Area or a Division/Group","Log, secure, and respond to requests for apparatus and equipment","If a working fire is declared, consider requesting a 3rd Alarm immediately"], equipment:["TIC","Knox Key","Hose Pack","Search Rope Bag"] },
                 engineer: { tasks:["Locate outside of a 200 ft perimeter or 2–3 blocks from the incident","Communicate with the Command Post (primary channel) and arriving companies (face-to-face)","Officially check in companies and maintain accountability — maintain designated level of available units","Direct companies when assigned to the Interior Staging Area or a Division/Group","Log, secure, and respond to requests for apparatus and equipment","If a working fire is declared, consider requesting a 3rd Alarm immediately"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Locate outside of a 200 ft perimeter or 2–3 blocks from the incident","Communicate with the Command Post (primary channel) and arriving companies (face-to-face)","Officially check in companies and maintain accountability — maintain designated level of available units","Direct companies when assigned to the Interior Staging Area or a Division/Group","Log, secure, and respond to requests for apparatus and equipment","If a working fire is declared, consider requesting a 3rd Alarm immediately"], equipment:["High-Rise Bag","Rabbit Tool","Hose Pack"] },
                 ffr:      { tasks:["Locate outside of a 200 ft perimeter or 2–3 blocks from the incident","Communicate with the Command Post (primary channel) and arriving companies (face-to-face)","Officially check in companies and maintain accountability — maintain designated level of available units","Direct companies when assigned to the Interior Staging Area or a Division/Group","Log, secure, and respond to requests for apparatus and equipment","If a working fire is declared, consider requesting a 3rd Alarm immediately"], equipment:["Irons","Pump Can","Hose Pack"] }
@@ -4582,14 +4582,14 @@
           label: "Tower",
           alert: null,
           cache: [
-            { label:"Truck HR Package", items:["Truck HR Bag","Hydra-Ram, Set of Irons","Thermal Imager","Search Bag","Wynn Pole or Pike Pole","Water Can"] },
+            { label:"Truck HR Package", items:["Truck HR Bag","Hydra-Ram, Set of Irons","Thermal Imager","Search Rope Bag","Wynn Pole or Pike Pole","Water Can"] },
             { label:"Truck High-Rise Equipment Bag", items:["Accountability board — Velcro one side, HR pre-assignments printed on the back","Sprinkler stops","Door stops","Duct tape"] }
           ],
           arrivals: [
             {
               order:"1st Due", group:"Suppression",
               seats: {
-                officer:  { tasks:["Find building rep","Assess alarm panel","Announce plan to Command","Investigate the fire floor","Establish attack/evacuation stairwells","Locate and confine fire, search and evacuate"], equipment:["Thermal Imager","Search Bag"] },
+                officer:  { tasks:["Find building rep","Assess alarm panel","Announce plan to Command","Investigate the fire floor","Establish attack/evacuation stairwells","Locate and confine fire, search and evacuate"], equipment:["Thermal Imager","Search Rope Bag"] },
                 engineer: { tasks:["Find building rep","Assess alarm panel","Announce plan to Command","Investigate the fire floor","Establish attack/evacuation stairwells","Locate and confine fire, search and evacuate"], equipment:["Long Tool"] },
                 ffl:      { tasks:["Find building rep","Assess alarm panel","Announce plan to Command","Investigate the fire floor","Establish attack/evacuation stairwells","Locate and confine fire, search and evacuate"], equipment:["High-Rise Bag","Rabbit Tool"] },
                 ffr:      { tasks:["Find building rep","Assess alarm panel","Announce plan to Command","Investigate the fire floor","Establish attack/evacuation stairwells","Locate and confine fire, search and evacuate"], equipment:["Irons","Pump Can","TIC"] }
@@ -4600,8 +4600,8 @@
               seats: {
                 officer:  { tasks:["Establish secondary accountability system","Establish secondary communication line"], equipment:[] },
                 engineer: { tasks:["Obtain and control additional keys and access cards","Control the air handling systems and utilities"], equipment:["4 Air Bottles"] },
-                ffl:      { tasks:["Control elevators","Place search rope, irons, and scaler in each stairwell being used"], equipment:["Scaler"] },
-                ffr:      { tasks:["Control stairwell entrance/exit points","Check status of fire pump"], equipment:["Search Rope","Forcible Entry Tools"] }
+                ffl:      { tasks:["Control elevators","Place search rope bag, irons, and scaler in each stairwell being used"], equipment:["Scaler"] },
+                ffr:      { tasks:["Control stairwell entrance/exit points","Check status of fire pump"], equipment:["Search Rope Bag","Forcible Entry Tools"] }
               }
             }
           ]
@@ -4613,7 +4613,7 @@
             {
               order:"RIT", group:"Rapid Intervention Team — Squad 2 (6th Engine if Squad 2 is unavailable)",
               seats: {
-                officer:  { tasks:["Ascend to the floor below the fire floor"], equipment:["Thermal Imager","Search Bag"] },
+                officer:  { tasks:["Ascend to the floor below the fire floor"], equipment:["Thermal Imager","Search Rope Bag"] },
                 engineer: { tasks:["Preplan lower floors"], equipment:["4 Air Bottles"] },
                 ffl:      { tasks:["Find and assess stairwells"], equipment:["RIT Bag (consider 2 RIT bags)"] },
                 ffr:      { tasks:["Monitor radio closely"], equipment:["Set of Irons, other forcible entry tools"] }
@@ -4673,10 +4673,10 @@
             {
               order:"4th Due", group:"Floors Above",
               seats: {
-                officer:  { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["TIC","Search Rope Bag","Hose Pack"] },
+                officer:  { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope bag and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["TIC","Search Rope Bag","Hose Pack"] },
                 engineer: { tasks:["Join the Water Supply Group","Once the fire is under control, help determine the best method to shut down the sprinkler system water supply when directed by Command — usually a cutoff valve for the branch line","Identify that shutoff location early to limit time once the request is announced"], equipment:[] },
-                ffl:      { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["High-Rise Bag","Rabbit Tool","Long Tool","Hose Pack"] },
-                ffr:      { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["Irons","Pump Can","Hose Pack"] }
+                ffl:      { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope bag and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["High-Rise Bag","Rabbit Tool","Long Tool","Hose Pack"] },
+                ffr:      { tasks:["Ascend/descend to the floor above the fire to search for occupants, smoke travel, or fire extension","Expect heavy smoke conditions to have migrated up","Utilize a search rope bag and thermal imager for a wide-area search if needed — focus on stairwells, elevator shafts, and the occupancy directly above the fire"], equipment:["Irons","Pump Can","Hose Pack"] }
               }
             },
             {
@@ -4697,7 +4697,7 @@
             {
               order:"1st Due", group:"Suppression / Division X",
               seats: {
-                officer:  { tasks:["Assume Suppression — perform truck work for the Suppression Group focused on forcible entry, fire floor search, and ventilation","If a working fire is declared, establish Division X and serve as Division Supervisor on the fire floor until a Chief Officer arrives"], equipment:["TIC","Search Rope"] },
+                officer:  { tasks:["Assume Suppression — perform truck work for the Suppression Group focused on forcible entry, fire floor search, and ventilation","If a working fire is declared, establish Division X and serve as Division Supervisor on the fire floor until a Chief Officer arrives"], equipment:["TIC","Search Rope Bag","Knox Key"] },
                 engineer: { tasks:["Position the apparatus for aerial ladder use, then remain with the apparatus","Become part of the Outside Truck Group"], equipment:[] },
                 ffl:      { tasks:["Assume Suppression — perform truck work for the Suppression Group focused on forcible entry, fire floor search, and ventilation"], equipment:["High-Rise Bag","Hydra Ram"] },
                 ffr:      { tasks:["Assume Suppression — perform truck work for the Suppression Group focused on forcible entry, fire floor search, and ventilation"], equipment:["TIC","Irons","Pump Can"] }
@@ -4706,7 +4706,7 @@
             {
               order:"2nd Due", group:"Inside Truck",
               seats: {
-                officer:  { tasks:["Assume Inside Truck — responsible for Evacuation and Ventilation","Evacuation starts in the area of most danger — usually the fire floor, then the floor above","When directed by the Division Supervisor, select the best method for ventilating the stairwells, fire floor, and any other affected floor","Establish proper flow paths to move products of combustion out of the structure and away from crews entering for fire attack","Use PPV fans to pressurize enclosed stairwells — most mid-rise buildings lack built-in pressurization systems"], equipment:["TIC","Search Rope"] },
+                officer:  { tasks:["Assume Inside Truck — responsible for Evacuation and Ventilation","Evacuation starts in the area of most danger — usually the fire floor, then the floor above","When directed by the Division Supervisor, select the best method for ventilating the stairwells, fire floor, and any other affected floor","Establish proper flow paths to move products of combustion out of the structure and away from crews entering for fire attack","Use PPV fans to pressurize enclosed stairwells — most mid-rise buildings lack built-in pressurization systems"], equipment:["TIC","Search Rope Bag","Knox Key"] },
                 engineer: { tasks:["Position the apparatus for aerial ladder use, then remain with the apparatus","Become part of the Outside Truck Group"], equipment:[] },
                 ffl:      { tasks:["Assume Inside Truck — responsible for Evacuation and Ventilation","Evacuation starts in the area of most danger — usually the fire floor, then the floor above"], equipment:["High-Rise Bag","Hydra Ram"] },
                 ffr:      { tasks:["Assume Inside Truck — responsible for Evacuation and Ventilation","Evacuation starts in the area of most danger — usually the fire floor, then the floor above"], equipment:["TIC","Irons","Pump Can"] }
@@ -4730,7 +4730,7 @@
             {
               order:"Roof Team", group:"Roof Assignment",
               seats: {
-                officer:  { tasks:["Report to the roof"], equipment:["Search Rope","Thermal Imager","NY Hook"] },
+                officer:  { tasks:["Report to the roof"], equipment:["Search Rope Bag","Thermal Imager","NY Hook"] },
                 engineer: { tasks:["Report to the roof"], equipment:["K-9","Bolt Cutters"] },
                 ffl:      { tasks:["Report to the roof"], equipment:["Roof Rope","Rabbit Tool"] },
                 ffr:      { tasks:["Report to the roof"], equipment:["Set of Irons","Thermal Imager"] }
