@@ -1786,20 +1786,11 @@
 
     <p class="board-label">Manuals</p>
 
-    <a class="plate" href="./CMCMPDManualV30.pdf" target="_blank" rel="noopener">
+    <button class="plate" onclick="showScreen('trt-ropes')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
-        <span class="plate-unit">MPD</span>
-        <span class="plate-desc">CMC Multi-Purpose Device · User's Manual V3.0</span>
-      </span>
-      <span class="plate-arrow">↗</span>
-    </a>
-
-    <button class="plate" onclick="showScreen('trt-vortex')">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">Vortex</span>
-        <span class="plate-desc">Manual, Training Videos &amp; DoorTex</span>
+        <span class="plate-unit">Ropes</span>
+        <span class="plate-desc">MPD, Vortex &amp; Aztek</span>
       </span>
       <span class="plate-arrow">→</span>
     </button>
@@ -1809,19 +1800,6 @@
       <span class="plate-main">
         <span class="plate-unit">Air Cart</span>
         <span class="plate-desc">Quick Reference Guide</span>
-      </span>
-      <span class="plate-arrow">↗</span>
-    </a>
-
-    <p class="board-label" style="margin-top:34px;">Training Videos</p>
-
-    <p class="plate-count" style="text-align:center; margin:-6px 0 14px;">Aztek</p>
-
-    <a class="plate" href="https://www.youtube.com/watch?v=utudr574hQg" target="_blank" rel="noopener">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">Aztek — Training Video</span>
-        <span class="plate-desc">youtube.com/watch?v=utudr574hQg</span>
       </span>
       <span class="plate-arrow">↗</span>
     </a>
@@ -1856,12 +1834,62 @@
   </div>
 </section>
 
+<!-- ============ TRT / ROPES ============ -->
+<section class="screen" id="trt-ropes">
+  <div class="sub-hero">
+    <div class="sub-wrap">
+      <div class="nav-row">
+        <button class="back-btn" onclick="showScreen('trt')">← Back</button>
+        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
+      </div>
+      <h2 class="sub-title">Ropes</h2>
+      <p class="sub-tag">Technical Rescue Team · Station 2</p>
+    </div>
+  </div>
+  <div class="board-wrap" style="padding-top:0;">
+
+    <p class="board-label">Manuals</p>
+
+    <a class="plate" href="./CMCMPDManualV30.pdf" target="_blank" rel="noopener">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">MPD</span>
+        <span class="plate-desc">CMC Multi-Purpose Device · User's Manual V3.0</span>
+      </span>
+      <span class="plate-arrow">↗</span>
+    </a>
+
+    <button class="plate" onclick="showScreen('trt-vortex')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">Vortex</span>
+        <span class="plate-desc">Manual, Training Videos &amp; DoorTex</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
+    <p class="board-label" style="margin-top:34px;">Training Videos</p>
+
+    <p class="plate-count" style="text-align:center; margin:-6px 0 14px;">Aztek</p>
+
+    <a class="plate" href="https://www.youtube.com/watch?v=utudr574hQg" target="_blank" rel="noopener">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">Aztek — Training Video</span>
+        <span class="plate-desc">youtube.com/watch?v=utudr574hQg</span>
+      </span>
+      <span class="plate-arrow">↗</span>
+    </a>
+
+  </div>
+</section>
+
 <!-- ============ TRT / VORTEX ============ -->
 <section class="screen" id="trt-vortex">
   <div class="sub-hero">
     <div class="sub-wrap">
       <div class="nav-row">
-        <button class="back-btn" onclick="showScreen('trt')">← Back</button>
+        <button class="back-btn" onclick="showScreen('trt-ropes')">← Back</button>
         <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
       </div>
       <h2 class="sub-title">Vortex</h2>
@@ -5422,6 +5450,7 @@ function initFlsaCurrentPeriod(){
 const SCREEN_LABELS = {
   'home': 'Home',
   'trt': 'TRT',
+  'trt-ropes': 'Ropes',
   'trt-vortex': 'Vortex',
   'hazmat': 'HAZMAT',
   'general': 'General',
