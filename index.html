@@ -1627,6 +1627,13 @@
     color: var(--ash);
     margin:0;
   }
+
+  .flsa-next-payday{
+    font-weight:600;
+    color: var(--brass);
+    text-align:center;
+    margin:10px 0 0;
+  }
   .flsa-holiday{
     font-family:'Courier Prime', monospace;
     font-size:11.5px;
@@ -1693,24 +1700,6 @@
       <span class="plate-arrow">→</span>
     </button>
 
-    <button class="plate" onclick="showScreen('trt')">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">TRT</span>
-        <span class="plate-desc">Technical Rescue Team</span>
-      </span>
-      <span class="plate-arrow">→</span>
-    </button>
-
-    <button class="plate" onclick="showScreen('hazmat')">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">HAZMAT</span>
-        <span class="plate-desc">Hazardous Materials Response</span>
-      </span>
-      <span class="plate-arrow">→</span>
-    </button>
-
     <button class="plate" onclick="showScreen('pass-it-on')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -1737,6 +1726,24 @@
       </span>
       <span class="plate-arrow">→</span>
     </a>
+
+    <button class="plate" onclick="showScreen('trt')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">TRT</span>
+        <span class="plate-desc">Technical Rescue Team</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
+    <button class="plate" onclick="showScreen('hazmat')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">HAZMAT</span>
+        <span class="plate-desc">Hazardous Materials Response</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
 
     <button class="plate" onclick="showScreen('general')">
       <span class="rivet tl"></span><span class="rivet br"></span>
@@ -5438,6 +5445,24 @@ function initFlsaCurrentPeriod(){
   summary.removeAttribute('data-search'); // avoid a duplicate hit in the on-page/global search index
   summary.classList.add('flsa-card--summary');
   wrap.appendChild(summary);
+
+
+  // Determine and display the next upcoming pay day
+  let nextPayday = null;
+  cards.forEach(card => {
+    const pdEl = card.querySelector('.flsa-payday');
+    if (!pdEl) return;
+    const pm = /Pay Day:\s*(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(pdEl.textContent);
+    if (!pm) return;
+    const pd = new Date(+pm[3], +pm[1]-1, +pm[2]);
+    if (pd >= today && (!nextPayday || pd < nextPayday)) nextPayday = pd;
+  });
+  if (nextPayday) {
+    const npEl = document.createElement('p');
+    npEl.className = 'flsa-payday flsa-next-payday';
+    npEl.textContent = 'Next Pay Day: ' + (nextPayday.getMonth()+1) + '/' + nextPayday.getDate() + '/' + nextPayday.getFullYear();
+    wrap.appendChild(npEl);
+  }
 }
 
 /* ============ GLOBAL SEARCH (Home screen) ============ */
