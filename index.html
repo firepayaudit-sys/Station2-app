@@ -19,6 +19,21 @@
     --ember:     #cf5a26;
     --ash:       #8a8172;
     --moss:      #5f7a45;
+    /* extensions for the embedded Pump Calculator (.pumpcalc) */
+    --panel-2:   #241f17;
+    --card-a:    #2a251c;
+    --card-b:    #1e1a13;
+    --line-strong:#4a4536;
+    --ember-lt:  #e0602f;
+    --ash-dim:   #6b6255;
+    --ok:        #5c8a4a;
+    --ok-soft:   rgba(92,138,74,0.18);
+    --warn:      #b8934f;
+    --warn-soft: rgba(184,147,79,0.18);
+    --danger:    #cf5a26;
+    --danger-soft:rgba(207,90,38,0.18);
+    --accent-ink:#241c0d;
+    --shadow: 0 3px 8px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.35);
   }
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -538,221 +553,6 @@
     border-radius:3px;
     padding:2px 7px;
     margin:0 1px;
-  }
-
-  /* ============ HYDRANT CALCULATOR (Engineer — Engine/Tower) ============ */
-  .hcalc-wrap{
-    --hc-plate: #322e26;
-    --hc-ember-lt: #e0602f;
-    --hc-parchment-dim: #bdb195;
-    --hc-rivet: #17140f;
-    --hc-ok: #5c8a4a;
-    margin-top:28px;
-    padding-top:24px;
-    border-top:1px solid rgba(184,147,79,0.35);
-  }
-  .hcalc-heading{
-    font-family:'Oswald',sans-serif;
-    font-size:11px;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color: var(--brass-lt);
-    margin:0 0 4px;
-  }
-  .hcalc-subheading{
-    font-family:'Courier Prime',monospace;
-    font-size:11px;
-    color: var(--hc-parchment-dim);
-    margin:0 0 16px;
-  }
-  .hcalc-card{
-    background:linear-gradient(180deg, var(--hc-plate), #2a2620);
-    border:1px solid #4a4536;
-    border-radius:6px;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.06),
-      0 6px 16px rgba(0,0,0,0.45);
-    padding:18px 16px;
-    margin-bottom:16px;
-    position:relative;
-  }
-  .hcalc-card::before, .hcalc-card::after{
-    content:"";
-    position:absolute;
-    width:7px;height:7px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #7a7160, var(--hc-rivet) 70%);
-    box-shadow:0 1px 1px rgba(0,0,0,0.6);
-    top:8px;
-  }
-  .hcalc-card::before{left:8px;}
-  .hcalc-card::after{right:8px;}
-  .hcalc-card-title{
-    font-family:'Oswald',sans-serif;
-    font-size:13px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color: var(--brass-lt);
-    margin:0 0 14px;
-    padding-bottom:8px;
-    border-bottom:2px solid var(--ember);
-  }
-  .hcalc-field{margin-bottom:14px;}
-  .hcalc-field:last-child{margin-bottom:0;}
-  .hcalc-label{
-    display:block;
-    font-family:'Oswald',sans-serif;
-    font-size:11px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color: var(--hc-parchment-dim);
-    margin-bottom:5px;
-  }
-  .hcalc-unit{color: var(--brass-lt); font-size:10px;}
-  .hcalc-input{
-    width:100%;
-    background:#181611;
-    border:1px solid #4a4536;
-    border-radius:4px;
-    color: var(--parchment);
-    font-family:'Courier Prime',monospace;
-    font-size:20px;
-    padding:10px 12px;
-  }
-  .hcalc-input:focus{
-    outline:none;
-    border-color: var(--ember);
-    box-shadow:0 0 0 2px rgba(193,68,30,0.25);
-  }
-  .hcalc-input::-webkit-outer-spin-button,
-  .hcalc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-  .hcalc-hint{
-    font-family:'Courier Prime',monospace;
-    font-size:10.5px;
-    color: var(--hc-parchment-dim);
-    margin-top:12px;
-    line-height:1.5;
-    border-top:1px dashed #4a4536;
-    padding-top:10px;
-  }
-  .hcalc-result{text-align:center;}
-  .hcalc-status{
-    font-family:'Oswald',sans-serif;
-    font-size:11px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    padding:4px 10px;
-    border-radius:3px;
-    display:inline-block;
-    margin-bottom:14px;
-  }
-  .hcalc-status.good{background:rgba(92,138,74,0.18);color:#8fbf78;border:1px solid var(--hc-ok);}
-  .hcalc-status.mid{background:rgba(182,135,63,0.18);color:var(--brass-lt);border:1px solid var(--brass);}
-  .hcalc-status.low{background:rgba(193,68,30,0.18);color:var(--hc-ember-lt);border:1px solid var(--ember);}
-  .hcalc-bignum{
-    font-family:'Rye',serif;
-    font-size:52px;
-    line-height:1;
-    color: var(--hc-ember-lt);
-    text-shadow:0 2px 0 rgba(0,0,0,0.5);
-  }
-  .hcalc-biglabel{
-    font-family:'Oswald',sans-serif;
-    font-size:11px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color: var(--hc-parchment-dim);
-    margin-top:4px;
-  }
-  .hcalc-breakdown{
-    display:flex;
-    justify-content:space-around;
-    margin-top:18px;
-    padding-top:16px;
-    border-top:1px solid #4a4536;
-  }
-  .hcalc-bditem{text-align:center;}
-  .hcalc-bdnum{
-    font-family:'Courier Prime',monospace;
-    font-weight:700;
-    font-size:20px;
-    color: var(--parchment);
-  }
-  .hcalc-bdlbl{
-    font-family:'Oswald',sans-serif;
-    font-size:9.5px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color: var(--hc-parchment-dim);
-    margin-top:2px;
-  }
-  .hcalc-bddivider{width:1px;background:#4a4536;}
-  .hcalc-strip{
-    margin-top:16px;
-    height:8px;
-    border-radius:4px;
-    background:linear-gradient(90deg, var(--ember) 0%, var(--brass) 45%, var(--hc-ok) 100%);
-    position:relative;
-  }
-  .hcalc-marker{
-    position:absolute;
-    top:-5px;
-    width:2px;
-    height:18px;
-    background: var(--parchment);
-    box-shadow:0 0 4px rgba(0,0,0,0.8);
-    transition:left 0.15s ease;
-  }
-  .hcalc-striplabels{
-    display:flex;
-    justify-content:space-between;
-    font-family:'Courier Prime',monospace;
-    font-size:9px;
-    color: var(--hc-parchment-dim);
-    margin-top:6px;
-  }
-  .hcalc-deploy-item{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 4px;
-    border-bottom:1px solid #4a4536;
-  }
-  .hcalc-deploy-item:last-child{border-bottom:none;}
-  .hcalc-di-left{display:flex;align-items:center;gap:10px;}
-  .hcalc-di-gpm{
-    font-family:'Courier Prime',monospace;
-    font-weight:700;
-    font-size:15px;
-    min-width:52px;
-  }
-  .hcalc-di-desc{
-    font-family:'Oswald',sans-serif;
-    font-size:12.5px;
-    letter-spacing:0.3px;
-  }
-  .hcalc-di-check{
-    font-family:'Oswald',sans-serif;
-    font-size:10px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    padding:3px 8px;
-    border-radius:3px;
-  }
-  .hcalc-deploy-item.avail .hcalc-di-gpm{color: var(--hc-ok);}
-  .hcalc-deploy-item.avail .hcalc-di-desc{color: var(--parchment);}
-  .hcalc-deploy-item.avail .hcalc-di-check{background:rgba(92,138,74,0.18);color:#8fbf78;border:1px solid var(--hc-ok);}
-  .hcalc-deploy-item.locked{opacity:0.4;}
-  .hcalc-deploy-item.locked .hcalc-di-gpm{color: var(--hc-parchment-dim);}
-  .hcalc-deploy-item.locked .hcalc-di-desc{color: var(--hc-parchment-dim);}
-  .hcalc-deploy-item.locked .hcalc-di-check{background:rgba(255,255,255,0.04);color:var(--hc-parchment-dim);border:1px solid #4a4536;}
-  .hcalc-footnote{
-    text-align:center;
-    font-family:'Courier Prime',monospace;
-    font-size:10px;
-    color: var(--hc-parchment-dim);
-    margin-top:4px;
-    opacity:0.7;
   }
 
   /* ============ MORNING LINE-UP (inside Ride Assignments) ============ */
@@ -1665,6 +1465,160 @@
     color: var(--ash);
     margin:4px 0 30px;
   }
+
+  /* ============ EMBEDDED PUMP CALCULATOR (.pumpcalc) ============
+     Ported from the standalone Station 2 Pump Calculator tool. Every rule
+     here is scoped under .pumpcalc so it can never affect the rest of the
+     site, and it reuses this page's own color variables (extended above). */
+.pumpcalc .wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:0 56px}
+.pumpcalc header.top{
+  background: linear-gradient(180deg, var(--iron-2), var(--iron));
+  border-bottom: 4px solid var(--brass);
+  position:static;z-index:1;
+  box-shadow: 0 6px 0 var(--iron), 0 8px 20px rgba(0,0,0,0.6);
+}
+.pumpcalc .top-inner{max-width:880px;margin:0 auto;padding:14px 16px 8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pumpcalc .brand{
+  font-family:'Rye',serif;font-weight:400;font-size:26px;letter-spacing:.5px;margin:0;
+  color:var(--parchment);text-shadow:1px 1px 0 var(--brick), 3px 3px 8px rgba(0,0,0,0.6);
+}
+.pumpcalc .brand span{color:var(--brass-lt)}
+.pumpcalc .hose-switch{margin-left:auto;display:flex;gap:0;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden}
+.pumpcalc .hose-switch button{
+  font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  padding:8px 12px;border:0;background:var(--panel-2);color:var(--ash);cursor:pointer;transition:all .15s}
+.pumpcalc .hose-switch button[aria-pressed="true"]{background:var(--brass);color:var(--accent-ink)}
+.pumpcalc .hose-switch button:hover{color:var(--brass-lt)}
+.pumpcalc .hose-switch button[aria-pressed="true"]:hover{color:var(--accent-ink)}
+.pumpcalc .hose-switch button:focus-visible{outline:3px solid var(--ember);outline-offset:-3px}
+.pumpcalc .tabs{display:flex;gap:6px;overflow-x:auto;padding:6px 16px 12px;max-width:880px;margin:0 auto;scrollbar-width:none}
+.pumpcalc .tabs::-webkit-scrollbar{display:none}
+.pumpcalc .tab{flex:0 0 auto;font-family:'Oswald',sans-serif;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  padding:9px 14px;border-radius:3px;border:1px solid var(--steel);background:var(--panel-2);color:var(--ash);cursor:pointer;transition:all .15s}
+.pumpcalc .tab[aria-selected="true"]{background:var(--brass);color:var(--accent-ink);border-color:var(--brass);font-weight:600}
+.pumpcalc .tab:hover{border-color:var(--brass)}
+.pumpcalc .tab:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+.pumpcalc section.panel{
+  background: linear-gradient(180deg, var(--card-a), var(--card-b));
+  border:1px solid var(--steel);border-left:5px solid var(--brass);
+  border-radius:4px;padding:16px;margin-top:16px;box-shadow:var(--shadow);
+  position:relative;
+}
+.pumpcalc h2.sec{font-family:'Courier Prime',monospace;font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-lt);margin:0 0 10px}
+.pumpcalc .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:8px}
+.pumpcalc .choice{text-align:left;padding:11px 12px;border:1px solid var(--steel);border-left:3px solid var(--brass);border-radius:3px;
+  background: linear-gradient(180deg, var(--card-a), var(--card-b));color:var(--parchment);cursor:pointer;
+  font-family:inherit;display:flex;flex-direction:column;gap:2px;min-height:62px;justify-content:center;transition:all .15s}
+.pumpcalc .choice b{font-family:'Rye',serif;font-weight:400;font-size:17px;letter-spacing:.3px}
+.pumpcalc .choice small{color:var(--ash);font-size:12px;line-height:1.3}
+.pumpcalc .choice:hover{border-left-color:var(--ember);transform:translateX(2px)}
+.pumpcalc .choice[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);border-left-color:var(--ember);color:var(--accent-ink)}
+.pumpcalc .choice[aria-pressed="true"] b{color:var(--accent-ink)}
+.pumpcalc .choice[aria-pressed="true"] small{color:var(--accent-ink);opacity:.85}
+.pumpcalc .choice:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+.pumpcalc .chips{display:flex;flex-wrap:wrap;gap:6px}
+.pumpcalc .chip{font-family:'Courier Prime',monospace;font-size:14px;font-weight:700;padding:8px 13px;border:1px solid var(--brass);border-radius:3px;
+  background:rgba(184,147,79,0.12);color:var(--brass-lt);cursor:pointer;font-variant-numeric:tabular-nums;transition:all .15s}
+.pumpcalc .chip[aria-pressed="true"]{background:var(--brass);color:var(--accent-ink);border-color:var(--brass)}
+.pumpcalc .chip:hover{border-color:var(--ember)}
+.pumpcalc .chip:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+.pumpcalc .row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+.pumpcalc [hidden]{display:none !important}
+.pumpcalc .field{display:flex;flex-direction:column;gap:5px;min-width:120px;flex:1 1 140px}
+.pumpcalc .field label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);font-weight:600}
+.pumpcalc .field input{font-family:'Courier Prime',monospace;font-size:18px;font-variant-numeric:tabular-nums;padding:9px 10px;
+  border:1px solid var(--line-strong);border-radius:3px;background:#181611;color:var(--parchment);width:100%}
+.pumpcalc .field input:focus-visible{outline:none;border-color:var(--ember);box-shadow:0 0 0 2px rgba(207,90,38,0.25)}
+.pumpcalc .field input::-webkit-outer-spin-button, .pumpcalc .field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.pumpcalc .hint{font-size:12.5px;color:var(--ash)}
+.pumpcalc .readout{margin-top:16px;border:1px solid var(--steel);border-radius:4px;overflow:hidden;
+  background:linear-gradient(180deg, var(--card-a), var(--card-b));box-shadow:var(--shadow)}
+.pumpcalc .readout-main{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:18px 16px;background:var(--panel-2);border-bottom:1px solid var(--steel)}
+.pumpcalc .big{font-family:'Rye',serif;font-weight:400;font-size:clamp(52px,16vw,76px);line-height:.95;font-variant-numeric:tabular-nums;
+  color:var(--ember-lt);text-shadow:0 2px 0 rgba(0,0,0,0.5)}
+.pumpcalc .big-label{font-family:'Courier Prime',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);display:block;margin-bottom:2px}
+.pumpcalc .big-unit{font-size:20px;color:var(--ash);font-weight:500;margin-left:4px}
+.pumpcalc .flow{margin-left:auto;text-align:right;font-family:'Oswald',sans-serif;font-variant-numeric:tabular-nums}
+.pumpcalc .flow b{display:block;font-size:28px;font-weight:600;line-height:1.05;color:var(--parchment)}
+.pumpcalc .flow span{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);font-family:'Courier Prime',monospace}
+.pumpcalc .math{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px}
+.pumpcalc .term{border:1px solid var(--brass);border-radius:3px;padding:6px 10px;background:rgba(184,147,79,0.1);font-size:13px;font-variant-numeric:tabular-nums}
+.pumpcalc .term b{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;color:var(--brass-lt)}
+.pumpcalc .term i{font-style:normal;color:var(--ash);text-transform:uppercase;letter-spacing:.07em;font-size:10.5px;font-weight:600;display:block;font-family:'Courier Prime',monospace}
+.pumpcalc .alert{display:flex;gap:10px;align-items:flex-start;padding:12px 16px;border-top:1px solid var(--steel);font-size:14px}
+.pumpcalc .alert.is-ok{background:var(--ok-soft)}
+.pumpcalc .alert.is-warn{background:var(--warn-soft)}
+.pumpcalc .alert.is-danger{background:var(--danger-soft)}
+.pumpcalc .alert .tag{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:2px;flex:0 0 auto}
+.pumpcalc .is-ok .tag{background:var(--ok);color:#fff}
+.pumpcalc .is-warn .tag{background:var(--brass);color:var(--accent-ink)}
+.pumpcalc .is-danger .tag{background:var(--ember);color:#fff}
+.pumpcalc .tablewrap{overflow-x:auto;margin-top:8px;border:1px solid var(--steel);border-radius:3px}
+.pumpcalc table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px;min-width:540px}
+.pumpcalc caption{text-align:left;padding:10px 12px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--brass-lt);background:var(--panel-2);border-bottom:1px solid var(--steel)}
+.pumpcalc th, .pumpcalc td{padding:7px 10px;border-bottom:1px solid var(--steel);text-align:right;color:var(--parchment)}
+.pumpcalc th:first-child, .pumpcalc td:first-child{text-align:left}
+.pumpcalc thead th{font-family:'Oswald',sans-serif;font-weight:500;font-size:12.5px;color:var(--ash);background:var(--panel-2)}
+.pumpcalc tbody tr:last-child td{border-bottom:0}
+.pumpcalc td.hit{background:var(--brass);color:var(--accent-ink);font-weight:700}
+.pumpcalc td.over{background:var(--warn-soft)}
+.pumpcalc td.way-over{background:var(--danger-soft);color:var(--ember-lt);font-weight:600}
+.pumpcalc td.rowhead{font-family:'Oswald',sans-serif;font-weight:500}
+.pumpcalc .ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.pumpcalc .ref h3{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:.05em;text-transform:uppercase;margin:0 0 8px;color:var(--brass-lt)}
+.pumpcalc .ref ul{margin:0;padding-left:18px}
+.pumpcalc .ref li{margin-bottom:6px;font-size:14px;color:var(--parchment)}
+.pumpcalc .ref li b{font-variant-numeric:tabular-nums;color:var(--brass-lt)}
+.pumpcalc .formula{font-family:'Rye',serif;font-weight:400;font-size:22px;letter-spacing:.5px;background:var(--iron);color:var(--brass-lt);
+  border:1px solid var(--brass);padding:10px 14px;border-radius:3px;display:inline-block}
+.pumpcalc .notes li{margin-bottom:10px;font-size:14px;color:var(--parchment)}
+.pumpcalc .notes b{font-family:'Oswald',sans-serif;letter-spacing:.02em;color:var(--brass-lt)}
+.pumpcalc footer.foot{max-width:880px;margin:24px auto 0;padding:0 16px 20px;color:var(--ash-dim);font-size:12.5px;
+  font-family:'Courier Prime',monospace;letter-spacing:.02em;line-height:1.6}
+.pumpcalc .divider{height:1px;background:var(--steel);margin:18px 0}
+
+@media (max-width:520px){.pumpcalc .flow{margin-left:0;text-align:left;width:100%}
+.pumpcalc .hose-switch{margin-left:0;width:100%}
+.pumpcalc .hose-switch button{flex:1}
+}
+/* ============ HYDRANT CALCULATOR extras (You Can Deploy) ============ */
+.pumpcalc .hcalc-card{
+  background:linear-gradient(180deg, var(--card-a), var(--card-b));
+  border:1px solid var(--steel);
+  border-radius:6px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 6px 16px rgba(0,0,0,0.4);
+  padding:16px;
+  margin-top:16px;
+  position:relative;
+}
+.pumpcalc .hcalc-card::before, .pumpcalc .hcalc-card::after{
+  content:"";position:absolute;width:7px;height:7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #7a7160, var(--iron) 70%);
+  box-shadow:0 1px 1px rgba(0,0,0,0.6);top:8px;
+}
+.pumpcalc .hcalc-card::before{left:8px}
+.pumpcalc .hcalc-card::after{right:8px}
+.pumpcalc .hcalc-card-title{
+  font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass-lt);margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ember)
+}
+.pumpcalc .hcalc-deploy-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 4px;border-bottom:1px solid var(--steel)
+}
+.pumpcalc .hcalc-deploy-item:last-child{border-bottom:none}
+.pumpcalc .hcalc-di-left{display:flex;align-items:center;gap:10px}
+.pumpcalc .hcalc-di-gpm{font-family:'Courier Prime',monospace;font-weight:700;font-size:15px;min-width:52px;color:var(--parchment)}
+.pumpcalc .hcalc-di-desc{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.3px;color:var(--parchment)}
+.pumpcalc .hcalc-di-check{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.pumpcalc .hcalc-deploy-item.avail .hcalc-di-gpm{color:var(--ok)}
+.pumpcalc .hcalc-deploy-item.avail .hcalc-di-desc{color:var(--parchment)}
+.pumpcalc .hcalc-deploy-item.avail .hcalc-di-check{background:rgba(92,138,74,0.18);color:#8fbf78;border:1px solid var(--ok)}
+.pumpcalc .hcalc-deploy-item.locked{opacity:.45}
+.pumpcalc .hcalc-deploy-item.locked .hcalc-di-gpm{color:var(--ash-dim)}
+.pumpcalc .hcalc-deploy-item.locked .hcalc-di-desc{color:var(--ash-dim)}
+.pumpcalc .hcalc-deploy-item.locked .hcalc-di-check{background:rgba(255,255,255,0.04);color:var(--ash-dim);border:1px solid var(--line-strong)}
 
 </style>
 </head>
@@ -3786,7 +3740,7 @@
   </div>
 </section>
 
-<!-- ============ RIDE ASSIGNMENTS (mode picker: High-Rise / Midrise) ============ -->
+<!-- ============ RIDE ASSIGNMENTS (rig / apparatus picker: Engine / Tower / Squad) ============ -->
 <section class="screen" id="assignments">
   <div class="sub-hero">
     <div class="sub-wrap">
@@ -3839,7 +3793,7 @@
   </div>
 </section>
 
-<!-- ============ MODE DETAIL (apparatus picker: Engine / Tower / Squad) ============ -->
+<!-- ============ MODE DETAIL (riding position / seat picker: Officer / Engineer / FFL / FFR) ============ -->
 <section class="screen" id="mode-detail">
   <div class="sub-hero">
     <div class="sub-wrap">
@@ -3853,12 +3807,12 @@
   </div>
   <div class="content-block" style="margin-top:20px;" id="modeInfo"></div>
   <div class="board-wrap" style="padding-top:0;">
-    <p class="board-label">Choose Call Type</p>
+    <p class="board-label">Tap Your Seat</p>
     <div id="apparatusBoard"></div>
   </div>
 </section>
 
-<!-- ============ APPARATUS DETAIL (seat picker: Officer / Engineer / FFL / FFR) ============ -->
+<!-- ============ APPARATUS DETAIL (call type picker: High-Rise / Midrise) ============ -->
 <section class="screen" id="apparatus-detail">
   <div class="sub-hero">
     <div class="sub-wrap">
@@ -3870,12 +3824,227 @@
       <p class="sub-tag" id="apparatusTag"></p>
     </div>
   </div>
-  <div class="content-block" style="margin-top:20px;" id="apparatusAlert"></div>
   <div class="board-wrap" style="padding-top:0;">
-    <p class="board-label">Tap Your Seat</p>
+    <p class="board-label">Choose Call Type</p>
     <div id="seatBoard"></div>
   </div>
-  <div class="content-block" id="apparatusCache"></div>
+
+  <!-- Full Pump Calculator — shown only for Engineer on Engine/Tower, since
+       the calculator doesn't depend on call type and belongs here, before
+       the crew drills into a specific arrival scenario. Toggled via
+       #pc-root's [hidden] attribute in openSeatPicker(). -->
+<div class="pumpcalc" id="pc-root" hidden>
+<header class="top">
+  <div class="top-inner">
+    <h1 class="brand">Station 2 <span>Pump Calculator</span></h1>
+    <div class="hose-switch" role="group" aria-label="Hose type">
+      <button type="button" id="hose-combat" aria-pressed="true">Combat Ready</button>
+      <button type="button" id="hose-standard" aria-pressed="false">Standard (old)</button>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Calculator mode">
+    <button class="tab" role="tab" id="tab-off" aria-controls="p-off" aria-selected="true">Offensive</button>
+    <button class="tab" role="tab" id="tab-def" aria-controls="p-def" aria-selected="false">Defensive &amp; Supply</button>
+    <button class="tab" role="tab" id="tab-hyd" aria-controls="p-hyd" aria-selected="false">Hydrant Water</button>
+    <button class="tab" role="tab" id="tab-rly" aria-controls="p-rly" aria-selected="false">Relay</button>
+    <button class="tab" role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div id="p-off" role="tabpanel" aria-labelledby="tab-off">
+    <section class="panel">
+      <h2 class="sec">1 · Line</h2>
+      <div class="choices" id="off-lines"></div>
+      <div id="off-tips-block" hidden>
+        <div class="divider"></div>
+        <h2 class="sec">2 · Nozzle tip</h2>
+        <div class="chips" id="off-tips"></div>
+      </div>
+      <div class="divider"></div>
+      <h2 class="sec" id="off-len-label">Hose length</h2>
+      <div class="chips" id="off-lengths"></div>
+      <div class="row" style="margin-top:12px">
+        <div class="field"><label for="off-len-custom">Other length (ft)</label>
+          <input id="off-len-custom" type="number" min="0" max="2000" step="25" inputmode="numeric"></div>
+        <div class="field"><label for="off-floors">Floors above pump</label>
+          <input id="off-floors" type="number" min="-10" max="40" step="1" value="0" inputmode="numeric"></div>
+        <div class="field"><label for="off-feet">Extra elevation (ft)</label>
+          <input id="off-feet" type="number" min="-200" max="400" step="1" value="0" inputmode="numeric"></div>
+      </div>
+      <p class="hint">Elevation follows the card: <b>5 psi per 10 ft</b>. A floor counts as 10 ft. Use a negative number below the pump.</p>
+    </section>
+    <div class="readout" id="off-readout"></div>
+    <section class="panel">
+      <h2 class="sec">Matching chart</h2>
+      <div class="tablewrap" id="off-table"></div>
+      <p class="hint" style="margin-bottom:0">Highlighted cell is your setting. Lengths between columns are interpolated from the card.</p>
+    </section>
+  </div>
+
+  <div id="p-def" role="tabpanel" aria-labelledby="tab-def" hidden>
+    <section class="panel">
+      <h2 class="sec">1 · Line</h2>
+      <div class="choices" id="def-lines"></div>
+      <div id="def-tips-block" hidden>
+        <div class="divider"></div>
+        <h2 class="sec">2 · Nozzle tip</h2>
+        <div class="chips" id="def-tips"></div>
+      </div>
+      <div id="def-flow-block" hidden>
+        <div class="divider"></div>
+        <h2 class="sec">2 · Flow needed</h2>
+        <div class="chips" id="def-flows"></div>
+      </div>
+      <div class="divider"></div>
+      <h2 class="sec" id="def-len-label">Hose length</h2>
+      <div class="chips" id="def-lengths"></div>
+      <div class="row" style="margin-top:12px">
+        <div class="field"><label for="def-len-custom">Other length (ft)</label>
+          <input id="def-len-custom" type="number" min="0" max="2000" step="25" inputmode="numeric"></div>
+        <div class="field"><label for="def-feet">Elevation (ft)</label>
+          <input id="def-feet" type="number" min="-200" max="400" step="5" value="0" inputmode="numeric"></div>
+        <div class="field" id="def-intake-field" hidden><label for="def-intake">Residual wanted at the next intake (psi)</label>
+          <input id="def-intake" type="number" min="0" max="150" step="5" value="20" inputmode="numeric"></div>
+      </div>
+      <p class="hint" id="def-hint"></p>
+      <div class="alert is-danger" id="def-warn" hidden style="margin-top:12px;border-top:0;border-radius:3px">
+        <span class="tag">Caution</span>
+        <span>DO NOT OVERPUMP THE TIP. Pump the smooth bore's rated PDP for the tip that's actually on the device — this calculator only adds the 5" supply friction loss on top of that. Overpumping a master stream tip risks hose failure and injury.</span>
+      </div>
+    </section>
+    <div class="readout" id="def-readout"></div>
+    <section class="panel">
+      <h2 class="sec">Matching chart</h2>
+      <div class="tablewrap" id="def-table"></div>
+      <p class="hint" style="margin-bottom:0">Amber cells are high working pressures — check the stretch and set the relief valve. Red cells pass the hose's rated pressure.</p>
+    </section>
+  </div>
+
+  <div id="p-hyd" role="tabpanel" aria-labelledby="tab-hyd" hidden>
+    <section class="panel">
+      <h2 class="sec">Pumping worksheet</h2>
+      <div class="row">
+        <div class="field"><label for="hyd-static">Static pressure (psi)</label>
+          <input id="hyd-static" type="number" min="0" max="250" step="1" value="80" inputmode="numeric"></div>
+        <div class="field"><label for="hyd-residual">Residual, flowing (psi)</label>
+          <input id="hyd-residual" type="number" min="0" max="250" step="1" value="70" inputmode="numeric"></div>
+        <div class="field"><label for="hyd-gpm">Current flow (gpm)</label>
+          <input id="hyd-gpm" type="number" min="0" max="4000" step="10" value="250" inputmode="numeric"></div>
+      </div>
+      <p class="hint">Mark the static before the lines are charged. Read the residual off the intake gauge once water is moving.</p>
+    </section>
+    <div class="readout" id="hyd-readout"></div>
+    <div class="hcalc-card" id="hyd-deploy">
+      <p class="hcalc-card-title">You Can Deploy</p>
+      <div id="hyd-deploy-list"></div>
+    </div>
+    <section class="panel">
+      <h2 class="sec">Card table</h2>
+      <div class="tablewrap">
+        <table>
+          <caption>Estimating additional hydrant water available</caption>
+          <thead><tr><th>Static</th><th>Residual → ×3</th><th>Residual → ×2</th><th>Residual → ×1</th></tr></thead>
+          <tbody id="hyd-table"></tbody>
+        </table>
+      </div>
+      <p class="hint" style="margin-bottom:0">Supply lines: friction loss in the lay plus the residual you want left on the receiving intake. M 6125 sets that minimum at <b>20 psi</b>.</p>
+    </section>
+  </div>
+
+  <div id="p-rly" role="tabpanel" aria-labelledby="tab-rly" hidden>
+    <section class="panel">
+      <h2 class="sec">Relay worksheet</h2>
+      <div class="row">
+        <div class="field"><label for="rly-gpm">Flow needed at the fire (gpm)</label>
+          <input id="rly-gpm" type="number" min="0" max="4000" step="10" value="1000" inputmode="numeric"></div>
+        <div class="field"><label for="rly-dist">Total lay distance (ft)</label>
+          <input id="rly-dist" type="number" min="0" max="20000" step="100" value="2000" inputmode="numeric"></div>
+        <div class="field"><label for="rly-lines">Parallel 5" supply lines</label>
+          <input id="rly-lines" type="number" min="1" max="4" step="1" value="1" inputmode="numeric"></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="field"><label for="rly-elev">Net elevation, source to fire (ft)</label>
+          <input id="rly-elev" type="number" min="-500" max="500" step="5" value="0" inputmode="numeric"></div>
+        <div class="field"><label for="rly-intake">Residual wanted at each intake (psi)</label>
+          <input id="rly-intake" type="number" min="0" max="150" step="5" value="20" inputmode="numeric"></div>
+        <div class="field"><label for="rly-cap">Max relay discharge pressure (psi)</label>
+          <input id="rly-cap" type="number" min="50" max="300" step="5" value="150" inputmode="numeric"></div>
+        <div class="field"><label for="rly-rating">Pump rated capacity (gpm @150 psi)</label>
+          <input id="rly-rating" type="number" min="250" max="3000" step="250" value="1500" inputmode="numeric"></div>
+      </div>
+      <p class="hint">Splits the lay evenly across relay engines until each one's discharge pressure fits inside your cap, and checks that a derated pump can still make the flow at that pressure. Rule of thumb: 10 psi per 100 ft, not over 200 psi discharge (S 6506).</p>
+    </section>
+    <div class="readout" id="rly-readout"></div>
+    <section class="panel">
+      <h2 class="sec">Engine by engine</h2>
+      <div class="tablewrap" id="rly-table"></div>
+      <p class="hint" style="margin-bottom:0">Pump capacity derates as discharge pressure climbs — 100% at 150 psi, about 70% at 200, about 50% at 250, about 40% beyond that (<i>Hydraulics &amp; Pump Operations</i>, Ch. 5, p. 107). A "Short" flag means that engine can't actually make the flow at the pressure this leg needs — split the flow across more parallel lines or add another relay engine.</p>
+    </section>
+  </div>
+
+  <div id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden>
+    <section class="panel">
+      <h2 class="sec">The equation</h2>
+      <p style="margin-top:0"><span class="formula">EP = NP + FL + APP + ELEV</span></p>
+      <p style="margin-bottom:0;color:var(--ash)">Friction loss is <b>FL = CQ²L</b>, where Q is gpm ÷ 100 and L is length ÷ 100.</p>
+      <div class="divider"></div>
+      <div class="ref-grid">
+        <div class="ref"><h3>Combat Ready coefficients</h3>
+          <ul><li>1¾" — <b>6.59</b></li><li>2" — <b>5.25</b></li><li>2½" — <b>1.8</b></li><li>5" — <b>0.08</b></li></ul></div>
+        <div class="ref"><h3>Standard (old) coefficients</h3>
+          <ul><li>1¾" — <b>15.5</b></li><li>2" — <b>8</b></li><li>2½" — <b>2</b></li><li>5" — <b>0.08</b></li></ul></div>
+        <div class="ref"><h3>Nozzle pressures</h3>
+          <ul><li>Smooth bore handline — <b>50 psi</b></li><li>Fog handline — <b>50 psi</b> (yellow, orange)</li>
+            <li>Smooth bore master stream — <b>80 psi</b></li><li>Stacked tips over 350 gpm — <b>80 psi</b></li></ul></div>
+        <div class="ref"><h3>Pressure limits <span class="hint">(FWFD SOPs)</span></h3>
+          <ul><li>2½" attack hose — working <b>400 psi</b>, tested to <b>800 psi</b> <span class="hint">I 6923</span></li>
+            <li>Our 5" supply is <b>double jacketed</b> — service tested <b>300 psi</b> for 5 min <span class="hint">S 6801 R3</span></li>
+            <li>Max discharge, woven/double jacket — <b>300 psi</b> <span class="hint">M 6125</span></li>
+            <li>5" supply — <b>300 psi</b> max <span class="hint">rig card, matches M 6125</span></li>
+            <li>Keep <b>20 psi</b> minimum residual on the intake gauge <span class="hint">M 6125</span></li></ul></div>
+        <div class="ref"><h3>Relay pumping</h3>
+          <ul><li>PDP = <b>LDH friction loss + the residual you want at the next intake</b></li>
+            <li>Minimum residual on the intake gauge — <b>20 psi</b> <span class="hint">M 6125</span></li>
+            <li>Rule of thumb <b>10 psi per 100 ft</b>, <b>not over 200 psi</b> discharge <span class="hint">S 6506</span></li>
+            <li>Low-volume hydrant = <b>9 psi or less</b>; start a relay past <b>800 ft</b> <span class="hint">S 6506</span></li>
+            <li>Close lines slowly — surges travel the whole relay</li></ul></div>
+        <div class="ref"><h3>Deck gun &amp; aerial</h3>
+          <ul><li>Combat Ready card — <b>105 PDP</b> at the device</li><li>Standard card — <b>80 PDP</b> at the device</li>
+            <li>Plus friction loss in the 5" supply feeding it — <b>FL = CQ²L</b>, C <b>0.08</b></li>
+            <li>Plus <b>5 psi per 10 ft</b> of elevation</li></ul></div>
+      </div>
+      <div class="divider"></div>
+      <h2 class="sec">Master stream tips</h2>
+      <div class="tablewrap">
+        <table><caption>Smooth bore deck gun / aerials — 105 PDP</caption>
+          <thead><tr><th>Tip</th><th>GPM</th><th>Tip</th><th>GPM</th></tr></thead>
+          <tbody>
+            <tr><td class="rowhead">1⅜"</td><td>501</td><td class="rowhead">1⅞"</td><td>935</td></tr>
+            <tr><td class="rowhead">1½"</td><td>598</td><td class="rowhead">2"</td><td>1,063</td></tr>
+            <tr><td class="rowhead">1¾"</td><td>814</td><td class="rowhead">2¼"</td><td>1,345</td></tr>
+            <tr><td class="rowhead">—</td><td>—</td><td class="rowhead">2½"</td><td>1,660</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="sec">Check these against the printed card</h2>
+      <ul class="notes">
+        <li><b>Defensive 2½" stacked tips.</b> The flows listed (414 · 501 · 598 gpm) are what those tips move at <b>80 psi</b> nozzle pressure, but the PDP row is built on <b>50 psi</b>. At 100 ft the card reads 81 psi for the 1¼" tip, while the Blitzfire block on the same card reads 111 psi for the same 415 gpm. Pumping the card number gets you roughly 330 gpm out of that tip, not 414. Add about 30 psi if you want the listed flow.</li>
+        <li><b>Blitzfire 1½" row.</b> That row is built on about 100 psi at the inlet, while the 1" and 1¼" rows use 80. Looks like 20 psi of appliance loss was added to one row and not the others.</li>
+        <li><b>2" fog, 350 ft.</b> The row steps 17 psi per 50 ft (83 · 100 · 117 · 134 · 151), which puts 350 ft at 168. The card looks like 177. This calculator uses 168.</li>
+      </ul>
+      <p class="hint" style="margin-bottom:0">Everything else on both cards matches FL = CQ²L with the department coefficients.</p>
+    </section>
+  </div>
+
+  <footer class="foot">
+    Built from the FWFD offensive, defensive and water supply cards (Combat Ready and standard hose) and <i>Fire Service Hydraulics and Pump Operations</i>. Check it against the card on your rig before you use it on the fireground.
+  </footer>
+</div>
+</div>
 </section>
 
 <!-- ============ POSITION DETAIL (arrival-order breakdown) ============ -->
@@ -4872,6 +5041,7 @@
 
   let currentMode = null;
   let currentApparatus = null;
+  let currentSeat = null;
 
   function seatLabel(app, seatId){
     if(app.seatOverrides && app.seatOverrides[seatId]) return app.seatOverrides[seatId].label;
@@ -4891,7 +5061,7 @@
     return { tasks: arrival.crewTasks || [], equipment: arrival.equipment || [] };
   }
 
-  // Flow: assignments (pick rig) -> mode-detail (pick call type) -> apparatus-detail (pick seat) -> position-detail
+  // Flow: assignments (pick rig) -> mode-detail (pick riding position) -> apparatus-detail (pick call type) -> position-detail
   const APPARATUS_KEYS = Object.keys(RIDE_DATA.highrise.apparatus); // same rig keys/labels under every call type
 
   function buildModeBoard(){
@@ -4913,14 +5083,57 @@
     });
   }
 
+  // Step 2 — riding position. Seat labels/descriptions don't vary by call
+  // type in practice, so this screen only needs the rig (appKey); any
+  // apparatus entry works as the reference for labels.
   function openApparatusPicker(appKey){
     currentApparatus = appKey;
-    const label = RIDE_DATA.highrise.apparatus[appKey].label;
-    document.getElementById('modeTitle').textContent = label;
-    document.getElementById('modeTag').textContent = 'Choose the call type for this rig';
+    const refApp = RIDE_DATA.highrise.apparatus[appKey];
+    document.getElementById('modeTitle').textContent = refApp.label;
+    document.getElementById('modeTag').textContent = 'Tap your riding position for this rig';
     document.getElementById('modeInfo').innerHTML = '';
 
     const board = document.getElementById('apparatusBoard');
+    board.innerHTML = '';
+    SEATS.forEach(seat => {
+      const label = seatLabel(refApp, seat.id);
+      const desc = seatDesc(refApp, seat.id);
+      const btn = document.createElement('button');
+      btn.className = 'plate';
+      btn.innerHTML = `
+        <span class="rivet tl"></span><span class="rivet br"></span>
+        <span class="plate-main">
+          <span class="plate-unit">${label.toUpperCase()}</span>
+          <span class="plate-desc">${desc}</span>
+        </span>
+        <span class="plate-arrow">→</span>`;
+      btn.onclick = () => openSeatPicker(appKey, seat.id);
+      board.appendChild(btn);
+    });
+
+    showScreen('mode-detail');
+  }
+
+  // Step 3 — call type. Rig + riding position are already known; this
+  // screen lists High-Rise/Midrise (with an arrival-scenario count for
+  // this rig) and, for the Engineer on Engine/Tower, the full Pump
+  // Calculator — it doesn't depend on call type, so it lives here rather
+  // than waiting for the final results screen.
+  function openSeatPicker(appKey, seatId){
+    currentApparatus = appKey;
+    currentSeat = seatId;
+    const refApp = RIDE_DATA.highrise.apparatus[appKey];
+
+    document.getElementById('apparatusTitle').textContent = seatLabel(refApp, seatId);
+    document.getElementById('apparatusTag').textContent = refApp.label + ' · Choose the call type';
+    document.getElementById('apparatusBackBtn').onclick = () => openApparatusPicker(appKey);
+
+    const pcRoot = document.getElementById('pc-root');
+    if(pcRoot){
+      pcRoot.hidden = !(seatId === 'engineer' && (appKey === 'engine' || appKey === 'tower'));
+    }
+
+    const board = document.getElementById('seatBoard');
     board.innerHTML = '';
     Object.entries(RIDE_DATA).forEach(([modeKey, mode]) => {
       const app = mode.apparatus[appKey];
@@ -4933,25 +5146,31 @@
           <span class="plate-desc">${app.arrivals.length} arrival scenario${app.arrivals.length>1?'s':''}</span>
         </span>
         <span class="plate-arrow">→</span>`;
-      btn.onclick = () => openApparatus(modeKey, appKey);
+      btn.onclick = () => openPosition(modeKey, appKey, seatId);
       board.appendChild(btn);
     });
 
-    showScreen('mode-detail');
+    showScreen('apparatus-detail');
   }
 
-  function openApparatus(modeKey, appKey){
+  // Step 4 — results. Mode, rig, and seat are all known here, so this is
+  // where the call-type-level alert/notes and the rig's equipment cache
+  // (previously shown a step earlier) now render, ahead of the seat's
+  // arrival-order breakdown.
+  function openPosition(modeKey, appKey, seatId){
     currentMode = modeKey;
     currentApparatus = appKey;
+    currentSeat = seatId;
     const mode = RIDE_DATA[modeKey];
     const app = mode.apparatus[appKey];
 
-    document.getElementById('apparatusTitle').textContent = app.label;
-    document.getElementById('apparatusTag').textContent = mode.label + ' · Station';
-    document.getElementById('apparatusBackBtn').onclick = () => openApparatusPicker(appKey);
+    document.getElementById('positionTitle').textContent = seatLabel(app, seatId);
+    document.getElementById('positionTag').textContent = app.label + ' · ' + mode.label + ' · Station';
+    document.getElementById('positionBackBtn').onclick = () => openSeatPicker(appKey, seatId);
 
-    const alertBox = document.getElementById('apparatusAlert');
-    alertBox.innerHTML = '';
+    const content = document.getElementById('positionContent');
+    content.innerHTML = '';
+
     if(mode.secondAlarm){
       const card = document.createElement('div');
       card.className = 'info-card';
@@ -4967,7 +5186,7 @@
         ul.appendChild(li);
       });
       card.appendChild(ul);
-      alertBox.appendChild(card);
+      content.appendChild(card);
     }
     if(mode.notes){
       mode.notes.forEach(note => {
@@ -4985,18 +5204,15 @@
           ul.appendChild(li);
         });
         card.appendChild(ul);
-        alertBox.appendChild(card);
+        content.appendChild(card);
       });
     }
     if(app.alert){
       const div = document.createElement('div');
       div.className = 'rpm-alert';
       div.textContent = app.alert;
-      alertBox.appendChild(div);
+      content.appendChild(div);
     }
-
-    const cacheBox = document.getElementById('apparatusCache');
-    cacheBox.innerHTML = '';
     if(app.cache){
       app.cache.forEach(group => {
         const card = document.createElement('div');
@@ -5010,50 +5226,14 @@
           row.innerHTML = `<span class="dot"></span><span class="name">${item}</span>`;
           card.appendChild(row);
         });
-        cacheBox.appendChild(card);
+        content.appendChild(card);
       });
     }
-
-    const board = document.getElementById('seatBoard');
-    board.innerHTML = '';
-    SEATS.forEach(seat => {
-      const label = seatLabel(app, seat.id);
-      const desc = seatDesc(app, seat.id);
-      const btn = document.createElement('button');
-      btn.className = 'plate';
-      btn.innerHTML = `
-        <span class="rivet tl"></span><span class="rivet br"></span>
-        <span class="plate-main">
-          <span class="plate-unit">${label.toUpperCase()}</span>
-          <span class="plate-desc">${desc}</span>
-        </span>
-        <span class="plate-arrow">→</span>`;
-      btn.onclick = () => openPosition(modeKey, appKey, seat.id);
-      board.appendChild(btn);
-    });
-
-    showScreen('apparatus-detail');
-  }
-
-  function openPosition(modeKey, appKey, seatId){
-    const mode = RIDE_DATA[modeKey];
-    const app = mode.apparatus[appKey];
-
-    document.getElementById('positionTitle').textContent = seatLabel(app, seatId);
-    document.getElementById('positionTag').textContent = app.label + ' · ' + mode.label + ' · Station';
-    document.getElementById('positionBackBtn').onclick = () => openApparatus(modeKey, appKey);
-
-    const content = document.getElementById('positionContent');
-    content.innerHTML = '';
 
     app.arrivals.forEach((arrival, i) => {
       const data = seatData(arrival, seatId);
       content.appendChild(buildArrivalCard(arrival, data, i === 0));
     });
-
-    if(seatId === 'engineer' && (appKey === 'engine' || appKey === 'tower')){
-      content.appendChild(buildHydrantCalcCard());
-    }
 
     showScreen('position-detail');
   }
@@ -5129,172 +5309,6 @@
 
     card.appendChild(body);
     return card;
-  }
-
-  /* ============ HYDRANT WATER AVAILABLE CALCULATOR (Engineer — Engine/Tower) ============ */
-  function buildHydrantCalcCard(){
-    // Reference table: static pressure -> [x3, x2, x1 threshold] residual psi
-    const table = [
-      {s:50,  x3:45, x2:40, x1:35},
-      {s:60,  x3:55, x2:50, x1:45},
-      {s:70,  x3:65, x2:60, x1:50},
-      {s:80,  x3:75, x2:70, x1:65},
-      {s:90,  x3:80, x2:75, x1:70},
-      {s:100, x3:90, x2:85, x1:75},
-    ];
-    function lerp(a,b,t){ return a + (b-a)*t; }
-    function thresholdsFor(staticP){
-      const s = Math.max(table[0].s, Math.min(table[table.length-1].s, staticP));
-      for(let i=0;i<table.length-1;i++){
-        const a = table[i], b = table[i+1];
-        if(s >= a.s && s <= b.s){
-          const t = (s - a.s) / (b.s - a.s);
-          return { x3: lerp(a.x3,b.x3,t), x2: lerp(a.x2,b.x2,t), x1: lerp(a.x1,b.x1,t) };
-        }
-      }
-      return {x3:table[0].x3, x2:table[0].x2, x1:table[0].x1};
-    }
-    function multiplierFor(staticP, residualP){
-      const th = thresholdsFor(staticP);
-      if(residualP >= th.x3){
-        const slope = th.x3 - th.x2;
-        if(slope <= 0) return 3;
-        return 3 + (residualP - th.x3) / slope;
-      }
-      if(residualP >= th.x2){
-        const t = (residualP - th.x2) / (th.x3 - th.x2);
-        return lerp(2, 3, t);
-      }
-      if(residualP >= th.x1){
-        const t = (residualP - th.x1) / (th.x2 - th.x1);
-        return lerp(1, 2, t);
-      }
-      const slope = th.x2 - th.x1;
-      if(slope <= 0) return 0;
-      const t = (residualP - (th.x1 - slope)) / slope;
-      return Math.max(0, t);
-    }
-    const deployOptions = [
-      {gpm:175,  desc:'1¾" Handline — 50 psi Fog'},
-      {gpm:250,  desc:'2" Handline — 50 psi Fog'},
-      {gpm:265,  desc:'2½" Handline — 1⅛" Smooth Bore'},
-      {gpm:500,  desc:'Deck Gun — 1⅜" Tip'},
-      {gpm:1063, desc:'Aerial — 2" Tip'}
-    ];
-
-    const wrap = document.createElement('div');
-    wrap.className = 'hcalc-wrap';
-    wrap.innerHTML = `
-      <p class="hcalc-heading">Hydrant Water Available</p>
-      <p class="hcalc-subheading">Estimating Additional Supply — Percent Drop Method</p>
-
-      <div class="hcalc-card">
-        <p class="hcalc-card-title">Additional GPM Calculator</p>
-        <div class="hcalc-field">
-          <label class="hcalc-label">Static Pressure <span class="hcalc-unit">psi</span></label>
-          <input type="number" class="hcalc-input" data-hf="staticP" inputmode="decimal" placeholder="e.g. 65">
-        </div>
-        <div class="hcalc-field">
-          <label class="hcalc-label">Residual Pressure <span class="hcalc-unit">psi (while flowing)</span></label>
-          <input type="number" class="hcalc-input" data-hf="residualP" inputmode="decimal" placeholder="e.g. 48">
-        </div>
-        <div class="hcalc-field">
-          <label class="hcalc-label">Current Flow <span class="hcalc-unit">gpm</span></label>
-          <input type="number" class="hcalc-input" data-hf="currentGPM" inputmode="decimal" placeholder="e.g. 250">
-        </div>
-        <div class="hcalc-hint">1. Mark static, then flow water and record GPM and residual.</div>
-      </div>
-
-      <div class="hcalc-card hcalc-result" data-hf="resultPlate" style="display:none;">
-        <p class="hcalc-card-title">Estimated Availability</p>
-        <div class="hcalc-status" data-hf="statusBadge">—</div>
-        <div class="hcalc-bignum" data-hf="outAdditional">0</div>
-        <div class="hcalc-biglabel">Additional GPM Available</div>
-        <div class="hcalc-strip"><div class="hcalc-marker" data-hf="marker" style="left:0%;"></div></div>
-        <div class="hcalc-striplabels"><span>0×</span><span>1×</span><span>2×</span><span>3×</span></div>
-        <div class="hcalc-breakdown">
-          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="outCurrent">0</div><div class="hcalc-bdlbl">Now Flowing</div></div>
-          <div class="hcalc-bddivider"></div>
-          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="multValue">0.0×</div><div class="hcalc-bdlbl">Multiplier</div></div>
-          <div class="hcalc-bddivider"></div>
-          <div class="hcalc-bditem"><div class="hcalc-bdnum" data-hf="outTotal">0</div><div class="hcalc-bdlbl">Total Capacity</div></div>
-        </div>
-      </div>
-
-      <div class="hcalc-card" data-hf="deployPlate" style="display:none;">
-        <p class="hcalc-card-title">You Can Deploy</p>
-        <div data-hf="deployList"></div>
-      </div>
-
-      <p class="hcalc-footnote">Combat Ready Hose reference · Percent-drop method (NFPA 291-style)</p>
-    `;
-
-    const $ = (name) => wrap.querySelector('[data-hf="' + name + '"]');
-    const staticInput = $('staticP');
-    const residualInput = $('residualP');
-    const gpmInput = $('currentGPM');
-    const resultPlate = $('resultPlate');
-    const statusBadge = $('statusBadge');
-    const multValue = $('multValue');
-    const marker = $('marker');
-    const outCurrent = $('outCurrent');
-    const outAdditional = $('outAdditional');
-    const outTotal = $('outTotal');
-    const deployPlate = $('deployPlate');
-    const deployList = $('deployList');
-
-    function recalc(){
-      const s = parseFloat(staticInput.value);
-      const r = parseFloat(residualInput.value);
-      const g = parseFloat(gpmInput.value);
-
-      if(isNaN(s) || isNaN(r) || isNaN(g) || s <= 0 || g < 0 || r > s){
-        resultPlate.style.display = 'none';
-        deployPlate.style.display = 'none';
-        return;
-      }
-
-      const mult = Math.max(0, multiplierFor(s, r));
-      const additional = mult * g;
-      const total = g + additional;
-
-      resultPlate.style.display = '';
-      multValue.textContent = mult.toFixed(1) + '×';
-      outCurrent.textContent = Math.round(g);
-      outAdditional.textContent = Math.round(additional);
-      outTotal.textContent = Math.round(total);
-
-      const pct = Math.max(0, Math.min(1, mult/3)) * 100;
-      marker.style.left = pct + '%';
-
-      statusBadge.classList.remove('good','mid','low');
-      if(mult >= 2){
-        statusBadge.classList.add('good');
-        statusBadge.textContent = 'Strong Supply';
-      } else if(mult >= 1){
-        statusBadge.classList.add('mid');
-        statusBadge.textContent = 'Moderate Supply';
-      } else {
-        statusBadge.classList.add('low');
-        statusBadge.textContent = 'Limited — Near Capacity';
-      }
-
-      deployPlate.style.display = '';
-      deployList.innerHTML = deployOptions.map(opt => {
-        const ok = additional >= opt.gpm;
-        return `<div class="hcalc-deploy-item ${ok ? 'avail' : 'locked'}">
-          <div class="hcalc-di-left">
-            <span class="hcalc-di-gpm">${opt.gpm}</span>
-            <span class="hcalc-di-desc">${opt.desc}</span>
-          </div>
-          <span class="hcalc-di-check">${ok ? 'Ready' : 'Locked'}</span>
-        </div>`;
-      }).join('');
-    }
-
-    [staticInput, residualInput, gpmInput].forEach(el => el.addEventListener('input', recalc));
-
-    return wrap;
   }
 
 // ---- Phone directory search (General tab) ----
@@ -5795,6 +5809,555 @@ function initGlobalSearch(){
     var unitEl = a.querySelector('.plate-unit');
     openPdf(a.getAttribute('href'), unitEl ? unitEl.textContent.trim() : 'Document');
   }, false);
+})();
+</script>
+
+<!-- Embedded Pump Calculator — logic ported from the standalone Station 2
+     Pump Calculator tool. Wrapped in its own IIFE so nothing here leaks
+     into the page's global scope; every id it touches (pc-root's
+     descendants) is unique to this block (verified against the rest of
+     the page), and its own localStorage keys are prefixed pc-s2*. -->
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- data ----------------
+     Each line: table of PDP (or FL) values keyed to the card's lengths.
+     Values are transcribed from the laminated cards; in-between lengths interpolate. */
+
+  var L9  = [100,150,200,250,300,350,400,450,500];
+  var L6  = [100,150,200,250,300,350];
+  var L12 = [100,150,200,250,300,350,400,450,500,550,600,650];
+  var LS  = [100,200,300,400,500,600,700,800,900,1000];
+  var LDECK = [25,50,100,200];
+
+  var COMBAT = {
+    label:"Combat Ready",
+    off:[
+      {id:"bbf", name:'1¾" Big Booster', sub:"Yellow 50 psi fog · 175 gpm", lengths:L6, defaultLen:150,
+       rows:[{tip:"Fog", gpm:175, vals:[71,81,91,101,111,121]}], limit:"handline"},
+      {id:"bbs", name:'1¾" Smooth Bore', sub:"50 psi nozzle", lengths:L6, defaultLen:150,
+       rows:[{tip:'7/8"', gpm:160, vals:[67,75,84,92,100,109]},
+             {tip:'15/16"', gpm:185, vals:[73,84,95,106,117,128]}], limit:"handline"},
+      {id:"2f", name:'2" Handline', sub:"Orange 50 psi fog · 250 gpm", lengths:L6,
+       rows:[{tip:"Fog", gpm:250, vals:[83,100,117,134,151,168]}], limit:"handline"},
+      {id:"2s", name:'2" Smooth Bore', sub:"50 psi nozzle", lengths:L6,
+       rows:[{tip:'1"', gpm:210, vals:[73,85,97,109,120,132]},
+             {tip:'1⅛"', gpm:265, vals:[87,105,124,142,161,180]}], limit:"handline"},
+      {id:"25o", name:'2½" Handline', sub:"50 psi NP · stacked tips", lengths:L9, defaultRowIdx:1,
+       rows:[{tip:'1"', gpm:210, vals:[58,62,66,70,74,78,82,86,90]},
+             {tip:'1⅛"', gpm:265, vals:[63,69,75,82,88,94,101,107,113]},
+             {tip:'1¼"', gpm:328, vals:[69,79,89,99,109,119,129,139,149]}], limit:"handline"},
+      {id:"apt", name:"Apartment Load", sub:'2½" into 100′ of 1¾" · 175 gpm', lengths:L12, lenLabel:'Length of 2½"',
+       rows:[{tip:"Yellow fog", gpm:175, vals:[75,78,81,84,87,90,93,96,99,102,105,108]}], limit:"handline"}
+    ],
+    def:[
+      {id:"25d", name:'2½" Stacked Tips', sub:"Over 350 gpm = 80 NP", lengths:L9,
+       note:"Card values. These flows need 80 psi at the tip but the row is figured on 50 — add about 30 psi to actually move the listed gpm.",
+       rows:[{tip:'1¼"', gpm:414, vals:[81,97,112,128,143,158,174,189,205]},
+             {tip:'1⅜"', gpm:501, vals:[96,118,141,164,186,209,232,255,277]},
+             {tip:'1½"', gpm:598, vals:[115,147,180,212,244,277,309,341,374]}], limit:"handline"},
+      {id:"blz", name:'2½" Blitzfire', sub:"Master stream", lengths:L9,
+       rows:[{tip:'1"', gpm:266, vals:[93,99,105,112,118,125,131,138,144]},
+             {tip:'1¼"', gpm:415, vals:[111,127,142,158,174,189,205,220,236]},
+             {tip:'1½"', gpm:598, vals:[167,199,232,264,296,329,361,393,426]}], limit:"handline"},
+      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply', defaultRowIdx:4, defaultLen:50,
+       rows:[{tip:'1⅜"', gpm:501},{tip:'1½"', gpm:598},{tip:'1¾"', gpm:814},{tip:'1⅞"', gpm:935},
+             {tip:'2"', gpm:1063},{tip:'2¼"', gpm:1345},{tip:'2½"', gpm:1660}], limit:"five"},
+      {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
+       rows:[{tip:"500", gpm:500, vals:[2,4,6,8,10,12,14,16,18,20]},
+             {tip:"1000", gpm:1000, vals:[8,16,24,32,40,48,56,64,72,80]},
+             {tip:"1500", gpm:1500, vals:[18,36,54,72,90,108,126,144,162,180]},
+             {tip:"2000", gpm:2000, vals:[32,64,96,128,160,192,224,256,288,320]}]}
+    ]
+  };
+
+  /* Standard (old) hose — generated from FL = CQ²L with C 15.5 / 8 / 2 / 0.2 */
+  function build(c, np, gpm, lengths, extra){
+    return lengths.map(function(L){
+      var fl = c * Math.pow(gpm/100,2) * (L/100);
+      if(extra) fl += extra.c * Math.pow(gpm/100,2) * (extra.len/100);
+      return Math.round(np + fl);
+    });
+  }
+  var STANDARD = {
+    label:"Standard (old)",
+    off:[
+      {id:"bbf", name:'1¾" Big Booster', sub:"Yellow 50 psi nozzle · 175 gpm", lengths:[100,150,200,250,300], defaultLen:150,
+       rows:[{tip:"Fog", gpm:175, vals:build(15.5,50,175,[100,150,200,250,300])}], limit:"handline"},
+      {id:"2f", name:'2" Handline', sub:"Orange 50 psi nozzle · 250 gpm", lengths:[100,150,200,250,300],
+       rows:[{tip:"Fog", gpm:250, vals:build(8,50,250,[100,150,200,250,300])}], limit:"handline"},
+      {id:"25o", name:'2½" Handline', sub:"50 psi NP · stacked tips", lengths:L9, defaultRowIdx:1,
+       rows:[{tip:'1"',gpm:210,vals:build(2,50,210,L9)},{tip:'1⅛"',gpm:266,vals:build(2,50,266,L9)},
+             {tip:'1⅜"',gpm:395,vals:build(2,50,395,L9)},{tip:'1½"',gpm:470,vals:build(2,50,470,L9)}], limit:"handline"},
+      {id:"apt", name:"Apartment Load", sub:'2½" into 100′ of 1¾" · 175 gpm', lengths:[200,250,300,350,400,450,500,550,600,650], lenLabel:'Length of 2½"',
+       rows:[{tip:"Yellow fog", gpm:175, vals:build(2,50,175,[200,250,300,350,400,450,500,550,600,650],{c:15.5,len:100})}], limit:"handline"}
+    ],
+    def:[
+      {id:"25d", name:'2½" Stacked Tips', sub:"Under 350 gpm = 50 NP · over = 80", lengths:L9,
+       rows:[{tip:'1"',gpm:210,vals:build(2,50,210,L9)},{tip:'1⅛"',gpm:266,vals:build(2,50,266,L9)},
+             {tip:'1⅜"',gpm:498,vals:build(2,80,498,L9)},{tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
+      {id:"blz", name:'2½" Blitzfire', sub:"Master stream · 80 psi NP", lengths:L9,
+       rows:[{tip:'1"',gpm:266,vals:build(2,80,266,L9)},{tip:'1¼"',gpm:415,vals:build(2,80,415,L9)},
+             {tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
+      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 80 PDP at the device", supplyFed:true, base:80, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply', defaultRowIdx:3, defaultLen:50,
+       rows:[{tip:'1⅜"',gpm:502},{tip:'1½"',gpm:598},{tip:'1¾"',gpm:814},{tip:'2"',gpm:1063}], limit:"five"},
+      {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
+       rows:[{tip:"500",gpm:500,vals:build(0.08,0,500,LS)},{tip:"1000",gpm:1000,vals:build(0.08,0,1000,LS)},
+             {tip:"1500",gpm:1500,vals:build(0.08,0,1500,LS)},{tip:"2000",gpm:2000,vals:build(0.08,0,2000,LS)}]}
+    ]
+  };
+
+  var SETS = {combat:COMBAT, standard:STANDARD};
+
+  /* Curated "what can I still add" list — pulled straight from each hose set's
+     own line data above, same spread the live site's hydrant calculator uses
+     (small handline through aerial). Kept separate per hose type since the
+     Standard card's deck gun tips run slightly different gpm. */
+  var DEPLOY_OPTIONS = {
+    combat:[
+      {gpm:175,  desc:'1¾" Handline — Big Booster, yellow 50 psi fog'},
+      {gpm:250,  desc:'2" Handline — Orange 50 psi fog'},
+      {gpm:265,  desc:'2½" Handline — 1⅛" smooth bore'},
+      {gpm:501,  desc:'Deck Gun — 1⅜" tip'},
+      {gpm:1063, desc:'Aerial — 2" tip'}
+    ],
+    standard:[
+      {gpm:175,  desc:'1¾" Handline — Big Booster, yellow 50 psi fog'},
+      {gpm:250,  desc:'2" Handline — Orange 50 psi fog'},
+      {gpm:266,  desc:'2½" Handline — 1⅛" smooth bore'},
+      {gpm:502,  desc:'Deck Gun — 1⅜" tip'},
+      {gpm:1063, desc:'Aerial — 2" tip'}
+    ]
+  };
+
+  var state = {
+    hose:"combat",
+    off:{lineId:"bbf", rowIdx:0, len:150},
+    def:{lineId:"25d", rowIdx:0, len:200}
+  };
+
+  function $(id){return document.getElementById(id);}
+  function el(t,c,x){var e=document.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  function num(v,d){var n=parseFloat(v); return isFinite(n)?n:d;}
+  function set(){return SETS[state.hose];}
+  function lines(side){return set()[side];}
+  function findLine(side,id){
+    var arr=lines(side);
+    for(var i=0;i<arr.length;i++) if(arr[i].id===id) return arr[i];
+    return arr[0];
+  }
+
+  /* value from a card row at any length */
+  function valueAt(line, row, L){
+    if(line.noHose) return line.base;
+    if(line.supplyFed){
+      var fl = line.supplyCoef * Math.pow(row.gpm/100,2) * (L/100);
+      return line.base + fl;
+    }
+    var xs=line.lengths, ys=row.vals;
+    if(L<=xs[0]){
+      var s0=(ys[1]-ys[0])/(xs[1]-xs[0]);
+      return ys[0]-(xs[0]-L)*s0;
+    }
+    for(var i=0;i<xs.length-1;i++){
+      if(L<=xs[i+1]){
+        var t=(L-xs[i])/(xs[i+1]-xs[i]);
+        return ys[i]+t*(ys[i+1]-ys[i]);
+      }
+    }
+    var n=xs.length-1, sN=(ys[n]-ys[n-1])/(xs[n]-xs[n-1]);
+    return ys[n]+(L-xs[n])*sN;
+  }
+
+  function limitCheck(kind, psi){
+    if(kind==="five"){
+      if(psi>300) return {level:"danger",tag:"Stop",msg:"Past 300 psi — the max discharge for double-jacketed hose (M 6125). Shorten the lay or add a relay pumper."};
+      if(psi>200) return {level:"warn",tag:"Caution",msg:"Past 200 psi — S 6506 caps relay discharge at 200 psi. Add an engine to the relay."};
+      return {level:"ok",tag:"Good",msg:"Inside the working pressure for double-jacketed 5\" supply hose."};
+    }
+    if(psi>400) return {level:"danger",tag:"Stop",msg:"Past 400 psi, the test pressure for hose 3\" and smaller. Break it into a relay or cut the length."};
+    if(psi>300) return {level:"warn",tag:"Caution",msg:"Past 300 psi — hard on hose and pump. Shorten the stretch or split the flow."};
+    if(psi>250) return {level:"warn",tag:"Watch",msg:"High discharge pressure. Check the length and set the relief valve."};
+    return {level:"ok",tag:"Good",msg:"Normal working pressure. Set the relief valve any time more than one line is flowing."};
+  }
+
+  function compute(side){
+    var s=state[side], line=findLine(side,s.lineId);
+    var row=line.rows[Math.min(s.rowIdx,line.rows.length-1)];
+    var len=line.noHose?0:s.len;
+    var base=Math.round(valueAt(line,row,len));
+    var feet = side==="off"
+      ? num($("off-floors").value,0)*10 + num($("off-feet").value,0)
+      : num($("def-feet").value,0);
+    var elev=Math.round(feet/2);
+    var out={line:line,row:row,len:len,base:base,feet:feet,elev:elev,gpm:row.gpm};
+    if(line.supplyFed){
+      out.devicePdp = line.base;
+      out.frictionPsi = base - line.base;
+    }
+    if(line.supply){
+      out.pad=num($("def-intake").value,20);
+      out.total=base+elev+out.pad;
+    } else {
+      out.total=base+elev;
+    }
+    out.check=limitCheck(line.limit,out.total);
+    return out;
+  }
+
+  function renderLines(side){
+    var host=$(side+"-lines"); host.innerHTML="";
+    lines(side).forEach(function(L){
+      var b=el("button","choice"); b.type="button";
+      b.setAttribute("aria-pressed", state[side].lineId===L.id?"true":"false");
+      b.appendChild(el("b",null,L.name));
+      b.appendChild(el("small",null,L.sub));
+      b.addEventListener("click",function(){
+        state[side].lineId=L.id; state[side].rowIdx=(typeof L.defaultRowIdx==="number")?L.defaultRowIdx:0;
+        if(!L.noHose){
+          if(typeof L.defaultLen==="number") state[side].len=L.defaultLen;
+          else if(L.lengths.indexOf(state[side].len)===-1) state[side].len=L.lengths[Math.min(2,L.lengths.length-1)];
+        }
+        draw(side);
+      });
+      host.appendChild(b);
+    });
+  }
+
+  function renderChips(host, items, activeIdx, label, onPick){
+    host.innerHTML="";
+    items.forEach(function(item,i){
+      var b=el("button","chip",label(item,i)); b.type="button";
+      b.setAttribute("aria-pressed", i===activeIdx?"true":"false");
+      b.addEventListener("click",function(){onPick(item,i);});
+      host.appendChild(b);
+    });
+  }
+
+  function renderReadout(side,r){
+    var host=$(side+"-readout"); host.innerHTML="";
+    var main=el("div","readout-main"), block=el("div");
+    block.appendChild(el("span","big-label", r.line.supply?"Pump discharge pressure":"Pump discharge pressure"));
+    var big=el("div","big"); big.appendChild(document.createTextNode(String(r.total)));
+    big.appendChild(el("span","big-unit","psi")); block.appendChild(big); main.appendChild(block);
+    var flow=el("div","flow");
+    flow.appendChild(el("b",null,r.gpm.toLocaleString()));
+    flow.appendChild(el("span",null, r.line.supply?"gpm through the lay":"gpm at the nozzle"));
+    main.appendChild(flow); host.appendChild(main);
+
+    var math=el("div","math");
+    function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
+    if(r.line.supplyFed){
+      math.appendChild(term("Device PDP", r.devicePdp+" psi"));
+      math.appendChild(term('5" supply '+r.len+"′", (r.frictionPsi>=0?"+":"")+r.frictionPsi+" psi"));
+    }
+    else if(r.line.noHose) math.appendChild(term("Card PDP", r.base+" psi"));
+    else if(r.line.supply) math.appendChild(term("Friction "+r.len+"′", r.base+" psi"));
+    else math.appendChild(term("Card PDP at "+r.len+"′", r.base+" psi"));
+    if(r.line.supply) math.appendChild(term("Residual at next intake", "+"+r.pad+" psi"));
+    math.appendChild(term("Elevation "+r.feet+"′",(r.elev>=0?"+":"")+r.elev+" psi"));
+    math.appendChild(term("Tip", r.row.tip));
+    math.appendChild(term("Hose", set().label));
+    host.appendChild(math);
+
+    var a=el("div","alert is-"+r.check.level);
+    a.appendChild(el("span","tag",r.check.tag));
+    a.appendChild(el("span",null,r.check.msg));
+    host.appendChild(a);
+
+    if(r.line.note){
+      var n=el("div","alert is-warn");
+      n.appendChild(el("span","tag","Check card"));
+      n.appendChild(el("span",null,r.line.note));
+      host.appendChild(n);
+    }
+  }
+
+  function renderTable(side,r){
+    var host=$(side+"-table"); host.innerHTML="";
+    var line=r.line, table=el("table");
+    table.appendChild(el("caption",null, line.name+" · "+line.sub+" · "+set().label));
+    var lens=line.noHose?[0]:line.lengths;
+    var thead=el("thead"), hr=el("tr");
+    hr.appendChild(el("th",null, line.supply?"GPM":"Tip · GPM"));
+    lens.forEach(function(L){hr.appendChild(el("th",null, line.noHose?"At the tip":L+"′"));});
+    thead.appendChild(hr); table.appendChild(thead);
+    var tbody=el("tbody");
+    line.rows.forEach(function(row,ri){
+      var tr=el("tr");
+      tr.appendChild(el("td","rowhead", line.supply ? row.gpm.toLocaleString()+" gpm" : row.tip+" · "+row.gpm));
+      lens.forEach(function(L,li){
+        var v = line.noHose ? line.base : Math.round(valueAt(line,row,L));
+        var td=el("td",null,String(v));
+        var chk=limitCheck(line.limit,v);
+        if(chk.level==="warn") td.className="over";
+        if(chk.level==="danger") td.className="way-over";
+        if(ri===state[side].rowIdx && (line.noHose || L===r.len)) td.className="hit";
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody); host.appendChild(table);
+  }
+
+  function draw(side){
+    var s=state[side], line=findLine(side,s.lineId);
+    s.lineId=line.id;
+    renderLines(side);
+
+    var tipsBlock=$(side+"-tips-block"), flowBlock=(side==="def")?$("def-flow-block"):null;
+    var showTips = line.rows.length>1 && !line.supply;
+    var showFlows = !!line.supply;
+    tipsBlock.hidden=!showTips;
+    if(showTips){
+      renderChips($(side+"-tips"), line.rows, s.rowIdx,
+        function(row){return row.tip+"  "+row.gpm+" gpm";},
+        function(row,i){state[side].rowIdx=i; draw(side);});
+    }
+    if(flowBlock){
+      flowBlock.hidden=!showFlows;
+      if(showFlows){
+        renderChips($("def-flows"), line.rows, s.rowIdx,
+          function(row){return row.gpm.toLocaleString()+" gpm";},
+          function(row,i){state.def.rowIdx=i; draw("def");});
+      }
+      $("def-intake-field").hidden=!line.supply;
+      $("def-hint").textContent = line.supply
+        ? "Relay pumper: PDP = friction loss in the lay plus the residual you want left on the receiving intake — 20 psi minimum (M 6125), 200 psi discharge cap (S 6506)."
+        : (line.supplyFed ? "Deck gun and aerial: card PDP at the device, plus friction loss in the 5\" supply line feeding it (FL = CQ²L, C 0.08), plus 5 psi per 10 ft of elevation."
+                       : "Elevation follows the card: 5 psi per 10 ft.");
+    }
+
+    var lenHost=$(side+"-lengths"), lenLabel=$(side+"-len-label");
+    if(line.noHose){
+      lenHost.innerHTML="";
+      lenHost.appendChild(el("p","hint","No hose in this evolution — the card pressure goes straight to the appliance."));
+      lenLabel.textContent="Hose length";
+    } else {
+      lenLabel.textContent=line.lenLabel||"Hose length";
+      renderChips(lenHost, line.lengths, line.lengths.indexOf(s.len),
+        function(L){return L+"′";},
+        function(L){state[side].len=L; $(side+"-len-custom").value=""; draw(side);});
+    }
+
+    var r=compute(side);
+    renderReadout(side,r);
+    renderTable(side,r);
+    if(side==="def"){ $("def-warn").hidden = !line.supplyFed; }
+  }
+
+  /* ---------------- hydrant ---------------- */
+  var HYD_ROWS=[[50,45,40,35],[60,55,50,45],[70,65,60,55],[80,75,70,65],[90,80,75,65],[100,90,85,75]];
+  function buildHydTable(){
+    var body=$("hyd-table");
+    HYD_ROWS.forEach(function(r){
+      var tr=el("tr");
+      tr.appendChild(el("td","rowhead",r[0]+" psi"));
+      tr.appendChild(el("td",null,r[1]+" psi"));
+      tr.appendChild(el("td",null,r[2]+" psi"));
+      tr.appendChild(el("td",null,r[3]+" psi"));
+      body.appendChild(tr);
+    });
+  }
+  function drawHydrant(){
+    var stat=num($("hyd-static").value,0), res=num($("hyd-residual").value,0), gpm=num($("hyd-gpm").value,0);
+    var host=$("hyd-readout"); host.innerHTML="";
+    var drop = stat>0 ? ((stat-res)/stat)*100 : 0;
+    var mult, band;
+    if(res<=0||stat<=0){mult=0;band="Enter both pressures";}
+    else if(res>stat){mult=0;band="Check the readings";}
+    else if(drop<=10){mult=3;band="0–10% drop";}
+    else if(drop<=15){mult=2;band="11–15% drop";}
+    else if(drop<=20){mult=1;band="16–20% drop";}
+    else {mult=0;band="Over 20% drop";}
+    var more=Math.round(gpm*mult);
+
+    var main=el("div","readout-main"), block=el("div");
+    block.appendChild(el("span","big-label","Still available"));
+    var big=el("div","big"); big.appendChild(document.createTextNode(more.toLocaleString()));
+    big.appendChild(el("span","big-unit","gpm")); block.appendChild(big); main.appendChild(block);
+    var flow=el("div","flow");
+    flow.appendChild(el("b",null,(gpm+more).toLocaleString()));
+    flow.appendChild(el("span",null,"max gpm from this hydrant"));
+    main.appendChild(flow); host.appendChild(main);
+
+    var math=el("div","math");
+    function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
+    math.appendChild(term("Pressure drop",(stat>0?drop.toFixed(1):"0")+"%"));
+    math.appendChild(term("Band",band));
+    math.appendChild(term("Multiplier",mult+" × current"));
+    math.appendChild(term("Now flowing",gpm.toLocaleString()+" gpm"));
+    host.appendChild(math);
+
+    var lvl,tag,msg;
+    if(res>0&&res<20){lvl="danger";tag="Stop";msg="Residual under 20 psi. You are at the bottom of this hydrant — get a second supply before you add water.";}
+    else if(mult===0){lvl="danger";tag="Tapped";msg="More than a 20% drop. Lay another line from a different main.";}
+    else if(mult===1){lvl="warn";tag="One more";msg="Room for about one more line of the same size. Watch the intake gauge as it comes on.";}
+    else if(mult===2){lvl="warn";tag="Two more";msg="Room for roughly two more lines of the same size.";}
+    else {lvl="ok";tag="Strong";msg="Strong hydrant — room for about three more lines of the same size.";}
+    var a=el("div","alert is-"+lvl);
+    a.appendChild(el("span","tag",tag)); a.appendChild(el("span",null,msg));
+    host.appendChild(a);
+
+    /* "You Can Deploy" — same avail/locked ladder as the live site's hydrant
+       calculator, checked against the additional gpm this hydrant has left. */
+    var listHost=$("hyd-deploy-list");
+    var opts = DEPLOY_OPTIONS[state.hose] || DEPLOY_OPTIONS.combat;
+    listHost.innerHTML = opts.map(function(opt){
+      var ok = more >= opt.gpm;
+      return '<div class="hcalc-deploy-item ' + (ok?'avail':'locked') + '">'
+        + '<div class="hcalc-di-left">'
+        + '<span class="hcalc-di-gpm">' + opt.gpm + '</span>'
+        + '<span class="hcalc-di-desc">' + opt.desc + '</span>'
+        + '</div>'
+        + '<span class="hcalc-di-check">' + (ok?'Ready':'Locked') + '</span>'
+        + '</div>';
+    }).join('');
+  }
+
+  /* ---------------- relay ---------------- */
+  /* Pump-capacity derating vs discharge pressure — Hydraulics & Pump Ops, Ch.5 p.107 */
+  function pumpDerate(psi){
+    if(psi<=150) return 1.0;
+    if(psi<=200) return 0.7;
+    if(psi<=250) return 0.5;
+    return 0.4;
+  }
+  function relayPlan(){
+    var gpmTotal=Math.max(0,num($("rly-gpm").value,1000));
+    var dist=Math.max(0,num($("rly-dist").value,2000));
+    var linesN=Math.max(1,Math.round(num($("rly-lines").value,1)));
+    var elevTotal=num($("rly-elev").value,0);
+    var intake=Math.max(0,num($("rly-intake").value,20));
+    var cap=Math.max(1,num($("rly-cap").value,150));
+    var rating=Math.max(1,num($("rly-rating").value,1500));
+    var qPerLine=gpmTotal/linesN; // per single 5" line, flow split evenly across parallel lines
+    var flPer100=0.08*Math.pow(qPerLine/100,2);
+
+    var k=1, legs=[], fits=false;
+    for(k=1;k<=12;k++){
+      var legLen=dist/k, legElev=elevTotal/k;
+      var friction=flPer100*(legLen/100);
+      var elevPsi=(legElev/10)*5;
+      var pdp=Math.round(friction+elevPsi+intake);
+      var derated=Math.round(rating*pumpDerate(pdp));
+      var short = derated < qPerLine;
+      legs=[]; // rebuild each k
+      for(var i=1;i<=k;i++){
+        legs.push({engine:i,legLen:Math.round(legLen),friction:Math.round(friction),elevPsi:Math.round(elevPsi),intake:intake,pdp:pdp,derated:derated,short:short});
+      }
+      if(pdp<=cap && !short){ fits=true; break; }
+    }
+    return {gpmTotal:gpmTotal,dist:dist,linesN:linesN,elevTotal:elevTotal,intake:intake,cap:cap,rating:rating,
+            qPerLine:qPerLine,k:Math.min(k,12),legs:legs,fits:fits};
+  }
+  function drawRelay(){
+    var p=relayPlan();
+    var host=$("rly-readout"); host.innerHTML="";
+    var main=el("div","readout-main"), block=el("div");
+    block.appendChild(el("span","big-label","Relay engines needed"));
+    var big=el("div","big"); big.appendChild(document.createTextNode(String(p.k)));
+    block.appendChild(big); main.appendChild(block);
+    var flow=el("div","flow");
+    flow.appendChild(el("b",null,Math.round(p.qPerLine).toLocaleString()));
+    flow.appendChild(el("span",null,"gpm per 5\" line"));
+    main.appendChild(flow); host.appendChild(main);
+
+    var math=el("div","math");
+    function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
+    var last=p.legs[p.legs.length-1];
+    math.appendChild(term("Spacing per leg", (last?last.legLen:0)+"′"));
+    math.appendChild(term("Friction per leg", "+"+(last?last.friction:0)+" psi"));
+    math.appendChild(term("Elevation per leg", (last&&last.elevPsi>=0?"+":"")+(last?last.elevPsi:0)+" psi"));
+    math.appendChild(term("Residual wanted", "+"+p.intake+" psi"));
+    math.appendChild(term("PDP per engine", (last?last.pdp:0)+" psi"));
+    math.appendChild(term("Parallel lines", String(p.linesN)));
+    host.appendChild(math);
+
+    var a=el("div","alert is-"+(p.fits?"ok":"danger"));
+    a.appendChild(el("span","tag", p.fits?"Good":"Stop"));
+    a.appendChild(el("span",null, p.fits
+      ? "This split keeps every engine at or under "+p.cap+" psi discharge with capacity to spare."
+      : "Even at 12 relay engines this lay doesn't fit inside "+p.cap+" psi with the pump rating given — add parallel 5\" lines, drop the flow, or raise the discharge cap."));
+    host.appendChild(a);
+
+    var thost=$("rly-table"); thost.innerHTML="";
+    var table=el("table");
+    table.appendChild(el("caption",null, p.linesN+" line(s) of 5\" supply · "+Math.round(p.gpmTotal).toLocaleString()+" gpm total over "+Math.round(p.dist).toLocaleString()+"′"));
+    var thead=el("thead"), hr=el("tr");
+    ["Engine","Leg length","Friction","Elevation","Residual in","PDP out","Pump check"].forEach(function(h){hr.appendChild(el("th",null,h));});
+    thead.appendChild(hr); table.appendChild(thead);
+    var tbody=el("tbody");
+    p.legs.forEach(function(leg){
+      var tr=el("tr");
+      tr.appendChild(el("td","rowhead", leg.engine===1?"1 · source":String(leg.engine)));
+      tr.appendChild(el("td",null,leg.legLen+"′"));
+      tr.appendChild(el("td",null,"+"+leg.friction));
+      tr.appendChild(el("td",null,(leg.elevPsi>=0?"+":"")+leg.elevPsi));
+      tr.appendChild(el("td",null,"+"+leg.intake));
+      var pdpTd=el("td",null,String(leg.pdp));
+      if(leg.pdp>p.cap) pdpTd.className="way-over";
+      tr.appendChild(pdpTd);
+      var chkTd=el("td",null, leg.short?"Short":"OK");
+      chkTd.className = leg.short?"way-over":"";
+      tr.appendChild(chkTd);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody); thost.appendChild(table);
+  }
+
+  /* ---------------- chrome ---------------- */
+  var TABS=[["tab-off","p-off"],["tab-def","p-def"],["tab-hyd","p-hyd"],["tab-rly","p-rly"],["tab-ref","p-ref"]];
+  TABS.forEach(function(pair){
+    $(pair[0]).addEventListener("click",function(){
+      TABS.forEach(function(p){
+        var on=p[0]===pair[0];
+        $(p[0]).setAttribute("aria-selected",on?"true":"false");
+        $(p[1]).hidden=!on;
+      });
+      try{localStorage.setItem("pc-s2tab",pair[0]);}catch(e){}
+    });
+  });
+  function setHose(which){
+    state.hose=which;
+    $("hose-combat").setAttribute("aria-pressed",which==="combat"?"true":"false");
+    $("hose-standard").setAttribute("aria-pressed",which==="standard"?"true":"false");
+    ["off","def"].forEach(function(side){
+      var arr=lines(side), found=false;
+      for(var i=0;i<arr.length;i++) if(arr[i].id===state[side].lineId) found=true;
+      if(!found){state[side].lineId=arr[0].id; state[side].rowIdx=0;}
+      draw(side);
+    });
+    drawHydrant();
+    try{localStorage.setItem("pc-s2hose",which);}catch(e){}
+  }
+  $("hose-combat").addEventListener("click",function(){setHose("combat");});
+  $("hose-standard").addEventListener("click",function(){setHose("standard");});
+
+  ["off-floors","off-feet"].forEach(function(id){$(id).addEventListener("input",function(){draw("off");});});
+  ["def-feet","def-intake"].forEach(function(id){$(id).addEventListener("input",function(){draw("def");});});
+  $("off-len-custom").addEventListener("input",function(){
+    var v=num(this.value,null); if(v!=null&&v>=0){state.off.len=Math.round(v); draw("off");}
+  });
+  $("def-len-custom").addEventListener("input",function(){
+    var v=num(this.value,null); if(v!=null&&v>=0){state.def.len=Math.round(v); draw("def");}
+  });
+  ["hyd-static","hyd-residual","hyd-gpm"].forEach(function(id){$(id).addEventListener("input",drawHydrant);});
+  ["rly-gpm","rly-dist","rly-lines","rly-elev","rly-intake","rly-cap","rly-rating"].forEach(function(id){$(id).addEventListener("input",drawRelay);});
+
+  buildHydTable();
+  try{
+    var h=localStorage.getItem("pc-s2hose");
+    if(h==="standard"||h==="combat") state.hose=h;
+  }catch(e){}
+  setHose(state.hose);
+  drawHydrant();
+  drawRelay();
+  try{
+    var saved=localStorage.getItem("pc-s2tab");
+    if(saved&&$(saved)) $(saved).click();
+  }catch(e){}
 })();
 </script>
 
