@@ -3843,16 +3843,15 @@
     </div>
   </div>
   <nav class="tabs" role="tablist" aria-label="Calculator mode">
-    <button class="tab" role="tab" id="tab-off" aria-controls="p-off" aria-selected="true">Offensive</button>
-    <button class="tab" role="tab" id="tab-def" aria-controls="p-def" aria-selected="false">Defensive &amp; Supply</button>
+    <button class="tab" role="tab" id="tab-off" aria-controls="p-off" aria-selected="false">Offensive</button>
+    <button class="tab" role="tab" id="tab-def" aria-controls="p-def" aria-selected="true">Defensive &amp; Supply</button>
     <button class="tab" role="tab" id="tab-hyd" aria-controls="p-hyd" aria-selected="false">Hydrant Water</button>
     <button class="tab" role="tab" id="tab-rly" aria-controls="p-rly" aria-selected="false">Relay</button>
-    <button class="tab" role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
   </nav>
 </header>
 
 <div class="wrap">
-  <div id="p-off" role="tabpanel" aria-labelledby="tab-off">
+  <div id="p-off" role="tabpanel" aria-labelledby="tab-off" hidden>
     <section class="panel">
       <h2 class="sec">1 · Line</h2>
       <div class="choices" id="off-lines"></div>
@@ -3882,7 +3881,7 @@
     </section>
   </div>
 
-  <div id="p-def" role="tabpanel" aria-labelledby="tab-def" hidden>
+  <div id="p-def" role="tabpanel" aria-labelledby="tab-def">
     <section class="panel">
       <h2 class="sec">1 · Line</h2>
       <div class="choices" id="def-lines"></div>
@@ -3983,62 +3982,6 @@
     </section>
   </div>
 
-  <div id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden>
-    <section class="panel">
-      <h2 class="sec">The equation</h2>
-      <p style="margin-top:0"><span class="formula">EP = NP + FL + APP + ELEV</span></p>
-      <p style="margin-bottom:0;color:var(--ash)">Friction loss is <b>FL = CQ²L</b>, where Q is gpm ÷ 100 and L is length ÷ 100.</p>
-      <div class="divider"></div>
-      <div class="ref-grid">
-        <div class="ref"><h3>Combat Ready coefficients</h3>
-          <ul><li>1¾" — <b>6.59</b></li><li>2" — <b>5.25</b></li><li>2½" — <b>1.8</b></li><li>5" — <b>0.08</b></li></ul></div>
-        <div class="ref"><h3>Standard (old) coefficients</h3>
-          <ul><li>1¾" — <b>15.5</b></li><li>2" — <b>8</b></li><li>2½" — <b>2</b></li><li>5" — <b>0.08</b></li></ul></div>
-        <div class="ref"><h3>Nozzle pressures</h3>
-          <ul><li>Smooth bore handline — <b>50 psi</b></li><li>Fog handline — <b>50 psi</b> (yellow, orange)</li>
-            <li>Smooth bore master stream — <b>80 psi</b></li><li>Stacked tips over 350 gpm — <b>80 psi</b></li></ul></div>
-        <div class="ref"><h3>Pressure limits <span class="hint">(FWFD SOPs)</span></h3>
-          <ul><li>2½" attack hose — working <b>400 psi</b>, tested to <b>800 psi</b> <span class="hint">I 6923</span></li>
-            <li>Our 5" supply is <b>double jacketed</b> — service tested <b>300 psi</b> for 5 min <span class="hint">S 6801 R3</span></li>
-            <li>Max discharge, woven/double jacket — <b>300 psi</b> <span class="hint">M 6125</span></li>
-            <li>5" supply — <b>300 psi</b> max <span class="hint">rig card, matches M 6125</span></li>
-            <li>Keep <b>20 psi</b> minimum residual on the intake gauge <span class="hint">M 6125</span></li></ul></div>
-        <div class="ref"><h3>Relay pumping</h3>
-          <ul><li>PDP = <b>LDH friction loss + the residual you want at the next intake</b></li>
-            <li>Minimum residual on the intake gauge — <b>20 psi</b> <span class="hint">M 6125</span></li>
-            <li>Rule of thumb <b>10 psi per 100 ft</b>, <b>not over 200 psi</b> discharge <span class="hint">S 6506</span></li>
-            <li>Low-volume hydrant = <b>9 psi or less</b>; start a relay past <b>800 ft</b> <span class="hint">S 6506</span></li>
-            <li>Close lines slowly — surges travel the whole relay</li></ul></div>
-        <div class="ref"><h3>Deck gun &amp; aerial</h3>
-          <ul><li>Combat Ready card — <b>105 PDP</b> at the device</li><li>Standard card — <b>80 PDP</b> at the device</li>
-            <li>Plus friction loss in the 5" supply feeding it — <b>FL = CQ²L</b>, C <b>0.08</b></li>
-            <li>Plus <b>5 psi per 10 ft</b> of elevation</li></ul></div>
-      </div>
-      <div class="divider"></div>
-      <h2 class="sec">Master stream tips</h2>
-      <div class="tablewrap">
-        <table><caption>Smooth bore deck gun / aerials — 105 PDP</caption>
-          <thead><tr><th>Tip</th><th>GPM</th><th>Tip</th><th>GPM</th></tr></thead>
-          <tbody>
-            <tr><td class="rowhead">1⅜"</td><td>501</td><td class="rowhead">1⅞"</td><td>935</td></tr>
-            <tr><td class="rowhead">1½"</td><td>598</td><td class="rowhead">2"</td><td>1,063</td></tr>
-            <tr><td class="rowhead">1¾"</td><td>814</td><td class="rowhead">2¼"</td><td>1,345</td></tr>
-            <tr><td class="rowhead">—</td><td>—</td><td class="rowhead">2½"</td><td>1,660</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2 class="sec">Check these against the printed card</h2>
-      <ul class="notes">
-        <li><b>Defensive 2½" stacked tips.</b> The flows listed (414 · 501 · 598 gpm) are what those tips move at <b>80 psi</b> nozzle pressure, but the PDP row is built on <b>50 psi</b>. At 100 ft the card reads 81 psi for the 1¼" tip, while the Blitzfire block on the same card reads 111 psi for the same 415 gpm. Pumping the card number gets you roughly 330 gpm out of that tip, not 414. Add about 30 psi if you want the listed flow.</li>
-        <li><b>Blitzfire 1½" row.</b> That row is built on about 100 psi at the inlet, while the 1" and 1¼" rows use 80. Looks like 20 psi of appliance loss was added to one row and not the others.</li>
-        <li><b>2" fog, 350 ft.</b> The row steps 17 psi per 50 ft (83 · 100 · 117 · 134 · 151), which puts 350 ft at 168. The card looks like 177. This calculator uses 168.</li>
-      </ul>
-      <p class="hint" style="margin-bottom:0">Everything else on both cards matches FL = CQ²L with the department coefficients.</p>
-    </section>
-  </div>
 
   <footer class="foot">
     Built from the FWFD offensive, defensive and water supply cards (Combat Ready and standard hose) and <i>Fire Service Hydraulics and Pump Operations</i>. Check it against the card on your rig before you use it on the fireground.
@@ -5852,16 +5795,11 @@ function initGlobalSearch(){
        rows:[{tip:"Yellow fog", gpm:175, vals:[75,78,81,84,87,90,93,96,99,102,105,108]}], limit:"handline"}
     ],
     def:[
-      {id:"25d", name:'2½" Stacked Tips', sub:"Over 350 gpm = 80 NP", lengths:L9,
-       note:"Card values. These flows need 80 psi at the tip but the row is figured on 50 — add about 30 psi to actually move the listed gpm.",
-       rows:[{tip:'1¼"', gpm:414, vals:[81,97,112,128,143,158,174,189,205]},
-             {tip:'1⅜"', gpm:501, vals:[96,118,141,164,186,209,232,255,277]},
-             {tip:'1½"', gpm:598, vals:[115,147,180,212,244,277,309,341,374]}], limit:"handline"},
       {id:"blz", name:'2½" Blitzfire', sub:"Master stream", lengths:L9,
        rows:[{tip:'1"', gpm:266, vals:[93,99,105,112,118,125,131,138,144]},
              {tip:'1¼"', gpm:415, vals:[111,127,142,158,174,189,205,220,236]},
              {tip:'1½"', gpm:598, vals:[167,199,232,264,296,329,361,393,426]}], limit:"handline"},
-      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply', defaultRowIdx:4, defaultLen:50,
+      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:4, defaultLen:50,
        rows:[{tip:'1⅜"', gpm:501},{tip:'1½"', gpm:598},{tip:'1¾"', gpm:814},{tip:'1⅞"', gpm:935},
              {tip:'2"', gpm:1063},{tip:'2¼"', gpm:1345},{tip:'2½"', gpm:1660}], limit:"five"},
       {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
@@ -5894,13 +5832,10 @@ function initGlobalSearch(){
        rows:[{tip:"Yellow fog", gpm:175, vals:build(2,50,175,[200,250,300,350,400,450,500,550,600,650],{c:15.5,len:100})}], limit:"handline"}
     ],
     def:[
-      {id:"25d", name:'2½" Stacked Tips', sub:"Under 350 gpm = 50 NP · over = 80", lengths:L9,
-       rows:[{tip:'1"',gpm:210,vals:build(2,50,210,L9)},{tip:'1⅛"',gpm:266,vals:build(2,50,266,L9)},
-             {tip:'1⅜"',gpm:498,vals:build(2,80,498,L9)},{tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
       {id:"blz", name:'2½" Blitzfire', sub:"Master stream · 80 psi NP", lengths:L9,
        rows:[{tip:'1"',gpm:266,vals:build(2,80,266,L9)},{tip:'1¼"',gpm:415,vals:build(2,80,415,L9)},
              {tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
-      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 80 PDP at the device", supplyFed:true, base:80, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply', defaultRowIdx:3, defaultLen:50,
+      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 80 PDP at the device", supplyFed:true, base:80, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:3, defaultLen:50,
        rows:[{tip:'1⅜"',gpm:502},{tip:'1½"',gpm:598},{tip:'1¾"',gpm:814},{tip:'2"',gpm:1063}], limit:"five"},
       {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
        rows:[{tip:"500",gpm:500,vals:build(0.08,0,500,LS)},{tip:"1000",gpm:1000,vals:build(0.08,0,1000,LS)},
@@ -5934,7 +5869,7 @@ function initGlobalSearch(){
   var state = {
     hose:"combat",
     off:{lineId:"bbf", rowIdx:0, len:150},
-    def:{lineId:"25d", rowIdx:0, len:200}
+    def:{lineId:"deck", rowIdx:4, len:50}
   };
 
   function $(id){return document.getElementById(id);}
@@ -6308,7 +6243,7 @@ function initGlobalSearch(){
   }
 
   /* ---------------- chrome ---------------- */
-  var TABS=[["tab-off","p-off"],["tab-def","p-def"],["tab-hyd","p-hyd"],["tab-rly","p-rly"],["tab-ref","p-ref"]];
+  var TABS=[["tab-off","p-off"],["tab-def","p-def"],["tab-hyd","p-hyd"],["tab-rly","p-rly"]];
   TABS.forEach(function(pair){
     $(pair[0]).addEventListener("click",function(){
       TABS.forEach(function(p){
@@ -6324,9 +6259,10 @@ function initGlobalSearch(){
     $("hose-combat").setAttribute("aria-pressed",which==="combat"?"true":"false");
     $("hose-standard").setAttribute("aria-pressed",which==="standard"?"true":"false");
     ["off","def"].forEach(function(side){
-      var arr=lines(side), found=false;
-      for(var i=0;i<arr.length;i++) if(arr[i].id===state[side].lineId) found=true;
+      var arr=lines(side), found=false, matchLine=null;
+      for(var i=0;i<arr.length;i++) if(arr[i].id===state[side].lineId){found=true; matchLine=arr[i];}
       if(!found){state[side].lineId=arr[0].id; state[side].rowIdx=0;}
+      else if(matchLine.rows && state[side].rowIdx>matchLine.rows.length-1){state[side].rowIdx=matchLine.rows.length-1;}
       draw(side);
     });
     drawHydrant();
