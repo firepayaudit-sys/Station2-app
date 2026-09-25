@@ -1657,6 +1657,15 @@
       <span class="plate-arrow">→</span>
     </button>
 
+    <button class="plate" onclick="showScreen('pump-calc')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">PUMP CALCULATOR</span>
+        <span class="plate-desc">Offensive, Defensive, Hydrant &amp; Relay</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
     <button class="plate" onclick="showScreen('pass-it-on')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
@@ -1684,20 +1693,11 @@
       <span class="plate-arrow">→</span>
     </a>
 
-    <button class="plate" onclick="showScreen('trt')">
+    <button class="plate" onclick="showScreen('specialties')">
       <span class="rivet tl"></span><span class="rivet br"></span>
       <span class="plate-main">
-        <span class="plate-unit">TRT</span>
-        <span class="plate-desc">Technical Rescue Team</span>
-      </span>
-      <span class="plate-arrow">→</span>
-    </button>
-
-    <button class="plate" onclick="showScreen('hazmat')">
-      <span class="rivet tl"></span><span class="rivet br"></span>
-      <span class="plate-main">
-        <span class="plate-unit">HAZMAT</span>
-        <span class="plate-desc">Hazardous Materials Response</span>
+        <span class="plate-unit">SPECIALTIES</span>
+        <span class="plate-desc">TRT &amp; HazMat</span>
       </span>
       <span class="plate-arrow">→</span>
     </button>
@@ -1734,12 +1734,47 @@
   </div>
 </div>
 
+<!-- ============ SPECIALTIES ============ -->
+<section class="screen" id="specialties">
+  <div class="sub-hero">
+    <div class="sub-wrap">
+      <div class="nav-row">
+        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
+      </div>
+      <h2 class="sub-title">Specialties</h2>
+      <p class="sub-tag">Station 2</p>
+    </div>
+  </div>
+  <div class="board-wrap" style="padding-top:0;">
+
+    <button class="plate" onclick="showScreen('trt')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">TRT</span>
+        <span class="plate-desc">Technical Rescue Team</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
+    <button class="plate" onclick="showScreen('hazmat')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">HAZMAT</span>
+        <span class="plate-desc">Hazardous Materials Response</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+
+  </div>
+</section>
+
 <!-- ============ TRT ============ -->
 <section class="screen" id="trt">
   <div class="sub-hero">
     <div class="sub-wrap">
       <div class="nav-row">
-        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="back-btn" onclick="showScreen('specialties')">← Specialties</button>
         <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
       </div>
       <h2 class="sub-title">TRT</h2>
@@ -1921,7 +1956,7 @@
   <div class="sub-hero">
     <div class="sub-wrap">
       <div class="nav-row">
-        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="back-btn" onclick="showScreen('specialties')">← Specialties</button>
         <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
       </div>
       <h2 class="sub-title">HazMat</h2>
@@ -3832,11 +3867,33 @@
     <div id="seatBoard"></div>
   </div>
 
-  <!-- Full Pump Calculator — shown only for Engineer on Engine/Tower, since
-       the calculator doesn't depend on call type and belongs here, before
-       the crew drills into a specific arrival scenario. Toggled via
-       #pc-root's [hidden] attribute in openSeatPicker(). -->
-<div class="pumpcalc" id="pc-root" hidden>
+  <!-- Pump Calculator link — shown only for Engineer on Engine/Tower. The
+       full calculator now lives on its own top-level screen (#pump-calc) so
+       it's reachable straight from Home too. Toggled via #pc-link's
+       [hidden] attribute in openSeatPicker(). -->
+  <div id="pc-link" hidden style="margin-top:20px;">
+    <button class="plate" type="button" onclick="showScreen('pump-calc')">
+      <span class="rivet tl"></span><span class="rivet br"></span>
+      <span class="plate-main">
+        <span class="plate-unit">Pump Calculator</span>
+        <span class="plate-desc">Open the full calculator</span>
+      </span>
+      <span class="plate-arrow">→</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ PUMP CALCULATOR ============ -->
+<section class="screen" id="pump-calc">
+  <div class="sub-hero" style="padding-bottom:10px;">
+    <div class="sub-wrap">
+      <div class="nav-row">
+        <button class="back-btn" onclick="showScreen('home')">← Back</button>
+        <button class="home-btn" onclick="showScreen('home')">⌂ Home</button>
+      </div>
+    </div>
+  </div>
+<div class="pumpcalc" id="pc-root">
 <header class="top">
   <div class="top-inner">
     <h1 class="brand">Pump <span>Calculator</span></h1>
@@ -3892,6 +3949,16 @@
         <div class="divider"></div>
         <h2 class="sec">2 · Nozzle tip</h2>
         <div class="chips" id="def-tips"></div>
+      </div>
+      <div id="def-nozzle-block" hidden>
+        <div class="divider"></div>
+        <h2 class="sec">Nozzle Reaction</h2>
+        <div class="math" id="def-nozzle-readout"></div>
+        <div class="row" style="margin-top:12px">
+          <div class="field"><label for="def-np-custom">Actual nozzle pressure, if not 80 psi (psi)</label>
+            <input id="def-np-custom" type="number" min="0" max="200" step="5" inputmode="numeric"></div>
+        </div>
+        <p class="hint" id="def-np-hint"></p>
       </div>
       <div id="def-flow-block" hidden>
         <div class="divider"></div>
@@ -5074,9 +5141,9 @@
     document.getElementById('apparatusTag').textContent = refApp.label + ' · Choose the call type';
     document.getElementById('apparatusBackBtn').onclick = () => openApparatusPicker(appKey);
 
-    const pcRoot = document.getElementById('pc-root');
-    if(pcRoot){
-      pcRoot.hidden = !(seatId === 'engineer' && (appKey === 'engine' || appKey === 'tower'));
+    const pcLink = document.getElementById('pc-link');
+    if(pcLink){
+      pcLink.hidden = !(seatId === 'engineer' && (appKey === 'engine' || appKey === 'tower'));
     }
 
     const board = document.getElementById('seatBoard');
@@ -5803,8 +5870,8 @@ function initGlobalSearch(){
              {tip:'1¼"', gpm:415, vals:[111,127,142,158,174,189,205,220,236]},
              {tip:'1½"', gpm:598, vals:[167,199,232,264,296,329,361,393,426]}], limit:"handline"},
       {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:4, defaultLen:50,
-       rows:[{tip:'1⅜"', gpm:501},{tip:'1½"', gpm:598},{tip:'1¾"', gpm:814},{tip:'1⅞"', gpm:935},
-             {tip:'2"', gpm:1063},{tip:'2¼"', gpm:1345},{tip:'2½"', gpm:1660}], limit:"five"},
+       rows:[{tip:'1⅜"', gpm:501, d:1.375},{tip:'1½"', gpm:598, d:1.5},{tip:'1¾"', gpm:814, d:1.75},{tip:'1⅞"', gpm:935, d:1.875},
+             {tip:'2"', gpm:1063, d:2},{tip:'2¼"', gpm:1345, d:2.25},{tip:'2½"', gpm:1660, d:2.5}], limit:"five"},
       {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
        rows:[{tip:"500", gpm:500, vals:[2,4,6,8,10,12,14,16,18,20]},
              {tip:"1000", gpm:1000, vals:[8,16,24,32,40,48,56,64,72,80]},
@@ -5839,7 +5906,7 @@ function initGlobalSearch(){
        rows:[{tip:'1"',gpm:266,vals:build(2,80,266,L9)},{tip:'1¼"',gpm:415,vals:build(2,80,415,L9)},
              {tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
       {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:3, defaultLen:50,
-       rows:[{tip:'1⅜"',gpm:502},{tip:'1½"',gpm:598},{tip:'1¾"',gpm:814},{tip:'2"',gpm:1063}], limit:"five"},
+       rows:[{tip:'1⅜"',gpm:502,d:1.375},{tip:'1½"',gpm:598,d:1.5},{tip:'1¾"',gpm:814,d:1.75},{tip:'2"',gpm:1063,d:2}], limit:"five"},
       {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
        rows:[{tip:"500",gpm:500,vals:build(0.08,0,500,LS)},{tip:"1000",gpm:1000,vals:build(0.08,0,1000,LS)},
              {tip:"1500",gpm:1500,vals:build(0.08,0,1500,LS)},{tip:"2000",gpm:2000,vals:build(0.08,0,2000,LS)}]}
@@ -5906,6 +5973,29 @@ function initGlobalSearch(){
     }
     var n=xs.length-1, sN=(ys[n]-ys[n-1])/(xs[n]-xs[n-1]);
     return ys[n]+(L-xs[n])*sN;
+  }
+
+  /* Smooth bore nozzle physics — NR = 1.57 d² NP, Q = 29.7 d² √NP (d inches, NP psi) */
+  function nozzleReaction(d, np){ return Math.round(1.57 * d*d * np); }
+  function smoothBoreGpm(d, np){ return Math.round(29.7 * d*d * Math.sqrt(np)); }
+  var STD_NP = 80;
+  function renderNozzleReaction(row){
+    var host=$("def-nozzle-readout"); host.innerHTML="";
+    function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
+    var stdNR=nozzleReaction(row.d, STD_NP);
+    host.appendChild(term("Tip diameter", row.tip));
+    host.appendChild(term("Nozzle reaction @ "+STD_NP+" psi", stdNR.toLocaleString()+" lb"));
+    var hint=$("def-np-hint");
+    var customVal=num($("def-np-custom").value,null);
+    if(customVal!=null && customVal>0){
+      var customGpm=smoothBoreGpm(row.d, customVal);
+      var customNR=nozzleReaction(row.d, customVal);
+      host.appendChild(term("Est. GPM @ "+customVal+" psi", customGpm.toLocaleString()+" gpm"));
+      host.appendChild(term("Nozzle reaction @ "+customVal+" psi", customNR.toLocaleString()+" lb"));
+      hint.textContent = "Card flow ("+row.gpm.toLocaleString()+" gpm) assumes the recommended 80 psi nozzle pressure. At "+customVal+" psi you'd get roughly "+customGpm.toLocaleString()+" gpm at the tip — Q = 29.7 × d² × √NP.";
+    } else {
+      hint.textContent = "Nozzle reaction uses NR = 1.57 × d² × NP. Only enter an actual nozzle pressure above if you know the device isn't getting the recommended 80 psi at the tip.";
+    }
   }
 
   function limitCheck(kind, psi){
@@ -6082,7 +6172,13 @@ function initGlobalSearch(){
     var r=compute(side);
     renderReadout(side,r);
     renderTable(side,r);
-    if(side==="def"){ $("def-warn").hidden = !line.supplyFed; }
+    if(side==="def"){
+      $("def-warn").hidden = !line.supplyFed;
+      var nb=$("def-nozzle-block");
+      var showNozzle = !!(line.supplyFed && r.row.d);
+      nb.hidden = !showNozzle;
+      if(showNozzle) renderNozzleReaction(r.row);
+    }
   }
 
   /* ---------------- hydrant ---------------- */
@@ -6284,7 +6380,7 @@ function initGlobalSearch(){
   $("hose-standard").addEventListener("click",function(){setHose("standard");});
 
   ["off-floors","off-feet"].forEach(function(id){$(id).addEventListener("input",function(){draw("off");});});
-  ["def-feet","def-intake"].forEach(function(id){$(id).addEventListener("input",function(){draw("def");});});
+  ["def-feet","def-intake","def-np-custom"].forEach(function(id){$(id).addEventListener("input",function(){draw("def");});});
   $("off-len-custom").addEventListener("input",function(){
     var v=num(this.value,null); if(v!=null&&v>=0){state.off.len=Math.round(v); draw("off");}
   });
