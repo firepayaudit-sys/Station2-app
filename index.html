@@ -3950,16 +3950,6 @@
         <h2 class="sec">2 · Nozzle tip</h2>
         <div class="chips" id="def-tips"></div>
       </div>
-      <div id="def-nozzle-block" hidden>
-        <div class="divider"></div>
-        <h2 class="sec">Nozzle Reaction</h2>
-        <div class="math" id="def-nozzle-readout"></div>
-        <div class="row" style="margin-top:12px">
-          <div class="field"><label for="def-np-custom">Actual nozzle pressure, if not 80 psi (psi)</label>
-            <input id="def-np-custom" type="number" min="0" max="200" step="5" inputmode="numeric"></div>
-        </div>
-        <p class="hint" id="def-np-hint"></p>
-      </div>
       <div id="def-flow-block" hidden>
         <div class="divider"></div>
         <h2 class="sec">2 · Flow needed</h2>
@@ -3983,6 +3973,15 @@
       </div>
     </section>
     <div class="readout" id="def-readout"></div>
+    <section class="panel" id="def-nozzle-block" hidden>
+      <h2 class="sec">Nozzle Reaction</h2>
+      <div class="math" id="def-nozzle-readout"></div>
+      <div class="row" style="margin-top:12px">
+        <div class="field"><label for="def-np-custom">Custom PSI</label>
+          <input id="def-np-custom" type="number" min="0" max="200" step="5" inputmode="numeric" placeholder="80"></div>
+      </div>
+      <p class="hint" id="def-np-hint"></p>
+    </section>
     <section class="panel">
       <h2 class="sec">Matching chart</h2>
       <div class="tablewrap" id="def-table"></div>
@@ -5982,19 +5981,24 @@ function initGlobalSearch(){
   function renderNozzleReaction(row){
     var host=$("def-nozzle-readout"); host.innerHTML="";
     function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
-    var stdNR=nozzleReaction(row.d, STD_NP);
-    host.appendChild(term("Tip diameter", row.tip));
-    host.appendChild(term("Nozzle reaction @ "+STD_NP+" psi", stdNR.toLocaleString()+" lb"));
     var hint=$("def-np-hint");
     var customVal=num($("def-np-custom").value,null);
-    if(customVal!=null && customVal>0){
-      var customGpm=smoothBoreGpm(row.d, customVal);
-      var customNR=nozzleReaction(row.d, customVal);
-      host.appendChild(term("Est. GPM @ "+customVal+" psi", customGpm.toLocaleString()+" gpm"));
-      host.appendChild(term("Nozzle reaction @ "+customVal+" psi", customNR.toLocaleString()+" lb"));
-      hint.textContent = "Card flow ("+row.gpm.toLocaleString()+" gpm) assumes the recommended 80 psi nozzle pressure. At "+customVal+" psi you'd get roughly "+customGpm.toLocaleString()+" gpm at the tip — Q = 29.7 × d² × √NP.";
+    var usingCustom = customVal!=null && customVal>0;
+    var npUsed = usingCustom ? customVal : STD_NP;
+    var nr = nozzleReaction(row.d, npUsed);
+    host.appendChild(term("Tip diameter", row.tip));
+    host.appendChild(term("Nozzle reaction @ "+npUsed+" psi"+(usingCustom?"":" (recommended)"), nr.toLocaleString()+" lb"));
+    if(usingCustom){
+      var gpm=smoothBoreGpm(row.d, customVal);
+      host.appendChild(term("Est. GPM @ "+customVal+" psi", gpm.toLocaleString()+" gpm"));
+      // Behind the scenes: subtract the recommended psi from the custom psi to
+      // get the pressure difference, then scale it by 1.57*d² to get how much
+      // nozzle reaction that difference is worth (NR is linear in NP).
+      var diffPsi = customVal - STD_NP;
+      var diffNR = nozzleReaction(row.d, Math.abs(diffPsi)) * (diffPsi<0?-1:1);
+      hint.textContent = (diffPsi>=0?"+":"")+diffPsi+" psi vs. the recommended "+STD_NP+" psi works out to "+(diffNR>=0?"+":"")+diffNR.toLocaleString()+" lb of nozzle reaction versus normal.";
     } else {
-      hint.textContent = "Nozzle reaction uses NR = 1.57 × d² × NP. Only enter an actual nozzle pressure above if you know the device isn't getting the recommended 80 psi at the tip.";
+      hint.textContent = "Enter a custom PSI above only if the device isn't getting the recommended "+STD_NP+" psi at the tip.";
     }
   }
 
