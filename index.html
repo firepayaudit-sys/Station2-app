@@ -3977,8 +3977,8 @@
       <h2 class="sec">Nozzle Reaction</h2>
       <div class="math" id="def-nozzle-readout"></div>
       <div class="row" style="margin-top:12px">
-        <div class="field"><label for="def-np-custom">Custom PSI</label>
-          <input id="def-np-custom" type="number" min="0" max="200" step="5" inputmode="numeric" placeholder="80"></div>
+        <div class="field"><label for="def-np-custom">Custom PDP</label>
+          <input id="def-np-custom" type="number" min="0" max="300" step="5" inputmode="numeric"></div>
       </div>
       <p class="hint" id="def-np-hint"></p>
     </section>
@@ -5978,28 +5978,43 @@ function initGlobalSearch(){
   function nozzleReaction(d, np){ return Math.round(1.57 * d*d * np); }
   function smoothBoreGpm(d, np){ return Math.round(29.7 * d*d * Math.sqrt(np)); }
   var STD_NP = 80;
-  function renderNozzleReaction(row){
+  function renderNozzleReaction(r){
+    var row = r.row;
     var host=$("def-nozzle-readout"); host.innerHTML="";
     function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
     var hint=$("def-np-hint");
-    var customVal=num($("def-np-custom").value,null);
-    var usingCustom = customVal!=null && customVal>0;
-    var npUsed = usingCustom ? customVal : STD_NP;
-    var nr = nozzleReaction(row.d, npUsed);
+    var input=$("def-np-custom");
+    input.placeholder = String(r.total);
+    var customPdp=num(input.value,null);
+    var usingCustom = customPdp!=null && customPdp>0;
     host.appendChild(term("Tip diameter", row.tip));
-    host.appendChild(term("Nozzle reaction @ "+npUsed+" psi"+(usingCustom?"":" (recommended)"), nr.toLocaleString()+" lb"));
-    if(usingCustom){
-      var gpm=smoothBoreGpm(row.d, customVal);
-      host.appendChild(term("Est. GPM @ "+customVal+" psi", gpm.toLocaleString()+" gpm"));
-      // Behind the scenes: subtract the recommended psi from the custom psi to
-      // get the pressure difference, then scale it by 1.57*d² to get how much
-      // nozzle reaction that difference is worth (NR is linear in NP).
-      var diffPsi = customVal - STD_NP;
-      var diffNR = nozzleReaction(row.d, Math.abs(diffPsi)) * (diffPsi<0?-1:1);
-      hint.textContent = (diffPsi>=0?"+":"")+diffPsi+" psi vs. the recommended "+STD_NP+" psi works out to "+(diffNR>=0?"+":"")+diffNR.toLocaleString()+" lb of nozzle reaction versus normal.";
-    } else {
-      hint.textContent = "Enter a custom PSI above only if the device isn't getting the recommended "+STD_NP+" psi at the tip.";
+    if(!usingCustom){
+      var nr=nozzleReaction(row.d, STD_NP);
+      host.appendChild(term("Nozzle reaction @ "+STD_NP+" psi (recommended)", nr.toLocaleString()+" lb"));
+      hint.textContent = "Enter a custom PDP above only if you're not pumping the recommended "+r.total+" psi for this setup.";
+      return;
     }
+    // Behind the scenes: back the tip (nozzle) pressure out of the pump
+    // discharge pressure by subtracting everything between the pump and the
+    // tip — appliance loss, the 5" supply friction for this lay, and the
+    // elevation adjustment — then run that tip pressure through the same
+    // NR = 1.57 d² NP / Q = 29.7 d² √NP formulas used for the recommended case.
+    var applianceLoss = r.devicePdp - STD_NP;
+    var lossesBeforeTip = applianceLoss + r.frictionPsi + r.elev;
+    var npUsed = customPdp - lossesBeforeTip;
+    if(npUsed <= 0){
+      host.appendChild(term("Nozzle reaction", "—"));
+      hint.textContent = customPdp+" PDP isn't enough to clear the "+Math.round(lossesBeforeTip)+" psi of appliance loss, supply friction, and elevation on this lay — nothing would reach the tip.";
+      return;
+    }
+    var nrCustom=nozzleReaction(row.d, npUsed);
+    var gpm=smoothBoreGpm(row.d, npUsed);
+    host.appendChild(term("Tip pressure @ "+customPdp+" PDP", Math.round(npUsed)+" psi"));
+    host.appendChild(term("Nozzle reaction", nrCustom.toLocaleString()+" lb"));
+    host.appendChild(term("Est. GPM", gpm.toLocaleString()+" gpm"));
+    var diffPsi = npUsed - STD_NP;
+    var diffNR = nozzleReaction(row.d, Math.abs(diffPsi)) * (diffPsi<0?-1:1);
+    hint.textContent = "Backing out "+Math.round(lossesBeforeTip)+" psi of appliance loss, supply friction, and elevation leaves about "+Math.round(npUsed)+" psi at the tip — "+(diffPsi>=0?"+":"")+Math.round(diffPsi)+" psi vs. the recommended "+STD_NP+", or "+(diffNR>=0?"+":"")+diffNR.toLocaleString()+" lb of nozzle reaction versus normal.";
   }
 
   function limitCheck(kind, psi){
@@ -6181,7 +6196,7 @@ function initGlobalSearch(){
       var nb=$("def-nozzle-block");
       var showNozzle = !!(line.supplyFed && r.row.d);
       nb.hidden = !showNozzle;
-      if(showNozzle) renderNozzleReaction(r.row);
+      if(showNozzle) renderNozzleReaction(r);
     }
   }
 
