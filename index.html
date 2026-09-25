@@ -1566,6 +1566,8 @@
 .pumpcalc td.over{background:var(--warn-soft)}
 .pumpcalc td.way-over{background:var(--danger-soft);color:var(--ember-lt);font-weight:600}
 .pumpcalc td.rowhead{font-family:'Oswald',sans-serif;font-weight:500}
+.pumpcalc tr.rly-manifold td{background:rgba(184,147,79,0.10);border-top:2px solid var(--brass);font-style:italic;color:var(--ash)}
+.pumpcalc tr.rly-manifold td.rowhead{color:var(--brass-lt);font-style:normal;font-weight:600}
 .pumpcalc .ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
 .pumpcalc .ref h3{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:.05em;text-transform:uppercase;margin:0 0 8px;color:var(--brass-lt)}
 .pumpcalc .ref ul{margin:0;padding-left:18px}
@@ -3837,7 +3839,7 @@
 <div class="pumpcalc" id="pc-root" hidden>
 <header class="top">
   <div class="top-inner">
-    <h1 class="brand">Station 2 <span>Pump Calculator</span></h1>
+    <h1 class="brand">Pump <span>Calculator</span></h1>
     <div class="hose-switch" role="group" aria-label="Hose type">
       <button type="button" id="hose-combat" aria-pressed="true">Combat Ready</button>
       <button type="button" id="hose-standard" aria-pressed="false">Standard (old)</button>
@@ -3973,7 +3975,7 @@
         <div class="field"><label for="rly-rating">Pump rated capacity (gpm @150 psi)</label>
           <input id="rly-rating" type="number" min="250" max="3000" step="250" value="1500" inputmode="numeric"></div>
       </div>
-      <p class="hint">Splits the lay evenly across relay engines until each one's discharge pressure fits inside your cap, and checks that a derated pump can still make the flow at that pressure. Rule of thumb: 10 psi per 100 ft, not over 200 psi discharge (S 6506).</p>
+      <p class="hint">Splits the lay evenly across relay engines until each one's discharge pressure fits inside your cap, and checks that a derated pump can still make the flow at that pressure. Rule of thumb: 10 psi per 100 ft, not over 200 psi discharge (S 6506). "Relay engines needed" counts only the pumps between the hydrant and the fire — the manifold/attack engine at the fire is shown separately in the table below, not included in that count.</p>
     </section>
     <div class="readout" id="rly-readout"></div>
     <section class="panel">
@@ -5836,7 +5838,7 @@ function initGlobalSearch(){
       {id:"blz", name:'2½" Blitzfire', sub:"Master stream · 80 psi NP", lengths:L9,
        rows:[{tip:'1"',gpm:266,vals:build(2,80,266,L9)},{tip:'1¼"',gpm:415,vals:build(2,80,415,L9)},
              {tip:'1½"',gpm:598,vals:build(2,80,598,L9)}], limit:"handline"},
-      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 80 PDP at the device", supplyFed:true, base:80, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:3, defaultLen:50,
+      {id:"deck", name:"Deck Gun / Aerial", sub:"Smooth bore · 105 PDP at the device", supplyFed:true, base:105, supplyCoef:0.08, lengths:LDECK, lenLabel:'Length of 5" supply between Engine and Tower', defaultRowIdx:3, defaultLen:50,
        rows:[{tip:'1⅜"',gpm:502},{tip:'1½"',gpm:598},{tip:'1¾"',gpm:814},{tip:'2"',gpm:1063}], limit:"five"},
       {id:"5in", name:'5" Supply Line', sub:"Friction loss · relay", supply:true, lengths:LS, limit:"five",
        rows:[{tip:"500",gpm:500,vals:build(0.08,0,500,LS)},{tip:"1000",gpm:1000,vals:build(0.08,0,1000,LS)},
@@ -6240,6 +6242,15 @@ function initGlobalSearch(){
       tr.appendChild(chkTd);
       tbody.appendChild(tr);
     });
+    var mTr=el("tr","rly-manifold");
+    mTr.appendChild(el("td","rowhead","Manifold / Attack Engine"));
+    mTr.appendChild(el("td",null,"—"));
+    mTr.appendChild(el("td",null,"—"));
+    mTr.appendChild(el("td",null,"—"));
+    mTr.appendChild(el("td",null,"+"+p.intake));
+    mTr.appendChild(el("td",null,"—"));
+    mTr.appendChild(el("td",null,"—"));
+    tbody.appendChild(mTr);
     table.appendChild(tbody); thost.appendChild(table);
   }
 
