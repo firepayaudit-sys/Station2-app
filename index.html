@@ -3977,6 +3977,7 @@
           <input id="def-np-custom" type="number" min="0" max="300" step="5" inputmode="numeric"></div>
       </div>
       <p class="hint" id="def-np-hint"></p>
+      <div class="alert" id="def-nozzle-status" hidden style="margin-top:12px;border-top:0;border-radius:3px"></div>
       <div class="alert is-danger" id="def-warn" hidden style="margin-top:12px;border-top:0;border-radius:3px">
         <span class="tag">Caution</span>
         <span><b>Increasing pressure past recommended PDP</b> — Pressure sets how fast water leaves the tip — 12.14√P, the same for every tip size. Tip size sets how much. A smaller tip does not shoot farther at the same nozzle pressure. A bigger stream actually reaches slightly farther, because more mass per square inch of surface fights the air better. And past about 100 psi a smooth bore breaks into spray — reach drops while nozzle reaction keeps climbing. Also ladders are not rated for the extreme nozzle reaction from high pressure. Need more water out there? Go up a tip, not up on the throttle.</span>
@@ -5978,20 +5979,48 @@ function initGlobalSearch(){
   function nozzleReaction(d, np){ return Math.round(1.57 * d*d * np); }
   function smoothBoreGpm(d, np){ return Math.round(29.7 * d*d * Math.sqrt(np)); }
   var STD_NP = 80;
+  /* Tip pressure is what actually makes the stream — 80–100 psi at a smooth
+     bore is the working range (recommended NP is 80). Under that, reach and
+     pattern suffer; over 100 the stream starts breaking into spray while
+     nozzle reaction keeps climbing, so that's also when the full caution
+     note below gets shown. */
+  function nozzleCheck(np){
+    if(np>100) return {level:"danger",tag:"Caution",msg:"Above 100 psi at the tip — the stream is breaking into spray while nozzle reaction keeps climbing. Ease back the throttle or go up a tip size instead."};
+    if(np>=80) return {level:"ok",tag:"Good",msg:"Good stream — tip pressure is in the 80–100 psi working range."};
+    return {level:"warn",tag:"Low",msg:"Under 80 psi at the tip — reach and pattern will suffer. Check for extra friction loss or bring the throttle up."};
+  }
   function renderNozzleReaction(r){
     var row = r.row;
     var host=$("def-nozzle-readout"); host.innerHTML="";
     function term(l,v){var t=el("div","term");t.appendChild(el("i",null,l));t.appendChild(el("b",null,v));return t;}
     var hint=$("def-np-hint");
+    var status=$("def-nozzle-status");
+    var warn=$("def-warn");
     var input=$("def-np-custom");
     input.placeholder = String(r.total);
     var customPdp=num(input.value,null);
     var usingCustom = customPdp!=null && customPdp>0;
     host.appendChild(term("Tip diameter", row.tip));
+
+    function showStatus(np){
+      var chk=nozzleCheck(np);
+      status.className="alert is-"+chk.level;
+      status.innerHTML="";
+      status.appendChild(el("span","tag",chk.tag));
+      status.appendChild(el("span",null,chk.msg));
+      status.hidden=false;
+      warn.hidden = np<=100;
+    }
+    function hideStatus(){
+      status.hidden=true;
+      warn.hidden=true;
+    }
+
     if(!usingCustom){
       var nr=nozzleReaction(row.d, STD_NP);
       host.appendChild(term("Nozzle reaction @ "+STD_NP+" psi (recommended)", nr.toLocaleString()+" lb"));
       hint.textContent = "Enter a custom PDP above only if you're not pumping the recommended "+r.total+" psi for this setup.";
+      showStatus(STD_NP);
       return;
     }
     // Behind the scenes: back the tip (nozzle) pressure out of the pump
@@ -6005,6 +6034,7 @@ function initGlobalSearch(){
     if(npUsed <= 0){
       host.appendChild(term("Nozzle reaction", "—"));
       hint.textContent = customPdp+" PDP isn't enough to clear the "+Math.round(lossesBeforeTip)+" psi of appliance loss, supply friction, and elevation on this lay — nothing would reach the tip.";
+      hideStatus();
       return;
     }
     var nrCustom=nozzleReaction(row.d, npUsed);
@@ -6015,6 +6045,7 @@ function initGlobalSearch(){
     var diffPsi = npUsed - STD_NP;
     var diffNR = nozzleReaction(row.d, Math.abs(diffPsi)) * (diffPsi<0?-1:1);
     hint.textContent = "Backing out "+Math.round(lossesBeforeTip)+" psi of appliance loss, supply friction, and elevation leaves about "+Math.round(npUsed)+" psi at the tip — "+(diffPsi>=0?"+":"")+Math.round(diffPsi)+" psi vs. the recommended "+STD_NP+", or "+(diffNR>=0?"+":"")+diffNR.toLocaleString()+" lb of nozzle reaction versus normal.";
+    showStatus(npUsed);
   }
 
   function limitCheck(kind, psi){
@@ -6192,11 +6223,11 @@ function initGlobalSearch(){
     renderReadout(side,r);
     renderTable(side,r);
     if(side==="def"){
-      $("def-warn").hidden = !line.supplyFed;
       var nb=$("def-nozzle-block");
       var showNozzle = !!(line.supplyFed && r.row.d);
       nb.hidden = !showNozzle;
       if(showNozzle) renderNozzleReaction(r);
+      else { $("def-nozzle-status").hidden=true; $("def-warn").hidden=true; }
     }
   }
 
